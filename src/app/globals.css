@@ -467,4 +467,163 @@ a {
   will-change: opacity, color, filter, text-shadow;
 }
 
+/* ==============================================================================
+   1. EL TRAZO DE TINTA INVISIBLE (INK STROKE SIMULATION) - CARMEN IBÁÑEZ
+   ============================================================================== */
+.ink-stroke-wrapper {
+  display: inline-block;
+  position: relative;
+  overflow: visible;
+  max-width: 100%;
+}
+
+.ink-stroke-text {
+  display: inline-block;
+  color: #1A1A1A;
+  background-color: #1A1A1A;
+  -webkit-background-clip: text;
+  background-clip: text;
+  /* Máscara de gradiente lineal de precisión: simula depósito de tinta fresca */
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    #000000 0%,
+    #000000 40%,
+    rgba(0, 0, 0, 0.6) 47%,
+    rgba(0, 0, 0, 0.2) 52%,
+    transparent 58%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    #000000 0%,
+    #000000 40%,
+    rgba(0, 0, 0, 0.6) 47%,
+    rgba(0, 0, 0, 0.2) 52%,
+    transparent 58%,
+    transparent 100%
+  );
+  -webkit-mask-size: 250% 100%;
+  mask-size: 250% 100%;
+  -webkit-mask-position: 100% 0;
+  mask-position: 100% 0;
+  animation: inkStrokeReveal 2.2s cubic-bezier(0.42, 0.02, 0.25, 1) forwards;
+  will-change: mask-position, -webkit-mask-position;
+}
+
+@keyframes inkStrokeReveal {
+  0% {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+    filter: blur(0.6px);
+  }
+  20% {
+    filter: blur(0.3px);
+  }
+  75% {
+    filter: blur(0px);
+  }
+  100% {
+    -webkit-mask-position: 0% 0;
+    mask-position: 0% 0;
+    filter: blur(0px);
+  }
+}
+
+/* Pluma estilográfica / Guía de tinta invisible en tiempo real */
+.ink-pen-tip {
+  position: absolute;
+  top: 8%;
+  bottom: 8%;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(26, 26, 26, 0.7) 25%,
+    rgba(26, 26, 26, 0.95) 50%,
+    rgba(26, 26, 26, 0.7) 75%,
+    transparent 100%
+  );
+  box-shadow: 0 0 10px 1px rgba(26, 26, 26, 0.35);
+  pointer-events: none;
+  animation: inkPenFollow 2.2s cubic-bezier(0.42, 0.02, 0.25, 1) forwards;
+}
+
+@keyframes inkPenFollow {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  94% {
+    opacity: 0.85;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+/* ==============================================================================
+   2. FADE-IN EDITORIAL GUIADO TRAS EL TRAZO DE TINTA (STAGGERED REVEAL)
+   ============================================================================== */
+@keyframes editorialSectionReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-ink-hero-details {
+  animation: editorialSectionReveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) 2.0s both;
+}
+
+.fade-in-editorial-sobre-mi {
+  animation: editorialSectionReveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) 2.2s both;
+}
+
+.fade-in-editorial-novela {
+  animation: editorialSectionReveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) 2.4s both;
+}
+
+.fade-in-editorial-novedades {
+  animation: editorialSectionReveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) 2.6s both;
+}
+
+.fade-in-editorial-contacto {
+  animation: editorialSectionReveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) 2.8s both;
+}
+
+.fade-in-editorial-footer {
+  animation: editorialSectionReveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) 3.0s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ink-stroke-text {
+    animation: none !important;
+    -webkit-mask: none !important;
+    mask: none !important;
+    opacity: 1 !important;
+  }
+  .ink-pen-tip {
+    display: none !important;
+  }
+  .fade-in-ink-hero-details,
+  .fade-in-editorial-sobre-mi,
+  .fade-in-editorial-novela,
+  .fade-in-editorial-novedades,
+  .fade-in-editorial-contacto,
+  .fade-in-editorial-footer {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+
 

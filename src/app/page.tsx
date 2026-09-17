@@ -181,86 +181,91 @@ export default async function HomePage() {
               </span>
             </div>
 
-            <h1
-              className="cinzel-heading"
-              style={{
-                fontSize: 'clamp(2.8rem, 5.5vw, 4.2rem)',
-                fontWeight: 600,
-                lineHeight: 1.12,
-                letterSpacing: '0.03em',
-                marginBottom: '18px',
-                color: '#121212',
-              }}
-            >
-              Carmen Ibáñez
-            </h1>
-
-            <p
-              className="serif-delicate"
-              style={{
-                fontSize: '1.45rem',
-                fontStyle: 'italic',
-                color: '#404040',
-                lineHeight: 1.5,
-                marginBottom: '24px',
-              }}
-            >
-              Historias que también viven en nosotras
-            </p>
-
-            <p
-              className="montserrat-body"
-              style={{
-                fontSize: '1.02rem',
-                lineHeight: 1.9,
-                color: '#525252',
-                maxWidth: '520px',
-                marginBottom: '36px',
-              }}
-            >
-              Una exploración literaria íntima de los vínculos, las emociones ocultas y aquellas elecciones capaces de transformar el destino de las personas.
-            </p>
-
-            <div
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: '16px',
-                alignItems: 'center',
-              }}
-            >
-              <Link href="/subdomains/giselle" className="btn-noir">
-                Ingresar a la obra Giselle →
-              </Link>
-              <a href="#sobre-mi" className="btn-noir-outline">
-                Sobre la autora
-              </a>
+            <div className="ink-stroke-wrapper" style={{ marginBottom: '18px' }}>
+              <h1
+                className="cinzel-heading ink-stroke-text"
+                style={{
+                  fontSize: 'clamp(2.8rem, 5.5vw, 4.2rem)',
+                  fontWeight: 600,
+                  lineHeight: 1.12,
+                  letterSpacing: '0.03em',
+                  margin: 0,
+                  color: '#1A1A1A',
+                }}
+              >
+                Carmen Ibáñez
+              </h1>
+              <span className="ink-pen-tip" aria-hidden="true" />
             </div>
 
-            {/* Cita en bloque tipográfico */}
-            <div
-              style={{
-                marginTop: '44px',
-                paddingLeft: '20px',
-                borderLeft: '2px solid #121212',
-              }}
-            >
+            <div className="fade-in-ink-hero-details">
               <p
                 className="serif-delicate"
                 style={{
-                  fontSize: '1.08rem',
+                  fontSize: '1.45rem',
                   fontStyle: 'italic',
-                  color: '#262626',
-                  lineHeight: 1.7,
+                  color: '#404040',
+                  lineHeight: 1.5,
+                  marginBottom: '24px',
                 }}
               >
-                &ldquo;Escribe desde la observación de las emociones y de aquello que muchas veces permanece oculto detrás de las apariencias.&rdquo;
+                Historias que también viven en nosotras
               </p>
+
+              <p
+                className="montserrat-body"
+                style={{
+                  fontSize: '1.02rem',
+                  lineHeight: 1.9,
+                  color: '#525252',
+                  maxWidth: '520px',
+                  marginBottom: '36px',
+                }}
+              >
+                Una exploración literaria íntima de los vínculos, las emociones ocultas y aquellas elecciones capaces de transformar el destino de las personas.
+              </p>
+
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '16px',
+                  alignItems: 'center',
+                }}
+              >
+                <Link href="/subdomains/giselle" className="btn-noir">
+                  Ingresar a la obra Giselle →
+                </Link>
+                <a href="#sobre-mi" className="btn-noir-outline">
+                  Sobre la autora
+                </a>
+              </div>
+
+              {/* Cita en bloque tipográfico */}
+              <div
+                style={{
+                  marginTop: '44px',
+                  paddingLeft: '20px',
+                  borderLeft: '2px solid #121212',
+                }}
+              >
+                <p
+                  className="serif-delicate"
+                  style={{
+                    fontSize: '1.08rem',
+                    fontStyle: 'italic',
+                    color: '#262626',
+                    lineHeight: 1.7,
+                  }}
+                >
+                  &ldquo;Escribe desde la observación de las emociones y de aquello que muchas veces permanece oculto detrás de las apariencias.&rdquo;
+                </p>
+              </div>
             </div>
           </div>
 
           {/* Columna Derecha: Fotografía Oficial en Blanco y Negro */}
-          <div style={{ position: 'relative' }}>
+          <div style={{ position: 'relative' }} className="fade-in-ink-hero-details">
             <div
               style={{
                 position: 'relative',
@@ -309,6 +314,7 @@ export default async function HomePage() {
       {/* 3. SECCIÓN: SOBRE LA AUTORA (TEXTO REAL OFICIAL) */}
       <section
         id="sobre-mi"
+        className="fade-in-editorial-sobre-mi"
         style={{
           backgroundColor: '#FFFFFF',
           padding: '110px 24px',
@@ -431,6 +437,7 @@ export default async function HomePage() {
       {/* 4. SECCIÓN: BIBLIOTECA (LA NOVELA GISELLE) */}
       <section
         id="novela"
+        className="fade-in-editorial-novela"
         style={{
           padding: '110px 24px',
           maxWidth: '1240px',
@@ -636,6 +643,7 @@ export default async function HomePage() {
       {/* 5. SECCIÓN: AVANCES Y NOVEDADES */}
       <section
         id="novedades"
+        className="fade-in-editorial-novedades"
         style={{
           backgroundColor: '#FFFFFF',
           padding: '110px 24px',
@@ -881,6 +889,7 @@ export default async function HomePage() {
       {/* 6. FORMULARIO MINIMALISTA DE CONTACTO */}
       <section
         id="contacto"
+        className="fade-in-editorial-contacto"
         style={{
           padding: '110px 24px',
           maxWidth: '820px',
@@ -1068,6 +1077,7 @@ export default async function HomePage() {
 
       {/* 7. FOOTER: ENLACES TIPOGRÁFICOS Y REDES SOCIALES */}
       <footer
+        className="fade-in-editorial-footer"
         style={{
           marginTop: 'auto',
           backgroundColor: '#121212',
