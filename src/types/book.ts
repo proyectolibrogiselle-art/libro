@@ -11,7 +11,7 @@ import { Database } from './database.types';
 // Enum estricto para el ciclo de vida del libro
 export type BookStatus = Database['public']['Enums']['book_status'];
 
-export const BOOK_STATUSES: readonly BookStatus[] = ['draft', 'writing', 'published'] as const;
+export const BOOK_STATUSES = ['draft', 'writing', 'published'] as const;
 
 // Entidad principal Libro (Lectura directa desde Supabase)
 export interface Book {
