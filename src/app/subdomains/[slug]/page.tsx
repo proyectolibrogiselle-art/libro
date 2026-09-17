@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { BooksService } from '@/lib/supabase/books.service';
@@ -19,10 +20,9 @@ export async function generateMetadata({ params }: SubdomainPageProps): Promise<
     // Silencioso para fallback
   }
 
-  const title = book ? book.title : 'Giselle';
-  const description = book
-    ? book.synopsis
-    : 'En los salones de una aristocracia decadente, Giselle teje su música entre hilos de secretos y pasiones prohibidas. Novela de Carmen Ibáñez.';
+  const title = book?.title || (slug.toLowerCase() === 'giselle' ? 'Giselle' : slug);
+  const description =
+    'Hay mujeres que nacen dispuestas a aceptar el mundo que les tocó vivir. Giselle no es una de ellas. Novela oficial de Carmen Ibáñez.';
 
   return {
     title: `${title} — Novela de Carmen Ibáñez`,
@@ -30,9 +30,7 @@ export async function generateMetadata({ params }: SubdomainPageProps): Promise<
     openGraph: {
       title: `${title} — Carmen Ibáñez`,
       description,
-      images: book?.cover_url
-        ? [book.cover_url]
-        : ['https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1200&auto=format&fit=crop'],
+      images: ['/images/giselle-2.jpg'],
     },
   };
 }
@@ -47,17 +45,16 @@ export default async function BookSubdomainPage({ params }: SubdomainPageProps) 
     console.warn(`[Subdomain] Error cargando libro '${slug}':`, err);
   }
 
-  // Datos editoriales ricos de demostración para 'Giselle' (Romance Oscuro / Drama Cinematográfico)
+  // Datos editoriales oficiales y definitivos de 'Giselle'
   if (!book && slug.toLowerCase() === 'giselle') {
     book = {
       id: 'd9b1c720-3b6a-4f51-8b22-e7df12908f91',
       title: 'Giselle',
       slug: 'giselle',
       synopsis:
-        'En los salones de una aristocracia decadente, Giselle teje su música entre hilos de secretos y pasiones prohibidas. Cuando el telón caiga, el drama de su realidad superará la ficción de su arte. Una novela inmersiva sobre el peso de las decisiones y la búsqueda de la redención.',
+        'Hay mujeres que nacen dispuestas a aceptar el mundo que les tocó vivir. Giselle no es una de ellas. En una época marcada por las apariencias, las convenciones familiares y aquello que se esperaba de una mujer, Giselle intenta construir su vida bajo sus propias reglas. Amores, decisiones, deseos, pérdidas y contradicciones irán trazando un camino en el que cada elección tendrá consecuencias. A su alrededor, otras historias también avanzan: familias que se forman, relaciones que se transforman y personajes que aman, juzgan, perdonan o abandonan. Giselle es una novela sobre la libertad, el amor, la dependencia y las decisiones que pueden acompañarnos durante toda una vida. Pero, sobre todo, es la historia de una mujer que quiso vivir sin pedir permiso.',
       status: 'published',
-      cover_url:
-        'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1200&auto=format&fit=crop',
+      cover_url: '/images/giselle-2.jpg',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
@@ -67,21 +64,22 @@ export default async function BookSubdomainPage({ params }: SubdomainPageProps) 
     notFound();
   }
 
-  const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'carmenibanez.cl';
+  const isGiselle = slug.toLowerCase() === 'giselle';
+  const coverImage = isGiselle ? '/images/giselle-2.jpg' : (book.cover_url || '/images/giselle-2.jpg');
 
   return (
     <div
       style={{
-        backgroundColor: '#0D0D0C',
-        color: '#FBFBF9',
+        backgroundColor: '#0A0A0A',
+        color: '#EAEAEA',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
         backgroundImage: `
-          radial-gradient(circle at 15% 15%, rgba(140, 45, 56, 0.12) 0%, transparent 45%),
-          radial-gradient(circle at 85% 80%, rgba(140, 45, 56, 0.08) 0%, transparent 50%),
-          radial-gradient(circle at 50% 50%, rgba(13, 13, 12, 0.95) 0%, #0D0D0C 100%)
+          radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
+          radial-gradient(circle at 10% 40%, rgba(255, 255, 255, 0.02) 0%, transparent 40%),
+          radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 40%)
         `,
         backgroundAttachment: 'fixed',
       }}
@@ -91,488 +89,699 @@ export default async function BookSubdomainPage({ params }: SubdomainPageProps) 
         style={{
           position: 'sticky',
           top: 0,
-          zIndex: 40,
-          backgroundColor: 'rgba(13, 13, 12, 0.88)',
+          zIndex: 50,
+          backgroundColor: 'rgba(10, 10, 10, 0.92)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-          padding: '18px 36px',
+          padding: '16px 32px',
         }}
       >
-        <div style={{ maxWidth: '1240px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <a
-            href={`https://${rootDomain}`}
+        <div
+          style={{
+            maxWidth: '1240px',
+            margin: '0 auto',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          {/* Retorno al Sitio de la Autora */}
+          <Link
+            href="/"
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: '10px',
-              fontSize: '0.88rem',
-              color: '#C5C5C5',
-              letterSpacing: '0.04em',
-              transition: 'color 0.25s ease',
+              textDecoration: 'none',
+              color: '#A0A0A0',
+              fontSize: '0.86rem',
+              letterSpacing: '0.03em',
+            }}
+            className="montserrat-body"
+          >
+            <span style={{ fontSize: '1rem' }}>←</span>
+            <span>Carmen Ibáñez (Inicio)</span>
+          </Link>
+
+          {/* Marca de la Novela */}
+          <span
+            className="cinzel-decorative"
+            style={{
+              fontSize: '1.25rem',
+              fontWeight: 700,
+              letterSpacing: '0.06em',
+              color: '#FFFFFF',
             }}
           >
-            ← Carmen Ibáñez
-          </a>
+            {book.title}
+          </span>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <span
+          {/* Acciones Rápidas */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+            <a
+              href="#sinopsis"
+              className="montserrat-body"
+              style={{ fontSize: '0.84rem', color: '#B0B0B0' }}
+            >
+              Sinopsis
+            </a>
+            <a
+              href="#avances"
+              className="montserrat-body"
+              style={{ fontSize: '0.84rem', color: '#B0B0B0' }}
+            >
+              Avances
+            </a>
+            <a
+              href="#club-lectura"
+              className="btn-ivory"
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '4px 14px',
-                borderRadius: '9999px',
-                fontSize: '0.72rem',
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                backgroundColor: 'rgba(140, 45, 56, 0.2)',
-                color: '#E06B78',
-                border: '1px solid rgba(140, 45, 56, 0.35)',
+                padding: '8px 18px',
+                fontSize: '0.8rem',
               }}
             >
-              Micro-sitio exclusivo · {book.slug}.{rootDomain}
-            </span>
+              Club de lectura
+            </a>
           </div>
         </div>
       </nav>
 
-      {/* 2. HERO DEL LIBRO: CINEMATIC DRAMA */}
-      <header
+      {/* 2. HERO DEL LIBRO: LUXURY DARK CINEMATOGRÁFICO EN BLANCO Y NEGRO */}
+      <section
         style={{
-          maxWidth: '1200px',
-          margin: '50px auto 100px',
-          padding: '0 24px',
+          padding: '70px 24px 100px',
+          maxWidth: '1240px',
+          margin: '0 auto',
           width: '100%',
         }}
       >
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
             gap: '64px',
             alignItems: 'center',
           }}
         >
-          {/* Portada en Cristal Oscuro */}
-          <div style={{ position: 'relative', maxWidth: '440px', margin: '0 auto', width: '100%' }}>
+          {/* Zona Destacada: Portada de la Novela (La escena nocturna bajo la lluvia con el taxi y el hotel) */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              position: 'relative',
+            }}
+          >
             <div
               style={{
-                backgroundColor: 'rgba(20, 20, 19, 0.75)',
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 40px -10px rgba(140, 45, 56, 0.3)',
-                padding: '16px',
-                borderRadius: '16px',
+                position: 'relative',
+                borderRadius: '12px',
+                padding: '10px',
+                background: 'rgba(255, 255, 255, 0.03)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                boxShadow: '0 30px 80px -20px rgba(0, 0, 0, 0.9), 0 0 50px rgba(255, 255, 255, 0.03)',
               }}
             >
               <img
-                src={book.cover_url || ''}
-                alt={`Portada oficial de ${book.title}`}
+                src={coverImage}
+                alt="Portada oficial de Giselle — Carmen Ibáñez"
                 style={{
                   width: '100%',
+                  maxWidth: '430px',
                   height: 'auto',
-                  borderRadius: '10px',
+                  borderRadius: '8px',
                   display: 'block',
-                  boxShadow: '0 15px 35px rgba(0,0,0,0.7)',
+                  filter: 'contrast(105%)',
                 }}
               />
-            </div>
-
-            {/* Sello de Género */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '-14px',
-                left: '-10px',
-                padding: '6px 18px',
-                borderRadius: '9999px',
-                fontSize: '0.74rem',
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                backgroundColor: '#8C2D38',
-                color: '#FBFBF9',
-                boxShadow: '0 8px 20px rgba(140, 45, 56, 0.5)',
-                fontWeight: 600,
-              }}
-            >
-              Romance Oscuro
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '24px',
+                  right: '24px',
+                  backgroundColor: 'rgba(10, 10, 10, 0.85)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  padding: '4px 14px',
+                  borderRadius: '9999px',
+                }}
+              >
+                <span style={{ fontSize: '0.72rem', letterSpacing: '0.06em', color: '#EAEAEA' }}>
+                  Edición oficial
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* Detalles Editoriales y Acciones */}
+          {/* Información Principal del Hero */}
           <div>
-            <p
-              className="cinzel-heading"
+            <div
               style={{
-                fontSize: '0.85rem',
-                letterSpacing: '0.2em',
-                color: '#E06B78',
-                marginBottom: '16px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '6px 16px',
+                borderRadius: '9999px',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                backgroundColor: 'rgba(255, 255, 255, 0.04)',
+                marginBottom: '24px',
               }}
             >
-              Novela de Carmen Ibáñez
-            </p>
+              <span style={{ fontSize: '0.72rem', color: '#D4D4D4', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                Novela · Ficción dramática
+              </span>
+            </div>
 
-            {/* Título en Cinzel Decorative grande y estilizado en Tipo Oración */}
             <h1
               className="cinzel-decorative"
               style={{
-                fontSize: 'clamp(3.8rem, 8vw, 6.2rem)',
-                fontWeight: 600,
-                lineHeight: 1.05,
-                letterSpacing: '0.03em',
-                color: '#FBFBF9',
-                marginBottom: '28px',
+                fontSize: 'clamp(3.2rem, 6vw, 4.8rem)',
+                fontWeight: 700,
+                lineHeight: 1.08,
+                letterSpacing: '0.04em',
+                color: '#FFFFFF',
+                marginBottom: '16px',
               }}
             >
               {book.title}
             </h1>
 
-            {/* Divisor Borgoña */}
-            <div style={{ width: '50px', height: '2px', backgroundColor: '#8C2D38', marginBottom: '32px' }} />
-
-            {/* Sinopsis Argumental */}
-            <div
+            <p
+              className="cinzel-heading"
               style={{
-                backgroundColor: 'rgba(20, 20, 19, 0.65)',
-                backdropFilter: 'blur(16px)',
-                WebkitBackdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                padding: '30px 32px',
-                borderRadius: '14px',
-                marginBottom: '40px',
+                fontSize: '1.2rem',
+                color: '#A0A0A0',
+                letterSpacing: '0.06em',
+                marginBottom: '28px',
               }}
             >
-              <h2
-                className="cinzel-heading"
-                style={{ fontSize: '0.9rem', letterSpacing: '0.12em', color: '#FBFBF9', marginBottom: '14px' }}
-              >
-                Sinopsis argumental
-              </h2>
+              Una novela de Carmen Ibáñez
+            </p>
+
+            <blockquote
+              style={{
+                borderLeft: '2px solid rgba(255, 255, 255, 0.3)',
+                paddingLeft: '20px',
+                marginBottom: '36px',
+              }}
+            >
               <p
-                className="montserrat-body"
+                className="serif-delicate"
                 style={{
-                  color: '#C5C5C5',
-                  fontSize: '1.05rem',
-                  lineHeight: 1.85,
+                  fontSize: '1.35rem',
+                  fontStyle: 'italic',
+                  color: '#FFFFFF',
+                  lineHeight: 1.5,
                   margin: 0,
                 }}
               >
-                {book.synopsis}
+                &ldquo;Hay mujeres que nacen dispuestas a aceptar el mundo que les tocó vivir. Giselle no es una de ellas.&rdquo;
               </p>
-            </div>
+            </blockquote>
 
-            {/* Botones de Acción Borgoña */}
-            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-              <a
-                href="https://amazon.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  padding: '15px 36px',
-                  backgroundColor: '#8C2D38',
-                  color: '#FBFBF9',
-                  borderRadius: '6px',
-                  fontSize: '0.95rem',
-                  fontWeight: 500,
-                  letterSpacing: '0.04em',
-                  boxShadow: '0 10px 25px -4px rgba(140, 45, 56, 0.5)',
-                  transition: 'all 0.3s ease',
-                }}
-              >
-                Comprar en Amazon →
+            <p
+              className="montserrat-body"
+              style={{
+                fontSize: '0.98rem',
+                lineHeight: 1.85,
+                color: '#B0B0B0',
+                marginBottom: '40px',
+                maxWidth: '540px',
+              }}
+            >
+              Una inmersión literaria nocturna en los pasillos de la culpa, el deseo y la búsqueda irrevocable de autonomía.
+            </p>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
+              <a href="#sinopsis" className="btn-ivory">
+                Leer sinopsis completa →
               </a>
-
-              <a
-                href="#primer-capitulo"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  padding: '14px 32px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.06)',
-                  color: '#FBFBF9',
-                  borderRadius: '6px',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  fontSize: '0.95rem',
-                  fontWeight: 500,
-                  backdropFilter: 'blur(8px)',
-                  transition: 'all 0.3s ease',
-                }}
-              >
-                Leer primer capítulo
+              <a href="#club-lectura" className="btn-dark-outline">
+                Unirse al Club de Lectura
               </a>
             </div>
           </div>
         </div>
-      </header>
+      </section>
 
-      {/* 3. SECCIÓN: AVANCE EXCLUSIVO (CAPÍTULO 1: EL ECO DEL SILENCIO) */}
+      {/* 3. SECCIÓN: SINOPSIS REAL INTEGRADA */}
       <section
-        id="primer-capitulo"
+        id="sinopsis"
         style={{
-          maxWidth: '960px',
-          margin: '0 auto 120px',
-          padding: '0 24px',
-          width: '100%',
+          backgroundColor: '#0E0E0E',
+          padding: '120px 24px',
+          borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
         }}
       >
         <div
           style={{
-            backgroundColor: 'rgba(20, 20, 19, 0.75)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            boxShadow: '0 20px 50px -15px rgba(0, 0, 0, 0.7)',
-            padding: '56px 48px',
-            borderRadius: '16px',
-            position: 'relative',
+            maxWidth: '900px',
+            margin: '0 auto',
           }}
         >
-          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '56px' }}>
             <span
+              className="cinzel-heading"
               style={{
                 fontSize: '0.78rem',
-                letterSpacing: '0.18em',
+                color: '#8A8A8A',
+                letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                color: '#E06B78',
                 display: 'block',
                 marginBottom: '12px',
               }}
             >
-              Avance exclusivo de lectura
+              Argumento oficial
             </span>
             <h2
-              className="cinzel-decorative"
+              className="serif-delicate"
               style={{
-                fontSize: 'clamp(2rem, 4vw, 2.8rem)',
+                fontSize: 'clamp(2.4rem, 4vw, 3.4rem)',
                 fontWeight: 500,
-                color: '#FBFBF9',
-                marginBottom: '18px',
+                lineHeight: 1.2,
+                color: '#FFFFFF',
               }}
             >
-              Capítulo 1: El eco del silencio
+              Sinopsis de la obra
             </h2>
-            <div style={{ width: '40px', height: '1px', backgroundColor: '#8C2D38', margin: '0 auto' }} />
           </div>
 
           <div
-            className="montserrat-body"
+            className="glass-noir-card"
             style={{
-              color: '#C5C5C5',
-              fontSize: '1.08rem',
-              lineHeight: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '24px',
+              padding: '52px 48px',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
             }}
           >
-            <p>
-              La niebla sobre el Sena no era más que un velo de gasa que ocultaba las vergüenzas de la noche parisina. En el interior del Gran Salón, el aroma a cera derretida y jazmín silvestre se mezclaba con el murmullo de conversaciones ahogadas por la música de cámara. Giselle acarició las teclas de marfil del piano de cola como quien toca la herida viva de un pasado que se niega a cicatrizar. Cada nota era una confesión que ninguno de los presentes se atrevía a descifrar, un réquiem silencioso para los sueños que habían ardido antes del amanecer.
+            {/* Texto Real Oficial Íntegro */}
+            <p
+              className="montserrat-body"
+              style={{
+                fontSize: '1.14rem',
+                lineHeight: 2.15,
+                color: '#D8D8D8',
+                textAlign: 'justify',
+                marginBottom: '32px',
+                fontWeight: 300,
+              }}
+            >
+              Hay mujeres que nacen dispuestas a aceptar el mundo que les tocó vivir. Giselle no es una de ellas. En una época marcada por las apariencias, las convenciones familiares y aquello que se esperaba de una mujer, Giselle intenta construir su vida bajo sus propias reglas. Amores, decisiones, deseos, pérdidas y contradicciones irán trazando un camino en el que cada elección tendrá consecuencias. A su alrededor, otras historias también avanzan: familias que se forman, relaciones que se transforman y personajes que aman, juzgan, perdonan o abandonan. Giselle es una novela sobre la libertad, el amor, la dependencia y las decisiones que pueden acompañarnos durante toda una vida. Pero, sobre todo, es la historia de una mujer que quiso vivir sin pedir permiso.
             </p>
-            <p>
-              Él la observaba desde la penumbra de las cortinas de terciopelo, con esa mirada que desnudaba los secretos mejor guardados de su partitura. No hacían falta palabras entre dos fugitivos del destino; la partitura ya estaba escrita con sangre, tinta y una promesa que ninguno de los dos podría cumplir cuando el invierno terminara de helar las aguas del invierno.
+
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '36px 0 20px',
+              }}
+            >
+              <div
+                style={{
+                  height: '1px',
+                  width: '80px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                }}
+              />
+              <span style={{ margin: '0 16px', color: '#888888', fontSize: '0.9rem' }}>✦</span>
+              <div
+                style={{
+                  height: '1px',
+                  width: '80px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                }}
+              />
+            </div>
+
+            <p
+              className="serif-delicate"
+              style={{
+                textAlign: 'center',
+                fontSize: '1.35rem',
+                fontStyle: 'italic',
+                color: '#FFFFFF',
+                margin: 0,
+              }}
+            >
+              &ldquo;Quiso vivir sin pedir permiso.&rdquo;
             </p>
           </div>
 
-          <div style={{ textAlign: 'center', marginTop: '48px', paddingTop: '32px', borderTop: '1px solid rgba(255, 255, 255, 0.06)' }}>
-            <p style={{ color: '#8C827A', fontSize: '0.9rem', marginBottom: '20px', fontStyle: 'italic' }}>
-              ¿Deseas sumergirte en la historia completa de Giselle?
-            </p>
-            <a
-              href="https://amazon.com"
-              target="_blank"
-              rel="noopener noreferrer"
+          {/* Ejes Temáticos de Giselle */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+              gap: '24px',
+              marginTop: '48px',
+            }}
+          >
+            <div
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '12px 28px',
-                backgroundColor: '#8C2D38',
-                color: '#FBFBF9',
-                borderRadius: '6px',
-                fontSize: '0.9rem',
-                fontWeight: 500,
+                padding: '24px',
+                borderRadius: '8px',
+                background: 'rgba(255, 255, 255, 0.02)',
+                border: '1px solid rgba(255, 255, 255, 0.06)',
               }}
             >
-              Obtener ejemplar en Amazon
-            </a>
+              <p className="cinzel-heading" style={{ fontSize: '0.88rem', color: '#FFFFFF', marginBottom: '8px' }}>
+                La libertad
+              </p>
+              <p className="montserrat-body" style={{ fontSize: '0.84rem', color: '#999999', lineHeight: 1.7, margin: 0 }}>
+                La resistencia frente a los mandatos impuestos y la valentía de construir un destino propio.
+              </p>
+            </div>
+
+            <div
+              style={{
+                padding: '24px',
+                borderRadius: '8px',
+                background: 'rgba(255, 255, 255, 0.02)',
+                border: '1px solid rgba(255, 255, 255, 0.06)',
+              }}
+            >
+              <p className="cinzel-heading" style={{ fontSize: '0.88rem', color: '#FFFFFF', marginBottom: '8px' }}>
+                Amor y dependencia
+              </p>
+              <p className="montserrat-body" style={{ fontSize: '0.84rem', color: '#999999', lineHeight: 1.7, margin: 0 }}>
+                Las complejidades afectivas donde la devoción y la necesidad de autonomía entran en pugna.
+              </p>
+            </div>
+
+            <div
+              style={{
+                padding: '24px',
+                borderRadius: '8px',
+                background: 'rgba(255, 255, 255, 0.02)',
+                border: '1px solid rgba(255, 255, 255, 0.06)',
+              }}
+            >
+              <p className="cinzel-heading" style={{ fontSize: '0.88rem', color: '#FFFFFF', marginBottom: '8px' }}>
+                Elecciones de vida
+              </p>
+              <p className="montserrat-body" style={{ fontSize: '0.84rem', color: '#999999', lineHeight: 1.7, margin: 0 }}>
+                Decisiones individuales que arrastran consecuencias irrevocables para una vida entera.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 4. SECCIÓN: CRÍTICAS Y RESEÑAS (SOCIAL PROOF EN CRISTAL OSCURO) */}
+      {/* 4. SECCIÓN DE AVANCES EXCLUSIVOS & CLUB DE LECTURA */}
       <section
+        id="avances"
         style={{
-          maxWidth: '1200px',
-          margin: '0 auto 130px',
-          padding: '0 24px',
+          padding: '120px 24px',
+          maxWidth: '1000px',
+          margin: '0 auto',
           width: '100%',
         }}
       >
-        <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '60px' }}>
           <span
+            className="cinzel-heading"
             style={{
               fontSize: '0.78rem',
-              letterSpacing: '0.18em',
+              color: '#8A8A8A',
+              letterSpacing: '0.08em',
               textTransform: 'uppercase',
-              color: '#E06B78',
               display: 'block',
-              marginBottom: '10px',
+              marginBottom: '12px',
             }}
           >
-            Recepción crítica
+            Comunidad literaria
           </span>
           <h2
             className="serif-delicate"
             style={{
-              fontSize: 'clamp(2.2rem, 3.8vw, 2.9rem)',
-              color: '#FBFBF9',
+              fontSize: 'clamp(2.4rem, 4vw, 3.4rem)',
               fontWeight: 500,
+              lineHeight: 1.2,
+              color: '#FFFFFF',
             }}
           >
-            Palabras de la crítica y lectores
+            Avances y club de lectura
           </h2>
         </div>
 
+        {/* Tarjeta de Cristal Oscuro con Desenfoque (Glassmorphism Dark) */}
         <div
+          id="club-lectura"
+          className="glass-noir-card"
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '32px',
+            padding: '54px 44px',
+            border: '1px solid rgba(255, 255, 255, 0.12)',
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          {/* Crítica 1 */}
           <div
             style={{
-              backgroundColor: 'rgba(20, 20, 19, 0.7)',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              padding: '36px 32px',
-              borderRadius: '14px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              boxShadow: '0 15px 35px -10px rgba(0, 0, 0, 0.6)',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '40px',
+              alignItems: 'center',
             }}
           >
-            <p
-              className="serif-delicate"
-              style={{
-                fontSize: '1.2rem',
-                fontStyle: 'italic',
-                lineHeight: 1.7,
-                color: '#FBFBF9',
-                marginBottom: '24px',
-              }}
-            >
-              “Una obra desgarradora y elegante que se lee como poesía en movimiento. Carmen Ibáñez reinventa la tragedia romántica con un pulso magnético.”
-            </p>
             <div>
-              <p style={{ color: '#E06B78', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.06em' }}>
-                Crítica Literaria & Cuadernos de Ficción
+              <span
+                style={{
+                  fontSize: '0.72rem',
+                  color: '#A0A0A0',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  display: 'block',
+                  marginBottom: '12px',
+                }}
+              >
+                Acceso prioritario
+              </span>
+              <h3
+                className="cinzel-heading"
+                style={{
+                  fontSize: '1.6rem',
+                  fontWeight: 600,
+                  color: '#FFFFFF',
+                  marginBottom: '14px',
+                  lineHeight: 1.3,
+                }}
+              >
+                Club de lectura de Giselle
+              </h3>
+              <p
+                className="montserrat-body"
+                style={{
+                  fontSize: '0.94rem',
+                  color: '#B0B0B0',
+                  lineHeight: 1.8,
+                  marginBottom: '20px',
+                }}
+              >
+                Inscríbete para recibir los fragmentos de apertura antes de la salida comercial, acceder a notas exclusivas del manuscrito de Carmen Ibáñez y formar parte del conversatorio digital de lanzamiento.
               </p>
-              <span style={{ color: '#7E776F', fontSize: '0.75rem' }}>Reseña destacada</span>
+              <ul
+                style={{
+                  listStyle: 'none',
+                  padding: 0,
+                  margin: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px',
+                }}
+              >
+                <li className="montserrat-body" style={{ fontSize: '0.84rem', color: '#D4D4D4', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span>✓</span> Lectura anticipada de los primeros capítulos
+                </li>
+                <li className="montserrat-body" style={{ fontSize: '0.84rem', color: '#D4D4D4', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span>✓</span> Invitaciones a encuentros privados con la autora
+                </li>
+                <li className="montserrat-body" style={{ fontSize: '0.84rem', color: '#D4D4D4', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span>✓</span> Notificación de preventa numerada y firmada
+                </li>
+              </ul>
             </div>
-          </div>
 
-          {/* Crítica 2 */}
-          <div
-            style={{
-              backgroundColor: 'rgba(20, 20, 19, 0.7)',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              padding: '36px 32px',
-              borderRadius: '14px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              boxShadow: '0 15px 35px -10px rgba(0, 0, 0, 0.6)',
-            }}
-          >
-            <p
-              className="serif-delicate"
+            {/* Formulario de Suscripción al Club */}
+            <form
+              action="#"
+              method="POST"
               style={{
-                fontSize: '1.2rem',
-                fontStyle: 'italic',
-                lineHeight: 1.7,
-                color: '#FBFBF9',
-                marginBottom: '24px',
+                backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                padding: '36px 30px',
+                borderRadius: '12px',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '18px',
               }}
             >
-              “Carmen Ibáñez logra un pulso narrativo donde cada acorde musical es una sentencia emocional. Imposible soltar el libro hasta su última página.”
-            </p>
-            <div>
-              <p style={{ color: '#E06B78', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.06em' }}>
-                Revista Letras del Sur
-              </p>
-              <span style={{ color: '#7E776F', fontSize: '0.75rem' }}>Publicación Cultural</span>
-            </div>
-          </div>
+              <div>
+                <label
+                  htmlFor="club-nombre"
+                  className="montserrat-body"
+                  style={{ fontSize: '0.82rem', color: '#D4D4D4', display: 'block', marginBottom: '8px' }}
+                >
+                  Nombre completo
+                </label>
+                <input
+                  type="text"
+                  id="club-nombre"
+                  name="nombre"
+                  required
+                  placeholder="Tu nombre"
+                  style={{
+                    width: '100%',
+                    padding: '12px 14px',
+                    borderRadius: '6px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.18)',
+                    color: '#FFFFFF',
+                    fontSize: '0.9rem',
+                    outline: 'none',
+                    fontFamily: 'inherit',
+                  }}
+                />
+              </div>
 
-          {/* Crítica 3 */}
-          <div
-            style={{
-              backgroundColor: 'rgba(20, 20, 19, 0.7)',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              padding: '36px 32px',
-              borderRadius: '14px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              boxShadow: '0 15px 35px -10px rgba(0, 0, 0, 0.6)',
-            }}
-          >
-            <p
-              className="serif-delicate"
-              style={{
-                fontSize: '1.2rem',
-                fontStyle: 'italic',
-                lineHeight: 1.7,
-                color: '#FBFBF9',
-                marginBottom: '24px',
-              }}
-            >
-              “La atmósfera decadente y la fragilidad de Giselle te atrapan desde la primera línea hasta su trágico e inolvidable desenlace.”
-            </p>
-            <div>
-              <p style={{ color: '#E06B78', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.06em' }}>
-                Círculo de Lectores Beta
+              <div>
+                <label
+                  htmlFor="club-correo"
+                  className="montserrat-body"
+                  style={{ fontSize: '0.82rem', color: '#D4D4D4', display: 'block', marginBottom: '8px' }}
+                >
+                  Correo electrónico
+                </label>
+                <input
+                  type="email"
+                  id="club-correo"
+                  name="correo"
+                  required
+                  placeholder="tucorreo@ejemplo.com"
+                  style={{
+                    width: '100%',
+                    padding: '12px 14px',
+                    borderRadius: '6px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.18)',
+                    color: '#FFFFFF',
+                    fontSize: '0.9rem',
+                    outline: 'none',
+                    fontFamily: 'inherit',
+                  }}
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="btn-ivory"
+                style={{
+                  padding: '13px',
+                  fontSize: '0.9rem',
+                  marginTop: '6px',
+                  width: '100%',
+                }}
+              >
+                Unirme al club de lectura →
+              </button>
+
+              <p
+                className="montserrat-body"
+                style={{
+                  fontSize: '0.74rem',
+                  color: '#737373',
+                  textAlign: 'center',
+                  margin: 0,
+                }}
+              >
+                Respetamos tu privacidad. Solo comunicaciones literarias exclusivas.
               </p>
-              <span style={{ color: '#7E776F', fontSize: '0.75rem' }}>Comunidad Exclusiva</span>
-            </div>
+            </form>
           </div>
         </div>
       </section>
 
-      {/* 5. FOOTER CINEMATOGRÁFICO */}
+      {/* 5. FOOTER DEL SUBDOMINIO */}
       <footer
         style={{
+          marginTop: 'auto',
+          backgroundColor: '#050505',
+          color: '#8A8A8A',
+          padding: '60px 24px 36px',
           borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-          padding: '40px 24px',
-          textAlign: 'center',
-          backgroundColor: '#090908',
-          color: '#7E776F',
         }}
       >
-        <p
-          className="cinzel-decorative"
-          style={{ fontSize: '1.3rem', color: '#FBFBF9', marginBottom: '8px' }}
+        <div
+          style={{
+            maxWidth: '1240px',
+            margin: '0 auto',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
+          }}
         >
-          {book.title}
-        </p>
-        <p className="montserrat-body" style={{ fontSize: '0.82rem' }}>
-          © {new Date().getFullYear()} Carmen Ibáñez — Todos los derechos reservados. Micro-sitio oficial alojado bajo Wildcard DNS.
-        </p>
+          <span
+            className="cinzel-decorative"
+            style={{
+              fontSize: '1.4rem',
+              fontWeight: 700,
+              letterSpacing: '0.06em',
+              color: '#FFFFFF',
+              marginBottom: '8px',
+            }}
+          >
+            {book.title}
+          </span>
+
+          <p
+            className="serif-delicate"
+            style={{
+              fontSize: '1rem',
+              fontStyle: 'italic',
+              color: '#A8A8A8',
+              marginBottom: '28px',
+            }}
+          >
+            Una novela de Carmen Ibáñez
+          </p>
+
+          <div style={{ marginBottom: '32px' }}>
+            <Link
+              href="/"
+              className="montserrat-body"
+              style={{
+                fontSize: '0.86rem',
+                color: '#D4D4D4',
+                textDecoration: 'underline',
+                textUnderlineOffset: '4px',
+              }}
+            >
+              ← Regresar al sitio principal de la autora (carmenibanez.cl)
+            </Link>
+          </div>
+
+          <div
+            style={{
+              width: '100%',
+              maxWidth: '400px',
+              height: '1px',
+              backgroundColor: 'rgba(255, 255, 255, 0.08)',
+              marginBottom: '24px',
+            }}
+          />
+
+          <p
+            className="montserrat-body"
+            style={{
+              fontSize: '0.76rem',
+              color: '#666666',
+              margin: 0,
+            }}
+          >
+            © 2026 Carmen Ibáñez. Micro-sitio literario de Giselle. Todos los derechos reservados.
+          </p>
+        </div>
       </footer>
     </div>
   );

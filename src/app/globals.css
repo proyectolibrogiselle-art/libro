@@ -216,3 +216,143 @@ a {
 
 .stone-engraving::before { left: 18px; }
 .stone-engraving::after { right: 18px; }
+
+/* Paleta Blanco y Negro Premium (Carmen Ibáñez & Giselle) */
+.btn-noir {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 32px;
+  background: #121212;
+  color: #FFFFFF !important;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-sm);
+  border: 1px solid #121212;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.btn-noir:hover {
+  background: #262626;
+  border-color: #262626;
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.btn-noir-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 30px;
+  background: transparent;
+  color: #121212 !important;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(18, 18, 18, 0.35);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.btn-noir-outline:hover {
+  background: #121212;
+  color: #FFFFFF !important;
+  border-color: #121212;
+  transform: translateY(-2px);
+}
+
+.btn-ivory {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 32px;
+  background: #EAEAEA;
+  color: #0A0A0A !important;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-sm);
+  border: 1px solid #EAEAEA;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.btn-ivory:hover {
+  background: #FFFFFF;
+  border-color: #FFFFFF;
+  color: #000000 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(255, 255, 255, 0.16);
+}
+
+.btn-dark-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 30px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #EAEAEA !important;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.btn-dark-outline:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
+}
+
+.glass-noir-card {
+  background: rgba(14, 14, 14, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius-md);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-noir-card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.glass-ivory-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(18, 18, 18, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  border-radius: var(--radius-md);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-ivory-card:hover {
+  border-color: rgba(18, 18, 18, 0.18);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
