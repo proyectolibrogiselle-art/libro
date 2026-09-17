@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { BooksService } from '@/lib/supabase/books.service';
 import { Book } from '@/types/book';
 
@@ -28,7 +29,6 @@ export default async function HomePage() {
   ];
 
   const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'carmenibanez.cl';
-  const isDev = process.env.NODE_ENV !== 'production';
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
@@ -144,9 +144,8 @@ export default async function HomePage() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '40px' }}>
           {displayBooks.map((book) => {
-            const subdomainUrl = isDev
-              ? `/subdomains/${book.slug}`
-              : `https://${book.slug}.${rootDomain}`;
+            // Modo de simulación local relativa para navegación directa de pruebas en Vercel
+            const simulationUrl = `/subdomains/${book.slug || 'giselle'}`;
 
             return (
               <article key={book.id} className="book-card-luxury">
@@ -200,9 +199,13 @@ export default async function HomePage() {
                     {book.synopsis}
                   </p>
 
-                  <a href={subdomainUrl} className="btn-terracotta-gold" style={{ width: '100%', textAlign: 'center' }}>
+                  <Link
+                    href={simulationUrl}
+                    className="btn-terracotta-gold"
+                    style={{ width: '100%', textAlign: 'center' }}
+                  >
                     Ingresar a la obra →
-                  </a>
+                  </Link>
                 </div>
               </article>
             );
