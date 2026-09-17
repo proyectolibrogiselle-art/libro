@@ -259,11 +259,27 @@ export default async function BookSubdomainPage({ params }: SubdomainPageProps) 
                 fontWeight: 700,
                 lineHeight: 1.08,
                 letterSpacing: '0.04em',
-                color: '#FFFFFF',
                 marginBottom: '16px',
+                display: 'inline-block',
               }}
             >
-              {book.title}
+              {book.title.split('').map((char, index) => {
+                // Retrasos aleatorios orgánicos (G-I-S-E-L-L-E) para el encendido realista de faroles de gas de época
+                const delays = [0.12, 0.65, 0.28, 0.88, 0.42, 0.74, 0.35, 0.52, 0.94];
+                const delay = delays[index % delays.length];
+
+                return (
+                  <span
+                    key={index}
+                    className="streetlamp-letter"
+                    style={{
+                      animationDelay: `${delay}s`,
+                    }}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </span>
+                );
+              })}
             </h1>
 
             <p

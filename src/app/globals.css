@@ -356,3 +356,115 @@ a {
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
 }
 
+/* ==============================================================================
+   EFECTO FAROL DE ANTAÑO (GAS STREETLAMP WARM FLICKER) - TÍTULO GISELLE
+   ============================================================================== */
+@keyframes streetlampFlicker {
+  0% {
+    opacity: 0.16;
+    color: #241D12;
+    text-shadow: none;
+    filter: drop-shadow(0 0 0px transparent);
+  }
+  6% {
+    opacity: 0.2;
+    color: #352B1B;
+    text-shadow: none;
+  }
+  11% {
+    opacity: 0.95;
+    color: #FFE194;
+    text-shadow:
+      0 0 10px rgba(226, 179, 82, 0.9),
+      0 0 20px rgba(226, 179, 82, 0.7),
+      0 0 35px rgba(226, 179, 82, 0.4);
+    filter: drop-shadow(0 0 15px rgba(226, 179, 82, 0.6));
+  }
+  16% {
+    opacity: 0.22;
+    color: #352B1B;
+    text-shadow: none;
+    filter: drop-shadow(0 0 0px transparent);
+  }
+  22% {
+    opacity: 0.88;
+    color: #E2B352;
+    text-shadow:
+      0 0 8px rgba(226, 179, 82, 0.8),
+      0 0 18px rgba(226, 179, 82, 0.5);
+    filter: drop-shadow(0 0 15px rgba(226, 179, 82, 0.6));
+  }
+  28% {
+    opacity: 0.18;
+    color: #241D12;
+    text-shadow: none;
+    filter: drop-shadow(0 0 0px transparent);
+  }
+  38% {
+    opacity: 0.3;
+    color: #4A3A22;
+    text-shadow: none;
+  }
+  44% {
+    opacity: 1;
+    color: #FFF2CE;
+    text-shadow:
+      0 0 14px rgba(226, 179, 82, 1),
+      0 0 28px rgba(226, 179, 82, 0.85),
+      0 0 45px rgba(226, 179, 82, 0.5);
+    filter: drop-shadow(0 0 15px rgba(226, 179, 82, 0.6));
+  }
+  52% {
+    opacity: 0.52;
+    color: #E2B352;
+    text-shadow: 0 0 8px rgba(226, 179, 82, 0.4);
+    filter: drop-shadow(0 0 6px rgba(226, 179, 82, 0.3));
+  }
+  60% {
+    opacity: 0.96;
+    color: #FFF6DE;
+    text-shadow:
+      0 0 14px rgba(226, 179, 82, 0.9),
+      0 0 30px rgba(226, 179, 82, 0.6);
+    filter: drop-shadow(0 0 15px rgba(226, 179, 82, 0.6));
+  }
+  68% {
+    opacity: 0.78;
+    color: #E2B352;
+    text-shadow: 0 0 10px rgba(226, 179, 82, 0.5);
+    filter: drop-shadow(0 0 10px rgba(226, 179, 82, 0.4));
+  }
+  78% {
+    opacity: 0.98;
+    color: #FFF8E7;
+    text-shadow:
+      0 0 12px rgba(226, 179, 82, 0.85),
+      0 0 25px rgba(226, 179, 82, 0.5);
+    filter: drop-shadow(0 0 15px rgba(226, 179, 82, 0.6));
+  }
+  88% {
+    opacity: 0.94;
+    color: #FBFBF9;
+    text-shadow:
+      0 0 10px rgba(226, 179, 82, 0.7),
+      0 0 20px rgba(226, 179, 82, 0.4);
+    filter: drop-shadow(0 0 15px rgba(226, 179, 82, 0.6));
+  }
+  100% {
+    opacity: 1;
+    color: #FBFBF9;
+    text-shadow:
+      0 0 12px rgba(226, 179, 82, 0.65),
+      0 0 24px rgba(226, 179, 82, 0.35),
+      0 0 45px rgba(226, 179, 82, 0.18);
+    filter: drop-shadow(0 0 15px rgba(226, 179, 82, 0.6));
+  }
+}
+
+.streetlamp-letter {
+  display: inline-block;
+  animation: streetlampFlicker 2s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+  will-change: opacity, color, filter, text-shadow;
+}
+
+
