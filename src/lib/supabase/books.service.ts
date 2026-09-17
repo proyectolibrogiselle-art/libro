@@ -1,6 +1,6 @@
 import { supabasePublicClient } from './client';
 import { getSupabaseAdminClient } from './admin';
-import { Book } from '@/types/book';
+import { Book, BookStatus } from '@/types/book';
 import { createBookSchema, updateBookSchema, CreateBookInput, UpdateBookInput } from '@/schemas/book.schema';
 
 /**
@@ -61,7 +61,7 @@ export class BooksService {
         title: validatedData.title,
         slug: validatedData.slug,
         synopsis: validatedData.synopsis,
-        status: validatedData.status,
+        status: validatedData.status as BookStatus,
         cover_url: validatedData.cover_url || null,
       })
       .select('*')
@@ -81,10 +81,15 @@ export class BooksService {
     const validatedData = updateBookSchema.parse(input);
     const { id, ...updateFields } = validatedData;
 
+    const updatePayload: Record<string, any> = { ...updateFields };
+    if (updateFields.status) {
+      updatePayload.status = updateFields.status as BookStatus;
+    }
+
     const adminClient = getSupabaseAdminClient();
     const { data, error } = await adminClient
       .from('books')
-      .update(updateFields)
+      .update(updatePayload)
       .eq('id', id)
       .select('*')
       .single();

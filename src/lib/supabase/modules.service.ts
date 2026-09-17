@@ -1,6 +1,6 @@
 import { supabasePublicClient } from './client';
 import { getSupabaseAdminClient } from './admin';
-import { Author, News, EventItem, GalleryItem, BookClub } from '@/types/entities';
+import { Author, News, EventItem, GalleryItem, BookClub, GaleriaCategory, ClubLecturaStatus } from '@/types/entities';
 import {
   authorSchema,
   AuthorInput,
@@ -159,7 +159,12 @@ export class GalleryService {
 
     const { data, error } = await admin
       .from('galeria')
-      .insert(validated)
+      .insert({
+        title: validated.title,
+        description: validated.description || null,
+        image_url: validated.image_url,
+        category: validated.category as GaleriaCategory,
+      })
       .select('*')
       .single();
 
@@ -188,7 +193,9 @@ export class BookClubService {
     const admin = getSupabaseAdminClient();
 
     const payload = {
-      ...validated,
+      name: validated.name,
+      description: validated.description,
+      status: (validated.status || 'active') as ClubLecturaStatus,
       book_id: validated.book_id || null,
       external_link: validated.external_link || null,
     };
