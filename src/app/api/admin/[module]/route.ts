@@ -9,6 +9,8 @@ import {
   BookClubService,
 } from '@/lib/supabase/modules.service';
 
+export type ValidTableName = 'books' | 'autores' | 'noticias' | 'eventos' | 'galeria' | 'club_lectura';
+
 interface RouteProps {
   params: Promise<{
     module: string;
@@ -114,7 +116,7 @@ export async function DELETE(req: NextRequest, { params }: RouteProps) {
 
   try {
     const admin = getSupabaseAdminClient();
-    const tableMap: Record<string, string> = {
+    const tableMap: Record<string, ValidTableName> = {
       books: 'books',
       autores: 'autores',
       noticias: 'noticias',
@@ -128,7 +130,8 @@ export async function DELETE(req: NextRequest, { params }: RouteProps) {
       return NextResponse.json({ success: false, error: 'Módulo no válido' }, { status: 404 });
     }
 
-    const { error } = await admin.from(tableName).delete().eq('id', id);
+    const validTable: ValidTableName = tableName;
+    const { error } = await admin.from(validTable).delete().eq('id', id);
     if (error) throw new Error(error.message);
 
     return NextResponse.json({ success: true, message: 'Registro eliminado' });
