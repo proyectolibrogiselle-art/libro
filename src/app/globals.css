@@ -1,12 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
 
 :root {
   /* Familias Tipográficas de Lujo */
-  --font-cinzel-dec: 'Cinzel Decorative', 'Cinzel', serif;
-  --font-cinzel: 'Cinzel', Georgia, serif;
+  --font-cinzel-dec: 'Cinzel Decorative', 'Cormorant Garamond', serif;
+  --font-cinzel: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
+  --font-serif: 'Cormorant Garamond', 'Cinzel', Georgia, serif;
   --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /* Paleta 'Quantum / Imperio' */
+  /* Paleta Suave Marfil y Carbón */
   --bg-primary: #FBFBF9;
   --bg-secondary: #F5F2EC;
   --text-primary: #1A1A1A;
@@ -18,14 +19,14 @@
   --accent-terracotta-light: rgba(194, 141, 117, 0.12);
   --accent-terracotta-border: rgba(194, 141, 117, 0.28);
 
-  /* Glassmorphism de Alta Joyería sobre Marfil */
-  --glass-bg: rgba(255, 255, 255, 0.72);
-  --glass-card: rgba(255, 255, 255, 0.82);
+  /* Glassmorphism Suave */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-card: rgba(255, 255, 255, 0.85);
   --glass-border: rgba(255, 255, 255, 0.95);
-  --glass-border-gold: rgba(194, 141, 117, 0.22);
+  --glass-border-gold: rgba(194, 141, 117, 0.2);
 
-  --shadow-subtle: 0 10px 30px -10px rgba(194, 141, 117, 0.14), 0 4px 12px -4px rgba(26, 26, 26, 0.04);
-  --shadow-hover: 0 30px 60px -15px rgba(194, 141, 117, 0.26), 0 12px 24px -6px rgba(26, 26, 26, 0.08);
+  --shadow-subtle: 0 10px 30px -10px rgba(194, 141, 117, 0.12), 0 4px 12px -4px rgba(26, 26, 26, 0.04);
+  --shadow-hover: 0 25px 50px -12px rgba(194, 141, 117, 0.2), 0 10px 20px -6px rgba(26, 26, 26, 0.06);
 
   --radius-sm: 6px;
   --radius-md: 14px;
@@ -47,30 +48,37 @@ body {
   color: var(--text-primary);
   font-family: var(--font-body);
   font-weight: 300;
-  line-height: 1.8;
+  line-height: 1.85;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   background-image: 
-    radial-gradient(circle at 10% 8%, rgba(194, 141, 117, 0.07) 0%, transparent 45%),
-    radial-gradient(circle at 90% 92%, rgba(194, 141, 117, 0.06) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(245, 242, 236, 0.45) 0%, transparent 100%);
+    radial-gradient(circle at 10% 8%, rgba(194, 141, 117, 0.06) 0%, transparent 45%),
+    radial-gradient(circle at 90% 92%, rgba(194, 141, 117, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(245, 242, 236, 0.4) 0%, transparent 100%);
   background-attachment: fixed;
 }
 
-/* Tipografía de Lujo */
+/* Tipografía de Lujo sin Saturación (Tipo Oración) */
 .cinzel-decorative {
   font-family: var(--font-cinzel-dec);
+  letter-spacing: 0.03em;
 }
 
 .cinzel-heading {
   font-family: var(--font-cinzel);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.serif-delicate {
+  font-family: var(--font-serif);
+  letter-spacing: 0.02em;
 }
 
 .montserrat-body {
   font-family: var(--font-body);
   font-weight: 300;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
 }
 
 h1, h2, h3, h4 {
@@ -108,16 +116,16 @@ a {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
 }
 
 .book-card-luxury:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   box-shadow: var(--shadow-hover);
   border-color: var(--accent-terracotta);
 }
 
-/* Insignias de Joyería */
+/* Insignias Literarias Delicadas */
 .luxury-badge {
   display: inline-flex;
   align-items: center;
@@ -125,60 +133,57 @@ a {
   padding: 5px 18px;
   border-radius: 9999px;
   font-family: var(--font-cinzel);
-  font-size: 0.72rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  font-weight: 500;
   background: var(--accent-terracotta-light);
   color: var(--accent-terracotta);
   border: 1px solid var(--accent-terracotta-border);
 }
 
-/* Botones Alta Costura */
+/* Botones de Relojería y Edición Fina */
 .btn-terracotta-gold {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 14px 34px;
+  gap: 10px;
+  padding: 13px 30px;
   background: var(--accent-terracotta);
   color: #FFFFFF;
-  font-family: var(--font-cinzel);
-  font-weight: 600;
-  font-size: 0.88rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
   border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
-  box-shadow: 0 10px 25px -5px rgba(194, 141, 117, 0.4);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 20px -4px rgba(194, 141, 117, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-terracotta-gold:hover {
   background: var(--accent-terracotta-hover);
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px -5px rgba(194, 141, 117, 0.5);
+  box-shadow: 0 12px 25px -4px rgba(194, 141, 117, 0.45);
 }
 
 .btn-outline-luxury {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 13px 32px;
+  gap: 10px;
+  padding: 12px 28px;
   background: rgba(255, 255, 255, 0.6);
   color: var(--text-primary);
-  font-family: var(--font-cinzel);
-  font-weight: 600;
-  font-size: 0.88rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
   border-radius: var(--radius-sm);
   border: 1px solid var(--accent-terracotta-border);
   cursor: pointer;
   backdrop-filter: blur(10px);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-outline-luxury:hover {
@@ -188,14 +193,14 @@ a {
   transform: translateY(-2px);
 }
 
-/* Grabado en Piedra Poético */
+/* Grabado en Piedra Poético Delicado */
 .stone-engraving {
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(14px);
-  border: 1px solid rgba(194, 141, 117, 0.25);
-  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.8), 0 12px 30px -10px rgba(194, 141, 117, 0.15);
+  border: 1px solid rgba(194, 141, 117, 0.22);
+  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.8), 0 10px 25px -8px rgba(194, 141, 117, 0.12);
   border-radius: var(--radius-md);
-  padding: 36px 40px;
+  padding: 34px 44px;
   position: relative;
 }
 
@@ -203,11 +208,11 @@ a {
 .stone-engraving::after {
   content: '✦';
   color: var(--accent-terracotta);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
 }
 
-.stone-engraving::before { left: 16px; }
-.stone-engraving::after { right: 16px; }
+.stone-engraving::before { left: 18px; }
+.stone-engraving::after { right: 18px; }
