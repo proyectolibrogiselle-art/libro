@@ -1,33 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
 
 :root {
-  --font-serif: 'Cormorant Garamond', Garamond, Georgia, serif;
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Familias Tipográficas de Lujo */
+  --font-cinzel-dec: 'Cinzel Decorative', 'Cinzel', serif;
+  --font-cinzel: 'Cinzel', Georgia, serif;
+  --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /* Paleta Romántico / Poético / Drama */
+  /* Paleta 'Quantum / Imperio' */
   --bg-primary: #FBFBF9;
-  --bg-secondary: #F4F1EC;
+  --bg-secondary: #F5F2EC;
   --text-primary: #1A1A1A;
-  --text-secondary: #5C554E;
-  --text-muted: #8C827A;
+  --text-secondary: #4A4641;
+  --text-muted: #7E776F;
 
-  --accent-rose: #C28D75;
-  --accent-rose-hover: #A8755F;
-  --accent-rose-light: rgba(194, 141, 117, 0.12);
-  --accent-rose-border: rgba(194, 141, 117, 0.25);
+  --accent-terracotta: #C28D75;
+  --accent-terracotta-hover: #A6725B;
+  --accent-terracotta-light: rgba(194, 141, 117, 0.12);
+  --accent-terracotta-border: rgba(194, 141, 117, 0.28);
 
-  /* Glassmorphism sobre papel marfil */
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-card: rgba(255, 255, 255, 0.78);
+  /* Glassmorphism de Alta Joyería sobre Marfil */
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-card: rgba(255, 255, 255, 0.82);
   --glass-border: rgba(255, 255, 255, 0.95);
-  --glass-border-subtle: rgba(194, 141, 117, 0.16);
+  --glass-border-gold: rgba(194, 141, 117, 0.22);
 
-  --shadow-subtle: 0 10px 30px -10px rgba(194, 141, 117, 0.12), 0 4px 12px -4px rgba(26, 26, 26, 0.04);
-  --shadow-hover: 0 25px 50px -12px rgba(194, 141, 117, 0.22), 0 10px 20px -6px rgba(26, 26, 26, 0.06);
+  --shadow-subtle: 0 10px 30px -10px rgba(194, 141, 117, 0.14), 0 4px 12px -4px rgba(26, 26, 26, 0.04);
+  --shadow-hover: 0 30px 60px -15px rgba(194, 141, 117, 0.26), 0 12px 24px -6px rgba(26, 26, 26, 0.08);
 
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  --radius-sm: 6px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
 }
 
 * {
@@ -43,30 +45,45 @@ html {
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: var(--font-sans);
-  line-height: 1.7;
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.8;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   background-image: 
-    radial-gradient(circle at 15% 10%, rgba(194, 141, 117, 0.06) 0%, transparent 45%),
-    radial-gradient(circle at 85% 90%, rgba(212, 175, 55, 0.04) 0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(244, 241, 236, 0.5) 0%, transparent 100%);
+    radial-gradient(circle at 10% 8%, rgba(194, 141, 117, 0.07) 0%, transparent 45%),
+    radial-gradient(circle at 90% 92%, rgba(194, 141, 117, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(245, 242, 236, 0.45) 0%, transparent 100%);
   background-attachment: fixed;
 }
 
-h1, h2, h3, h4, .serif-font {
-  font-family: var(--font-serif);
-  letter-spacing: 0.02em;
-  font-weight: 500;
+/* Tipografía de Lujo */
+.cinzel-decorative {
+  font-family: var(--font-cinzel-dec);
+}
+
+.cinzel-heading {
+  font-family: var(--font-cinzel);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.montserrat-body {
+  font-family: var(--font-body);
+  font-weight: 300;
+}
+
+h1, h2, h3, h4 {
+  color: var(--text-primary);
 }
 
 a {
   color: inherit;
   text-decoration: none;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Glassmorphic Panel Romántico */
+/* Paneles y Tarjetas */
 .glass-panel {
   background: var(--glass-card);
   backdrop-filter: blur(16px);
@@ -74,15 +91,14 @@ a {
   border: 1px solid var(--glass-border);
   box-shadow: var(--shadow-subtle);
   border-radius: var(--radius-md);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel:hover {
-  border-color: rgba(194, 141, 117, 0.35);
+  border-color: var(--accent-terracotta-border);
 }
 
-/* Tarjetas de Libros Flotantes */
-.book-card-poetic {
+.book-card-luxury {
   background: var(--glass-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -90,78 +106,108 @@ a {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-subtle);
   overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
 }
 
-.book-card-poetic:hover {
-  transform: translateY(-8px) scale(1.015);
+.book-card-luxury:hover {
+  transform: translateY(-8px);
   box-shadow: var(--shadow-hover);
-  border-color: var(--accent-rose);
+  border-color: var(--accent-terracotta);
 }
 
-/* Insignias Literarias */
-.poetic-badge {
+/* Insignias de Joyería */
+.luxury-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 16px;
+  gap: 8px;
+  padding: 5px 18px;
   border-radius: 9999px;
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
+  font-family: var(--font-cinzel);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   font-weight: 600;
-  background: var(--accent-rose-light);
-  color: var(--accent-rose-hover);
-  border: 1px solid var(--accent-rose-border);
+  background: var(--accent-terracotta-light);
+  color: var(--accent-terracotta);
+  border: 1px solid var(--accent-terracotta-border);
 }
 
-/* Botones Editoriales */
-.btn-terracotta {
+/* Botones Alta Costura */
+.btn-terracotta-gold {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 13px 30px;
-  background: var(--accent-rose);
+  gap: 12px;
+  padding: 14px 34px;
+  background: var(--accent-terracotta);
   color: #FFFFFF;
-  font-weight: 500;
-  font-size: 0.95rem;
-  letter-spacing: 0.03em;
+  font-family: var(--font-cinzel);
+  font-weight: 600;
+  font-size: 0.88rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
-  box-shadow: 0 8px 20px -4px rgba(194, 141, 117, 0.35);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 25px -5px rgba(194, 141, 117, 0.4);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.btn-terracotta:hover {
-  background: var(--accent-rose-hover);
+.btn-terracotta-gold:hover {
+  background: var(--accent-terracotta-hover);
   transform: translateY(-2px);
-  box-shadow: 0 12px 25px -4px rgba(194, 141, 117, 0.45);
+  box-shadow: 0 14px 30px -5px rgba(194, 141, 117, 0.5);
 }
 
-.btn-outline-editorial {
+.btn-outline-luxury {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 12px 28px;
-  background: rgba(255, 255, 255, 0.5);
+  gap: 12px;
+  padding: 13px 32px;
+  background: rgba(255, 255, 255, 0.6);
   color: var(--text-primary);
-  font-weight: 500;
-  font-size: 0.95rem;
+  font-family: var(--font-cinzel);
+  font-weight: 600;
+  font-size: 0.88rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--accent-rose-border);
+  border: 1px solid var(--accent-terracotta-border);
   cursor: pointer;
-  backdrop-filter: blur(8px);
-  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.btn-outline-editorial:hover {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: var(--accent-rose);
-  color: var(--accent-rose);
+.btn-outline-luxury:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: var(--accent-terracotta);
+  color: var(--accent-terracotta);
   transform: translateY(-2px);
 }
+
+/* Grabado en Piedra Poético */
+.stone-engraving {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(194, 141, 117, 0.25);
+  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.8), 0 12px 30px -10px rgba(194, 141, 117, 0.15);
+  border-radius: var(--radius-md);
+  padding: 36px 40px;
+  position: relative;
+}
+
+.stone-engraving::before,
+.stone-engraving::after {
+  content: '✦';
+  color: var(--accent-terracotta);
+  font-size: 0.85rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.stone-engraving::before { left: 16px; }
+.stone-engraving::after { right: 16px; }
