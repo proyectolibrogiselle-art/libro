@@ -1,31 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Cormorant Garamond', Garamond, Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /* Color Palette - Editorial & Literary Luxury */
-  --bg-primary: #0d0f14;
-  --bg-secondary: #141721;
-  --bg-card: rgba(26, 31, 44, 0.7);
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-accent: rgba(212, 175, 55, 0.3);
+  /* Paleta Romántico / Poético / Drama */
+  --bg-primary: #FBFBF9;
+  --bg-secondary: #F4F1EC;
+  --text-primary: #1A1A1A;
+  --text-secondary: #5C554E;
+  --text-muted: #8C827A;
 
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --accent-rose: #C28D75;
+  --accent-rose-hover: #A8755F;
+  --accent-rose-light: rgba(194, 141, 117, 0.12);
+  --accent-rose-border: rgba(194, 141, 117, 0.25);
 
-  --accent-gold: #e5b95f;
-  --accent-gold-hover: #f3cf7a;
-  --accent-gold-glow: rgba(229, 185, 95, 0.15);
+  /* Glassmorphism sobre papel marfil */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-card: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.95);
+  --glass-border-subtle: rgba(194, 141, 117, 0.16);
 
-  --status-published: #10b981;
-  --status-writing: #f59e0b;
-  --status-draft: #6b7280;
+  --shadow-subtle: 0 10px 30px -10px rgba(194, 141, 117, 0.12), 0 4px 12px -4px rgba(26, 26, 26, 0.04);
+  --shadow-hover: 0 25px 50px -12px rgba(194, 141, 117, 0.22), 0 10px 20px -6px rgba(26, 26, 26, 0.06);
 
   --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
 }
 
 * {
@@ -34,94 +36,132 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-sans);
-  line-height: 1.6;
+  line-height: 1.7;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   background-image: 
-    radial-gradient(ellipse at 20% 0%, rgba(229, 185, 95, 0.05) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 100%, rgba(99, 102, 241, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 15% 10%, rgba(194, 141, 117, 0.06) 0%, transparent 45%),
+    radial-gradient(circle at 85% 90%, rgba(212, 175, 55, 0.04) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(244, 241, 236, 0.5) 0%, transparent 100%);
   background-attachment: fixed;
 }
 
 h1, h2, h3, h4, .serif-font {
   font-family: var(--font-serif);
   letter-spacing: 0.02em;
+  font-weight: 500;
 }
 
 a {
   color: inherit;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Glassmorphic Container */
+/* Glassmorphic Panel Romántico */
 .glass-panel {
-  background: var(--bg-card);
+  background: var(--glass-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-subtle);
   border-radius: var(--radius-md);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
 }
 
-.gold-badge {
+.glass-panel:hover {
+  border-color: rgba(194, 141, 117, 0.35);
+}
+
+/* Tarjetas de Libros Flotantes */
+.book-card-poetic {
+  background: var(--glass-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-subtle);
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.book-card-poetic:hover {
+  transform: translateY(-8px) scale(1.015);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent-rose);
+}
+
+/* Insignias Literarias */
+.poetic-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 14px;
+  padding: 4px 16px;
   border-radius: 9999px;
   font-size: 0.75rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
   font-weight: 600;
-  background: var(--accent-gold-glow);
-  color: var(--accent-gold);
-  border: 1px solid var(--border-accent);
+  background: var(--accent-rose-light);
+  color: var(--accent-rose-hover);
+  border: 1px solid var(--accent-rose-border);
 }
 
-.btn-gold {
+/* Botones Editoriales */
+.btn-terracotta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 12px 28px;
-  background: linear-gradient(135deg, var(--accent-gold) 0%, #c49635 100%);
-  color: #0d0f14;
-  font-weight: 600;
+  gap: 10px;
+  padding: 13px 30px;
+  background: var(--accent-rose);
+  color: #FFFFFF;
+  font-weight: 500;
   font-size: 0.95rem;
+  letter-spacing: 0.03em;
   border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(229, 185, 95, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 8px 20px -4px rgba(194, 141, 117, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.btn-gold:hover {
+.btn-terracotta:hover {
+  background: var(--accent-rose-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(229, 185, 95, 0.35);
+  box-shadow: 0 12px 25px -4px rgba(194, 141, 117, 0.45);
 }
 
-.btn-secondary {
+.btn-outline-editorial {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   padding: 12px 28px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.5);
   color: var(--text-primary);
   font-weight: 500;
   font-size: 0.95rem;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--accent-rose-border);
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
 }
 
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+.btn-outline-editorial:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--accent-rose);
+  color: var(--accent-rose);
+  transform: translateY(-2px);
 }
