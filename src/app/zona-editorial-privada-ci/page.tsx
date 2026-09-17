@@ -6,9 +6,9 @@ import { FileUploader } from '@/components/FileUploader';
 type ModuleTab = 'books' | 'autores' | 'noticias' | 'eventos' | 'galeria' | 'club_lectura';
 
 export default function AntigravityAdminPanel() {
-  // 1. Estado de Autenticación
+  // 1. Estado de Autenticación con Credenciales Estrictas
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loginEmail, setLoginEmail] = useState('proyectolibrogiselle@gmail.com');
+  const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [loginError, setLoginError] = useState<string | null>(null);
 
@@ -27,19 +27,20 @@ export default function AntigravityAdminPanel() {
   const [galleryForm, setGalleryForm] = useState({ title: '', description: '', image_url: '', category: 'Inspiración' });
   const [clubForm, setClubForm] = useState({ name: '', description: '', status: 'active', external_link: '', book_id: '' });
 
-  // Manejador de Login
+  // Manejador de Login con Credenciales Estrictas para Presentación
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!loginEmail) {
-      setLoginError('Ingresa un correo electrónico');
+    if (!loginEmail || !loginPassword) {
+      setLoginError('Por favor, ingresa el correo y la contraseña.');
       return;
     }
-    // Verificación de credenciales
-    if (loginEmail === 'proyectolibrogiselle@gmail.com' || loginEmail.includes('@')) {
+
+    // Validación estricta de credenciales
+    if (loginEmail.trim() === 'proyectolibrogiselle@gmail.com' && loginPassword.trim() === '20181860') {
       setIsAuthenticated(true);
       setLoginError(null);
     } else {
-      setLoginError('Credenciales no autorizadas para este proyecto.');
+      setLoginError('Credenciales de seguridad incorrectas.');
     }
   };
 
@@ -147,25 +148,40 @@ export default function AntigravityAdminPanel() {
   };
 
   // ============================================================================
-  // VISTA 1: PANTALLA VISUAL DE LOGIN / INICIO DE SESIÓN
+  // VISTA 1: PANTALLA VISUAL DE LOGIN / INICIO DE SESIÓN CON SEGURIDAD REFORZADA
   // ============================================================================
   if (!isAuthenticated) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
         <div className="glass-panel" style={{ maxWidth: '440px', width: '100%', padding: '40px', textAlign: 'center' }}>
           <div className="gold-badge" style={{ marginBottom: '16px' }}>
-            Acceso Autorizado
+            Acceso Privado &middot; Zona Editorial
           </div>
           <h1 style={{ fontSize: '2rem', marginBottom: '8px', fontWeight: 600 }}>
             Carmen Ibáñez CMS
           </h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '28px' }}>
-            Gestión Headless & Supabase Cloud (ID: <code>zflljndvanqcnfcpciqb</code>)
+            Portal Administrativo Headless & Supabase Cloud
           </p>
 
           {loginError && (
-            <div style={{ padding: '10px', backgroundColor: 'rgba(239, 68, 68, 0.15)', border: '1px solid #ef4444', borderRadius: 'var(--radius-sm)', color: '#ef4444', fontSize: '0.85rem', marginBottom: '20px' }}>
-              {loginError}
+            <div
+              style={{
+                padding: '12px 16px',
+                backgroundColor: 'rgba(239, 68, 68, 0.12)',
+                border: '1px solid rgba(239, 68, 68, 0.4)',
+                borderRadius: 'var(--radius-sm)',
+                color: '#ef4444',
+                fontSize: '0.88rem',
+                marginBottom: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+              }}
+            >
+              <span>⚠️</span>
+              <span>{loginError}</span>
             </div>
           )}
 
@@ -175,6 +191,7 @@ export default function AntigravityAdminPanel() {
               <input
                 type="email"
                 required
+                placeholder="proyectolibrogiselle@gmail.com"
                 value={loginEmail}
                 onChange={(e) => setLoginEmail(e.target.value)}
                 style={inputStyle}
@@ -185,6 +202,7 @@ export default function AntigravityAdminPanel() {
               <label style={labelStyle}>Contraseña de Acceso</label>
               <input
                 type="password"
+                required
                 placeholder="••••••••••••"
                 value={loginPassword}
                 onChange={(e) => setLoginPassword(e.target.value)}
@@ -192,8 +210,8 @@ export default function AntigravityAdminPanel() {
               />
             </div>
 
-            <button type="submit" className="btn-gold" style={{ width: '100%', padding: '14px', fontSize: '1rem' }}>
-              Iniciar Sesión en CMS →
+            <button type="submit" className="btn-noir" style={{ width: '100%', padding: '14px', fontSize: '0.95rem' }}>
+              Ingresar al Panel Privado →
             </button>
           </form>
 
@@ -208,7 +226,7 @@ export default function AntigravityAdminPanel() {
   }
 
   // ============================================================================
-  // VISTA 2: PANEL COMPLETO DE GESTIÓN Y VISUALIZACIÓN DE LOS 5+ MÓDULOS
+  // VISTA 2: PANEL COMPLETO DE GESTIÓN Y VISUALIZACIÓN DE LOS 6 MÓDULOS
   // ============================================================================
   return (
     <div style={{ maxWidth: '1200px', margin: '40px auto', padding: '0 24px 80px' }}>
@@ -218,16 +236,16 @@ export default function AntigravityAdminPanel() {
           <div className="gold-badge" style={{ marginBottom: '8px' }}>
             Sesión Activa: {loginEmail}
           </div>
-          <h1 style={{ fontSize: '2.4rem', fontWeight: 600 }}>Panel de Control Headless</h1>
+          <h1 style={{ fontSize: '2.4rem', fontWeight: 600 }}>Zona Editorial Privada</h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-            Infraestructura Cloud: Supabase (<code>zflljndvanqcnfcpciqb</code>) & Wildcard DNS
+            Infraestructura Cloud: Supabase (<code>zflljndvanqcnfcpciqb</code>) &amp; Subdominios
           </p>
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <a href="/" target="_blank" className="btn-secondary" style={{ fontSize: '0.85rem' }}>
+          <a href="/" target="_blank" className="btn-noir-outline" style={{ fontSize: '0.85rem' }}>
             🌐 Ver Web
           </a>
-          <button onClick={() => setIsAuthenticated(false)} className="btn-secondary" style={{ fontSize: '0.85rem', color: '#ef4444' }}>
+          <button onClick={() => setIsAuthenticated(false)} className="btn-noir-outline" style={{ fontSize: '0.85rem', color: '#ef4444' }}>
             Cerrar Sesión
           </button>
         </div>
@@ -250,7 +268,7 @@ export default function AntigravityAdminPanel() {
         </div>
       )}
 
-      {/* Navegación por Tabs */}
+      {/* Navegación por Tabs (Los 6 Módulos) */}
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '32px' }}>
         {tabs.map((tab) => (
           <button
@@ -262,9 +280,9 @@ export default function AntigravityAdminPanel() {
             style={{
               padding: '10px 18px',
               borderRadius: 'var(--radius-sm)',
-              border: activeTab === tab.id ? '1px solid var(--accent-gold)' : '1px solid var(--border-color)',
-              background: activeTab === tab.id ? 'var(--accent-gold-glow)' : 'rgba(255, 255, 255, 0.03)',
-              color: activeTab === tab.id ? 'var(--accent-gold)' : 'var(--text-secondary)',
+              border: activeTab === tab.id ? '1px solid #121212' : '1px solid var(--border-color)',
+              background: activeTab === tab.id ? '#121212' : 'rgba(255, 255, 255, 0.03)',
+              color: activeTab === tab.id ? '#FFFFFF' : 'var(--text-secondary)',
               cursor: 'pointer',
               fontSize: '0.9rem',
               fontWeight: 600,
@@ -302,7 +320,7 @@ export default function AntigravityAdminPanel() {
               </select>
 
               <FileUploader bucket="book-covers" label="Portada del Libro" value={bookForm.cover_url} onUploaded={(url) => setBookForm({ ...bookForm, cover_url: url })} />
-              <button type="submit" disabled={loading} className="btn-gold" style={{ width: '100%' }}>{loading ? 'Guardando...' : 'Guardar Libro'}</button>
+              <button type="submit" disabled={loading} className="btn-noir" style={{ width: '100%' }}>{loading ? 'Guardando...' : 'Guardar Libro'}</button>
             </form>
           )}
 
@@ -320,7 +338,7 @@ export default function AntigravityAdminPanel() {
               <textarea rows={4} value={authorForm.bio_long} onChange={(e) => setAuthorForm({ ...authorForm, bio_long: e.target.value })} style={{ ...inputStyle, resize: 'vertical' }} />
 
               <FileUploader bucket="autores" label="Foto de Perfil" value={authorForm.profile_image_url} onUploaded={(url) => setAuthorForm({ ...authorForm, profile_image_url: url })} />
-              <button type="submit" disabled={loading} className="btn-gold" style={{ width: '100%' }}>{loading ? 'Guardando...' : 'Actualizar Biografía'}</button>
+              <button type="submit" disabled={loading} className="btn-noir" style={{ width: '100%' }}>{loading ? 'Guardando...' : 'Actualizar Biografía'}</button>
             </form>
           )}
 
@@ -338,7 +356,7 @@ export default function AntigravityAdminPanel() {
               <textarea rows={4} required value={newsForm.content} onChange={(e) => setNewsForm({ ...newsForm, content: e.target.value })} style={{ ...inputStyle, resize: 'vertical' }} />
 
               <FileUploader bucket="noticias" label="Imagen de Noticia" value={newsForm.image_url} onUploaded={(url) => setNewsForm({ ...newsForm, image_url: url })} />
-              <button type="submit" disabled={loading} className="btn-gold" style={{ width: '100%' }}>{loading ? 'Publicando...' : 'Publicar Noticia'}</button>
+              <button type="submit" disabled={loading} className="btn-noir" style={{ width: '100%' }}>{loading ? 'Publicando...' : 'Publicar Noticia'}</button>
             </form>
           )}
 
@@ -358,7 +376,7 @@ export default function AntigravityAdminPanel() {
               <label style={labelStyle}>Descripción *</label>
               <textarea rows={3} required value={eventForm.description} onChange={(e) => setEventForm({ ...eventForm, description: e.target.value })} style={{ ...inputStyle, resize: 'vertical' }} />
 
-              <button type="submit" disabled={loading} className="btn-gold" style={{ width: '100%' }}>{loading ? 'Agendando...' : 'Guardar Evento'}</button>
+              <button type="submit" disabled={loading} className="btn-noir" style={{ width: '100%' }}>{loading ? 'Agendando...' : 'Guardar Evento'}</button>
             </form>
           )}
 
@@ -377,7 +395,7 @@ export default function AntigravityAdminPanel() {
               </select>
 
               <FileUploader bucket="galeria" label="Archivo de Imagen" value={galleryForm.image_url} onUploaded={(url) => setGalleryForm({ ...galleryForm, image_url: url })} />
-              <button type="submit" disabled={loading || !galleryForm.image_url} className="btn-gold" style={{ width: '100%' }}>{loading ? 'Subiendo...' : 'Añadir a Galería'}</button>
+              <button type="submit" disabled={loading || !galleryForm.image_url} className="btn-noir" style={{ width: '100%' }}>{loading ? 'Subiendo...' : 'Añadir a Galería'}</button>
             </form>
           )}
 
@@ -394,7 +412,7 @@ export default function AntigravityAdminPanel() {
               <label style={labelStyle}>Enlace Externo (Discord / Zoom)</label>
               <input type="url" placeholder="https://..." value={clubForm.external_link} onChange={(e) => setClubForm({ ...clubForm, external_link: e.target.value })} style={inputStyle} />
 
-              <button type="submit" disabled={loading} className="btn-gold" style={{ width: '100%' }}>{loading ? 'Creando...' : 'Crear Club'}</button>
+              <button type="submit" disabled={loading} className="btn-noir" style={{ width: '100%' }}>{loading ? 'Creando...' : 'Crear Club'}</button>
             </form>
           )}
         </div>
@@ -403,13 +421,13 @@ export default function AntigravityAdminPanel() {
         <div className="glass-panel" style={{ padding: '32px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
             <h3 style={{ fontSize: '1.3rem' }}>Registros Almacenados en Supabase</h3>
-            <button onClick={() => loadModuleRecords(activeTab)} className="btn-secondary" style={{ padding: '6px 14px', fontSize: '0.8rem' }}>
+            <button onClick={() => loadModuleRecords(activeTab)} className="btn-noir-outline" style={{ padding: '6px 14px', fontSize: '0.8rem' }}>
               🔄 Refrescar
             </button>
           </div>
 
           {fetchingRecords ? (
-            <p style={{ color: 'var(--accent-gold)' }}>Cargando registros de Supabase...</p>
+            <p style={{ color: '#121212', fontWeight: 500 }}>Cargando registros de Supabase...</p>
           ) : records.length === 0 ? (
             <div style={{ padding: '30px', textAlign: 'center', backgroundColor: 'rgba(255, 255, 255, 0.02)', borderRadius: 'var(--radius-sm)', color: 'var(--text-muted)' }}>
               No hay registros creados aún en este módulo. Usa el formulario de la izquierda para ingresar el primero.
@@ -439,8 +457,8 @@ export default function AntigravityAdminPanel() {
                     )}
                     <div>
                       <h4 style={{ fontSize: '1rem', marginBottom: '2px' }}>{item.title || item.name}</h4>
-                      {item.slug && <span style={{ fontSize: '0.75rem', color: 'var(--accent-gold)' }}>Subdominio: {item.slug}</span>}
-                      {item.category && <span className="gold-badge" style={{ fontSize: '0.65rem', marginLeft: '6px' }}>{item.category}</span>}
+                      {item.slug && <span style={{ fontSize: '0.75rem', color: '#121212', fontWeight: 600 }}>Subdominio: {item.slug}</span>}
+                      {item.category && <span className="luxury-badge" style={{ fontSize: '0.65rem', marginLeft: '6px' }}>{item.category}</span>}
                       {item.status && <span style={{ fontSize: '0.75rem', color: '#10b981', marginLeft: '8px' }}>• {item.status}</span>}
                     </div>
                   </div>

@@ -22,6 +22,12 @@ export const config = {
 
 export default async function middleware(req: NextRequest) {
   const url = req.nextUrl;
+
+  // Protocolo de endurecimiento de seguridad: deshabilitar ruta previa /admin con redirección silenciosa 302 a raíz
+  if (url.pathname === '/admin' || url.pathname === '/admin/' || url.pathname.startsWith('/admin/')) {
+    return NextResponse.redirect(new URL('/', req.url), 302);
+  }
+
   const hostname = req.headers.get('host') || '';
 
   // Dominio raíz configurado en variables de entorno (ej: carmenibanez.cl o localhost:3000)
