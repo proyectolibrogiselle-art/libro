@@ -1,7 +1,7 @@
 // ==============================================================================
 // CARMENIBANEZ.CL - NEXT.JS CONFIGURATION
-// Vercel Hard Redeploy Trigger: 2026-09-17T17:15:00-03:00
-// Build ID & Cache Buster: v1.0.1-prod-build
+// Production Build V1.0.3 - Environment Variables Active
+// Timestamp: 2026-09-17T17:35:00-03:00
 // ==============================================================================
 
 import type { NextConfig } from 'next';
