@@ -3,10 +3,10 @@
 # ==============================================================================
 
 param (
-    [string]$RemoteUrl = "https://github.com"
+    [string]$RemoteUrl = "https://github.com/proyectolibrogiselle-art/libro.git"
 )
 
-Write-Host ">>> Iniciando protocolo CI/CD para carmenibanez.cl..." -ForegroundColor Cyan
+Write-Host ">>> Iniciando sincronización CI/CD con $RemoteUrl..." -ForegroundColor Cyan
 
 # 1. Localizar git.exe
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
@@ -25,24 +25,16 @@ if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     }
 }
 
-# 2. Inicializar repo si no existe y cambiar a main
-if (-not (Test-Path ".git")) {
-    git init
-}
-git branch -M main
-
-# 3. Configurar identidad fija del autor
+# 2. Configurar identidad fija
 git config --local user.email "proyectolibrogiselle@gmail.com"
 git config --local user.name "Carmen Ibanez"
 
-# 4. Vincular origen remoto
+# 3. Vincular origen remoto oficial
 git remote remove origin 2>$null
 git remote add origin $RemoteUrl
 
-# 5. Añadir todos los archivos y commit
+# 4. Añadir, commit y push
 git add .
-git commit -m "sync: automatización de cambios y despliegue continuo"
-
-# 6. Push forzado a la rama main
-Write-Host ">>> Enviando cambios a $RemoteUrl..." -ForegroundColor Cyan
+git commit -m "auto-sync: actualización continua" 2>$null
+Write-Host ">>> Enviando cambios al repositorio remoto..." -ForegroundColor Cyan
 git push -u origin main --force
