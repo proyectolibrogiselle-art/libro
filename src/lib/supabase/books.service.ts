@@ -1,7 +1,10 @@
 import { supabasePublicClient } from './client';
 import { getSupabaseAdminClient } from './admin';
 import { Book, BookStatus } from '@/types/book';
+import { Database } from '@/types/database.types';
 import { createBookSchema, updateBookSchema, CreateBookInput, UpdateBookInput } from '@/schemas/book.schema';
+
+type BookUpdate = Database['public']['Tables']['books']['Update'];
 
 /**
  * Servicio de Libros - Capa de Acceso a Datos y Dominio (SDD)
@@ -81,10 +84,12 @@ export class BooksService {
     const validatedData = updateBookSchema.parse(input);
     const { id, ...updateFields } = validatedData;
 
-    const updatePayload: Record<string, any> = { ...updateFields };
-    if (updateFields.status) {
-      updatePayload.status = updateFields.status as BookStatus;
-    }
+    const updatePayload: BookUpdate = {};
+    if (updateFields.title !== undefined) updatePayload.title = updateFields.title;
+    if (updateFields.slug !== undefined) updatePayload.slug = updateFields.slug;
+    if (updateFields.synopsis !== undefined) updatePayload.synopsis = updateFields.synopsis;
+    if (updateFields.status !== undefined) updatePayload.status = updateFields.status as BookStatus;
+    if (updateFields.cover_url !== undefined) updatePayload.cover_url = updateFields.cover_url || null;
 
     const adminClient = getSupabaseAdminClient();
     const { data, error } = await adminClient
