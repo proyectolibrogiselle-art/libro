@@ -20,7 +20,9 @@ export default function AntigravityAdminPanel() {
   const [fetchingRecords, setFetchingRecords] = useState(false);
 
   // Formularios de Creación
-  const [bookForm, setBookForm] = useState({ title: '', slug: '', synopsis: '', status: 'draft', cover_url: '' });
+  const [bookForm, setBookForm] = useState({ title: '', slug: '', synopsis: '', cover_url: '' });
+  const [editorialStatus, setEditorialStatus] = useState<'draft' | 'writing' | 'published'>('draft');
+  const [isPublicSwitch, setIsPublicSwitch] = useState(false);
   const [authorForm, setAuthorForm] = useState({ name: 'Carmen Ibáñez', bio_short: '', bio_long: '', profile_image_url: '', twitter_url: '', instagram_url: '', facebook_url: '' });
   const [newsForm, setNewsForm] = useState({ title: '', slug: '', content: '', image_url: '' });
   const [eventForm, setEventForm] = useState({ title: '', description: '', event_date: '', location: '', registration_url: '' });
@@ -301,23 +303,141 @@ export default function AntigravityAdminPanel() {
         <div className="glass-panel" style={{ padding: '32px' }}>
           {/* TAB 1: LIBROS */}
           {activeTab === 'books' && (
-            <form onSubmit={(e) => { e.preventDefault(); handleSubmit('books', bookForm); }}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                // Lógica estricta de visibilidad: si el switch está apagado se fuerza draft; si está encendido se envía published
+                const finalStatus = isPublicSwitch ? 'published' : 'draft';
+                handleSubmit('books', {
+                  ...bookForm,
+                  status: finalStatus,
+                });
+              }}
+            >
               <h2 style={{ fontSize: '1.4rem', marginBottom: '16px' }}>Publicar Nueva Obra</h2>
+              
               <label style={labelStyle}>Título de la Obra *</label>
-              <input type="text" required placeholder="Giselle" value={bookForm.title} onChange={(e) => setBookForm({ ...bookForm, title: e.target.value })} style={inputStyle} />
+              <input
+                type="text"
+                required
+                placeholder="Giselle"
+                value={bookForm.title}
+                onChange={(e) => setBookForm({ ...bookForm, title: e.target.value })}
+                style={inputStyle}
+              />
               
               <label style={labelStyle}>Slug para Subdominio *</label>
-              <input type="text" required placeholder="giselle (subdominio)" value={bookForm.slug} onChange={(e) => setBookForm({ ...bookForm, slug: e.target.value.toLowerCase().trim() })} style={inputStyle} />
+              <input
+                type="text"
+                required
+                placeholder="giselle (subdominio)"
+                value={bookForm.slug}
+                onChange={(e) => setBookForm({ ...bookForm, slug: e.target.value.toLowerCase().trim() })}
+                style={inputStyle}
+              />
 
               <label style={labelStyle}>Sinopsis *</label>
-              <textarea rows={3} required value={bookForm.synopsis} onChange={(e) => setBookForm({ ...bookForm, synopsis: e.target.value })} style={{ ...inputStyle, resize: 'vertical' }} />
+              <textarea
+                rows={3}
+                required
+                placeholder="Sinopsis literaria de la obra..."
+                value={bookForm.synopsis}
+                onChange={(e) => setBookForm({ ...bookForm, synopsis: e.target.value })}
+                style={{ ...inputStyle, resize: 'vertical' }}
+              />
 
-              <label style={labelStyle}>Estado</label>
-              <select value={bookForm.status} onChange={(e) => setBookForm({ ...bookForm, status: e.target.value })} style={inputStyle}>
-                <option value="draft">Borrador</option>
-                <option value="writing">En Escritura</option>
-                <option value="published">Publicado</option>
+              {/* COMPONENTE 1: SELECTOR DE ESTATUS EDITORIAL */}
+              <label style={labelStyle}>Estatus actual del libro *</label>
+              <select
+                value={editorialStatus}
+                onChange={(e) => {
+                  const val = e.target.value as 'draft' | 'writing' | 'published';
+                  setEditorialStatus(val);
+                  if (val === 'published') {
+                    setIsPublicSwitch(true);
+                  } else if (val === 'draft' || val === 'writing') {
+                    setIsPublicSwitch(false);
+                  }
+                }}
+                style={inputStyle}
+              >
+                <option value="draft">Borrador (Draft)</option>
+                <option value="writing">Escribiendo (Writing)</option>
+                <option value="published">Terminado / Listo para publicación</option>
               </select>
+
+              {/* COMPONENTE 2: INTERRUPTOR DE VISIBILIDAD (SWITCH / TOGGLE) */}
+              <div
+                style={{
+                  backgroundColor: isPublicSwitch ? 'rgba(16, 185, 129, 0.08)' : 'rgba(255, 255, 255, 0.04)',
+                  border: isPublicSwitch ? '1px solid rgba(16, 185, 129, 0.35)' : '1px solid var(--border-color)',
+                  borderRadius: 'var(--radius-sm)',
+                  padding: '16px 18px',
+                  marginBottom: '20px',
+                  transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
+                  <div style={{ flex: 1 }}>
+                    <label
+                      style={{
+                        ...labelStyle,
+                        marginBottom: '4px',
+                        cursor: 'pointer',
+                        color: 'var(--text-primary)',
+                      }}
+                      onClick={() => setIsPublicSwitch(!isPublicSwitch)}
+                    >
+                      ¿Desea publicar esta obra en la web pública ahora mismo?
+                    </label>
+                    <p
+                      style={{
+                        fontSize: '0.8rem',
+                        color: isPublicSwitch ? '#10b981' : 'var(--text-muted)',
+                        margin: 0,
+                        fontWeight: 400,
+                      }}
+                    >
+                      {isPublicSwitch
+                        ? '● SÍ — Obra pública (visible de inmediato en la sección Biblioteca)'
+                        : '○ NO — Obra en borrador privado (oculta de la Home por seguridad)'}
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={isPublicSwitch}
+                    onClick={() => setIsPublicSwitch(!isPublicSwitch)}
+                    style={{
+                      width: '52px',
+                      height: '28px',
+                      borderRadius: '9999px',
+                      backgroundColor: isPublicSwitch ? '#121212' : '#D1D5DB',
+                      border: isPublicSwitch ? '1px solid #121212' : '1px solid #9CA3AF',
+                      position: 'relative',
+                      cursor: 'pointer',
+                      transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+                      padding: 0,
+                      flexShrink: 0,
+                    }}
+                  >
+                    <span
+                      style={{
+                        position: 'absolute',
+                        top: '3px',
+                        left: isPublicSwitch ? '27px' : '3px',
+                        width: '20px',
+                        height: '20px',
+                        borderRadius: '50%',
+                        backgroundColor: isPublicSwitch ? '#FFFFFF' : '#6B7280',
+                        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+                        transition: 'left 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease',
+                      }}
+                    />
+                  </button>
+                </div>
+              </div>
 
               <FileUploader bucket="book-covers" label="Portada del Libro" value={bookForm.cover_url} onUploaded={(url) => setBookForm({ ...bookForm, cover_url: url })} />
               <button type="submit" disabled={loading} className="btn-noir" style={{ width: '100%' }}>{loading ? 'Guardando...' : 'Guardar Libro'}</button>
