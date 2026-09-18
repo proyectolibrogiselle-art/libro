@@ -4,6 +4,7 @@ import { EventsService, GalleryService, NewsService } from '@/lib/supabase/modul
 import { Book } from '@/types/book';
 import { EventItem, GalleryItem, News } from '@/types/entities';
 import PublicationsCarousel from '@/components/PublicationsCarousel';
+import GalleryMarquee from '@/components/GalleryMarquee';
 
 // Revalidación periódica (ISR)
 export const revalidate = 60;
@@ -1163,16 +1164,16 @@ export default async function HomePage() {
               Atmósferas y memoria
             </span>
             <h2
-              className="serif-delicate"
+              className="cinzel-heading"
               style={{
                 fontSize: 'clamp(2.4rem, 4vw, 3.2rem)',
-                fontWeight: 500,
+                fontWeight: 600,
                 lineHeight: 1.2,
                 color: '#121212',
                 marginBottom: '14px',
               }}
             >
-              Galería Visual
+              Galería
             </h2>
             <p
               className="montserrat-body"
@@ -1187,91 +1188,8 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '28px',
-            }}
-          >
-            {displayGallery.map((item) => (
-              <figure
-                key={item.id}
-                className="group"
-                style={{
-                  margin: 0,
-                  borderRadius: '14px',
-                  overflow: 'hidden',
-                  backgroundColor: '#121212',
-                  border: '1px solid rgba(18, 18, 18, 0.1)',
-                  boxShadow: '0 16px 36px rgba(0,0,0,0.06)',
-                  position: 'relative',
-                }}
-              >
-                <div style={{ height: '320px', overflow: 'hidden', position: 'relative' }}>
-                  <img
-                    src={item.image_url}
-                    alt={item.title}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      filter: 'grayscale(100%) contrast(106%)',
-                      transition: 'transform 0.5s ease, filter 0.5s ease',
-                    }}
-                  />
-                  <div
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%)',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'flex-end',
-                      padding: '24px 20px',
-                      color: '#FAFAFA',
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontSize: '0.68rem',
-                        color: '#A3A3A3',
-                        letterSpacing: '0.08em',
-                        textTransform: 'uppercase',
-                        marginBottom: '4px',
-                      }}
-                    >
-                      {item.category || 'Archivo visual'}
-                    </span>
-                    <h3
-                      className="cinzel-heading"
-                      style={{
-                        fontSize: '1.05rem',
-                        fontWeight: 600,
-                        margin: 0,
-                        marginBottom: '4px',
-                      }}
-                    >
-                      {item.title}
-                    </h3>
-                    {item.description && (
-                      <p
-                        className="montserrat-body"
-                        style={{
-                          fontSize: '0.82rem',
-                          color: '#D4D4D4',
-                          margin: 0,
-                          lineHeight: 1.5,
-                        }}
-                      >
-                        {item.description}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </figure>
-            ))}
-          </div>
+          {/* CINTA INFINITA AUTOMÁTICA CON LIGHTBOX INTERACTIVO */}
+          <GalleryMarquee items={displayGallery} />
         </div>
       </section>
 

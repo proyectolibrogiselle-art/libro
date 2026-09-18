@@ -94,7 +94,7 @@ export class BooksService {
     const adminClient = getSupabaseAdminClient();
     const { data, error } = await adminClient
       .from('books')
-      .update(updatePayload)
+      .update(updatePayload as any)
       .eq('id', id)
       .select('*')
       .single();
