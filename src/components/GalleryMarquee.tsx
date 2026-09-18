@@ -8,7 +8,7 @@ interface GalleryMarqueeProps {
 }
 
 export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
-  const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
 
   // Cerrar modal al presionar la tecla Escape
   useEffect(() => {
@@ -97,7 +97,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
           {marqueeItems.map((item, index) => (
             <div
               key={`${item.id}-${index}`}
-              onClick={() => setSelectedItem(item)}
+              onClick={() => setSelectedItem(item as any)}
               className="gallery-marquee-card"
               role="button"
               tabIndex={0}
@@ -105,7 +105,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
-                  setSelectedItem(item);
+                  setSelectedItem(item as any);
                 }
               }}
             >
