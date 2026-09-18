@@ -721,7 +721,7 @@ export default async function HomePage() {
                         lineHeight: 1.75,
                       }}
                     >
-                      {item.excerpt || item.content.slice(0, 160) + '...'}
+                      {item.content.slice(0, 160) + '...'}
                     </p>
                   </div>
                   <div style={{ marginTop: '24px' }}>
