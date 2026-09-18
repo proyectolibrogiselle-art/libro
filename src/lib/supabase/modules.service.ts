@@ -44,7 +44,7 @@ export class AuthorsService {
     if (existingId) {
       const { data, error } = await admin
         .from('autores')
-        .update(validated)
+        .update(validated as any)
         .eq('id', existingId)
         .select('*')
         .single();
@@ -107,7 +107,7 @@ export class NewsService {
     const updateData: Record<string, any> = { ...input, updated_at: new Date().toISOString() };
     const { data, error } = await admin
       .from('noticias')
-      .update(updateData)
+      .update(updateData as any)
       .eq('id', id)
       .select('*')
       .single();
@@ -157,7 +157,7 @@ export class EventsService {
     const updateData: Record<string, any> = { ...input, updated_at: new Date().toISOString() };
     const { data, error } = await admin
       .from('eventos')
-      .update(updateData)
+      .update(updateData as any)
       .eq('id', id)
       .select('*')
       .single();
@@ -210,7 +210,7 @@ export class GalleryService {
     const updateData: Record<string, any> = { ...input, updated_at: new Date().toISOString() };
     const { data, error } = await admin
       .from('galeria')
-      .update(updateData)
+      .update(updateData as any)
       .eq('id', id)
       .select('*')
       .single();
@@ -261,7 +261,7 @@ export class BookClubService {
     const updateData: Record<string, any> = { ...input, updated_at: new Date().toISOString() };
     const { data, error } = await admin
       .from('club_lectura')
-      .update(updateData)
+      .update(updateData as any)
       .eq('id', id)
       .select('*')
       .single();
