@@ -1197,6 +1197,7 @@ export default async function HomePage() {
             {displayGallery.map((item) => (
               <figure
                 key={item.id}
+                className="group"
                 style={{
                   margin: 0,
                   borderRadius: '14px',
@@ -1205,7 +1206,6 @@ export default async function HomePage() {
                   border: '1px solid rgba(18, 18, 18, 0.1)',
                   boxShadow: '0 16px 36px rgba(0,0,0,0.06)',
                   position: 'relative',
-                  group: 'true',
                 }}
               >
                 <div style={{ height: '320px', overflow: 'hidden', position: 'relative' }}>
