@@ -625,5 +625,20 @@ a {
   }
 }
 
+/* ==============================================================================
+   3. ESTILOS DE APOYO PARA COVER FLOW / STACKED CAROUSEL 3D
+   ============================================================================== */
+.cover-flow-stage {
+  user-select: none;
+  touch-action: pan-y;
+}
 
-
+@media (max-width: 640px) {
+  .cover-flow-stage {
+    min-height: 420px !important;
+  }
+  .cover-flow-card {
+    width: 220px !important;
+    height: 330px !important;
+  }
+}

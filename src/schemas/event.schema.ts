@@ -6,6 +6,7 @@ export const eventSchema = z.object({
   event_date: z.string({ required_error: 'La fecha del evento es obligatoria' }),
   location: z.string().trim().min(2, 'La ubicación es obligatoria'),
   registration_url: z.string().url('URL de registro inválida').nullable().optional().or(z.literal('')),
+  image_url: z.string().nullable().optional().or(z.literal('')),
 });
 
 export const updateEventSchema = eventSchema.partial().extend({

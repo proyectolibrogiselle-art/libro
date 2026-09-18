@@ -101,6 +101,19 @@ export class NewsService {
     if (error) throw new Error(error.message);
     return data;
   }
+
+  static async updateNews(id: string, input: Partial<NewsInput>): Promise<News> {
+    const admin = getSupabaseAdminClient();
+    const updateData: Record<string, any> = { ...input, updated_at: new Date().toISOString() };
+    const { data, error } = await admin
+      .from('noticias')
+      .update(updateData)
+      .eq('id', id)
+      .select('*')
+      .single();
+    if (error) throw new Error(error.message);
+    return data;
+  }
 }
 
 // 3. SERVICIO: EVENTOS
@@ -124,10 +137,30 @@ export class EventsService {
 
     const { data, error } = await admin
       .from('eventos')
-      .insert(validated)
+      .insert({
+        title: validated.title,
+        description: validated.description,
+        event_date: validated.event_date,
+        location: validated.location,
+        registration_url: validated.registration_url || null,
+        image_url: validated.image_url || null,
+      })
       .select('*')
       .single();
 
+    if (error) throw new Error(error.message);
+    return data;
+  }
+
+  static async updateEvent(id: string, input: Partial<EventInput>): Promise<EventItem> {
+    const admin = getSupabaseAdminClient();
+    const updateData: Record<string, any> = { ...input, updated_at: new Date().toISOString() };
+    const { data, error } = await admin
+      .from('eventos')
+      .update(updateData)
+      .eq('id', id)
+      .select('*')
+      .single();
     if (error) throw new Error(error.message);
     return data;
   }
@@ -171,6 +204,19 @@ export class GalleryService {
     if (error) throw new Error(error.message);
     return data;
   }
+
+  static async updateGalleryItem(id: string, input: Partial<GalleryInput>): Promise<GalleryItem> {
+    const admin = getSupabaseAdminClient();
+    const updateData: Record<string, any> = { ...input, updated_at: new Date().toISOString() };
+    const { data, error } = await admin
+      .from('galeria')
+      .update(updateData)
+      .eq('id', id)
+      .select('*')
+      .single();
+    if (error) throw new Error(error.message);
+    return data;
+  }
 }
 
 // 5. SERVICIO: CLUB DE LECTURA
@@ -206,6 +252,19 @@ export class BookClubService {
       .select('*')
       .single();
 
+    if (error) throw new Error(error.message);
+    return data;
+  }
+
+  static async updateClub(id: string, input: Partial<BookClubInput>): Promise<BookClub> {
+    const admin = getSupabaseAdminClient();
+    const updateData: Record<string, any> = { ...input, updated_at: new Date().toISOString() };
+    const { data, error } = await admin
+      .from('club_lectura')
+      .update(updateData)
+      .eq('id', id)
+      .select('*')
+      .single();
     if (error) throw new Error(error.message);
     return data;
   }
