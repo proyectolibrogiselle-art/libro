@@ -81,3 +81,9 @@ Este script configura:
 El enrutamiento de subdominios se resuelve mediante [src/middleware.ts](file:///c:/libro/src/middleware.ts):
 - Si el usuario visita `carmenibanez.cl` -> Se sirve la página principal.
 - Si el usuario visita `giselle.carmenibanez.cl` -> El middleware extrae `giselle` y reescribe internamente la petición a `/subdomains/giselle`.
+
+---
+
+## 5. Pipeline y Despliegue CI/CD
+Flujo de integración y despliegue continuo activo sincronizado con el repositorio oficial y Vercel.
+
