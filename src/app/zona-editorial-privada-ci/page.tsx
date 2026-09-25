@@ -21,6 +21,7 @@ export default function AntigravityAdminPanel() {
 
   // Estado para Edición CRUD Completa (MEJORA 1)
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [originalBookData, setOriginalBookData] = useState<any>(null);
 
   // Formularios de Creación / Edición
   const [bookForm, setBookForm] = useState({ title: '', slug: '', synopsis: '', cover_url: '' });
@@ -97,6 +98,7 @@ export default function AntigravityAdminPanel() {
     setStatusMessage(null);
 
     if (module === 'books') {
+      setOriginalBookData(item);
       setBookForm({
         title: item.title || '',
         slug: item.slug || '',
@@ -154,6 +156,7 @@ export default function AntigravityAdminPanel() {
   // Cancelar Edición y limpiar formularios
   const handleCancelEdit = () => {
     setEditingId(null);
+    setOriginalBookData(null);
     setBookForm({ title: '', slug: '', synopsis: '', cover_url: '' });
     setEditorialStatus('draft');
     setIsPublicSwitch(false);
@@ -425,12 +428,40 @@ export default function AntigravityAdminPanel() {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                // Lógica estricta de visibilidad: si el switch está apagado se fuerza draft; si está encendido se envía published
                 const finalStatus = isPublicSwitch ? 'published' : 'draft';
-                handleSubmit('books', {
-                  ...bookForm,
-                  status: finalStatus,
-                });
+
+                if (editingId && originalBookData) {
+                  // Actualización parcial segura: solo enviar campos modificados para preservar datos existentes intactos
+                  const updatePayload: Record<string, any> = { id: editingId };
+
+                  if (bookForm.synopsis !== originalBookData.synopsis) {
+                    updatePayload.synopsis = bookForm.synopsis;
+                  }
+                  if (bookForm.title !== originalBookData.title) {
+                    updatePayload.title = bookForm.title;
+                  }
+                  if (bookForm.slug !== originalBookData.slug) {
+                    updatePayload.slug = bookForm.slug;
+                  }
+                  if (bookForm.cover_url !== originalBookData.cover_url) {
+                    updatePayload.cover_url = bookForm.cover_url;
+                  }
+                  if (finalStatus !== originalBookData.status) {
+                    updatePayload.status = finalStatus;
+                  }
+
+                  // Si solo se modificó la sinopsis o submit directo en modo edición, asegurar que viaje la sinopsis
+                  if (Object.keys(updatePayload).length === 1) {
+                    updatePayload.synopsis = bookForm.synopsis;
+                  }
+
+                  handleSubmit('books', updatePayload);
+                } else {
+                  handleSubmit('books', {
+                    ...bookForm,
+                    status: finalStatus,
+                  });
+                }
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>

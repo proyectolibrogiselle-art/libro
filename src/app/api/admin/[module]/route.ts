@@ -245,6 +245,15 @@ export async function PUT(req: NextRequest, { params }: RouteProps) {
     switch (module) {
       case 'books': {
         const result = await BooksService.updateBook(body);
+        try {
+          revalidatePath('/');
+          revalidatePath('/zona-editorial-privada-ci');
+          if (result.slug) {
+            revalidatePath(`/subdomains/${result.slug}`);
+          }
+        } catch (revalErr) {
+          console.warn('[AdminAPI PUT] Error revalidando rutas de libros:', revalErr);
+        }
         return NextResponse.json({ success: true, data: result });
       }
       case 'autores': {

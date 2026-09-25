@@ -65,7 +65,10 @@ export const bookBaseSchema = z.object({
 
   cover_url: z
     .string()
-    .url('La URL de la portada debe ser una URL válida')
+    .trim()
+    .refine((val) => !val || val.startsWith('/') || /^https?:\/\//.test(val), {
+      message: 'La URL de la portada debe ser una URL válida o ruta local',
+    })
     .nullable()
     .optional()
     .or(z.literal('')),
