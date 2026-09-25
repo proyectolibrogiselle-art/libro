@@ -41,11 +41,20 @@ export class AuthorsService {
     const validated = authorSchema.parse(input);
     const admin = getSupabaseAdminClient();
 
-    if (existingId) {
+    // Determinar ID objetivo: si no viene en el argumento, buscar el autor existente para evitar duplicados
+    let targetId = existingId;
+    if (!targetId) {
+      const primary = await this.getPrimaryAuthor();
+      if (primary) {
+        targetId = primary.id;
+      }
+    }
+
+    if (targetId) {
       const { data, error } = await admin
         .from('autores')
         .update(validated as any)
-        .eq('id', existingId)
+        .eq('id', targetId)
         .select('*')
         .single();
       if (error) throw new Error(error.message);
@@ -53,7 +62,7 @@ export class AuthorsService {
     } else {
       const { data, error } = await admin
         .from('autores')
-        .insert(validated)
+        .insert(validated as any)
         .select('*')
         .single();
       if (error) throw new Error(error.message);

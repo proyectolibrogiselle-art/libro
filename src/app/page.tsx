@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import HeaderNav from '@/components/HeaderNav';
 import { BooksService } from '@/lib/supabase/books.service';
-import { EventsService, GalleryService, NewsService } from '@/lib/supabase/modules.service';
+import { AuthorsService, EventsService, GalleryService, NewsService } from '@/lib/supabase/modules.service';
 import { Book } from '@/types/book';
-import { EventItem, GalleryItem, News } from '@/types/entities';
+import { Author, EventItem, GalleryItem, News } from '@/types/entities';
 import PublicationsCarousel from '@/components/PublicationsCarousel';
 import GalleryMarquee from '@/components/GalleryMarquee';
 
@@ -11,10 +11,17 @@ import GalleryMarquee from '@/components/GalleryMarquee';
 export const revalidate = 60;
 
 export default async function HomePage() {
+  let author: Author | null = null;
   let books: Book[] = [];
   let newsList: News[] = [];
   let eventsList: EventItem[] = [];
   let galleryList: GalleryItem[] = [];
+
+  try {
+    author = await AuthorsService.getPrimaryAuthor();
+  } catch (err) {
+    console.warn('Conexión con Supabase (autores) en curso, usando fallback:', err);
+  }
 
   try {
     books = await BooksService.getPublishedBooks();
@@ -270,8 +277,8 @@ export default async function HomePage() {
               }}
             >
               <img
-                src="/images/giselle-portada.png"
-                alt="Carmen Ibáñez — Fotografía oficial de la autora"
+                src={author?.profile_image_url || "/images/giselle-portada.png"}
+                alt={`${author?.name || 'Carmen Ibáñez'} — Fotografía oficial de la autora`}
                 style={{
                   width: '100%',
                   height: 'auto',
@@ -293,7 +300,7 @@ export default async function HomePage() {
                 }}
               >
                 <p className="cinzel-heading" style={{ fontSize: '1rem', letterSpacing: '0.04em', margin: 0 }}>
-                  Carmen Ibáñez
+                  {author?.name || 'Carmen Ibáñez'}
                 </p>
                 <p className="montserrat-body" style={{ fontSize: '0.82rem', color: '#D4D4D4', margin: 0 }}>
                   Retrato literario oficial
@@ -364,9 +371,10 @@ export default async function HomePage() {
                 textAlign: 'justify',
                 marginBottom: '32px',
                 fontWeight: 300,
+                whiteSpace: 'pre-line',
               }}
             >
-              Carmen Ibáñez es una autora chilena que encuentra en la escritura una forma de explorar las emociones, las decisiones y las contradicciones que marcan la vida de las personas, especialmente el universo femenino. Su narrativa pone especial atención en los vínculos, el amor, la familia, la libertad, la culpa y aquellas elecciones capaces de cambiar una vida completa. Escribe desde la observación de las emociones y de aquello que muchas veces permanece oculto detrás de las apariencias.
+              {author?.bio_long || author?.bio_short || 'Carmen Ibáñez es una autora chilena que encuentra en la escritura una forma de explorar las emociones, las decisiones y las contradicciones que marcan la vida de las personas, especialmente el universo femenino. Su narrativa pone especial atención en los vínculos, el amor, la familia, la libertad, la culpa y aquellas elecciones capaces de cambiar una vida completa. Escribe desde la observación de las emociones y de aquello que muchas veces permanece oculto detrás de las apariencias.'}
             </p>
 
             {/* Pilares Temáticos en Tarjetas Escala de Grises */}

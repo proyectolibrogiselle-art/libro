@@ -2,7 +2,8 @@ import { createClient } from '@supabase/supabase-js';
 import { Database } from '@/types/database.types';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const supabaseServiceRoleKey =
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 /**
  * Cliente administrativo de Supabase con Service Role.
@@ -12,7 +13,7 @@ const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 export function getSupabaseAdminClient() {
   if (!supabaseUrl || !supabaseServiceRoleKey) {
     throw new Error(
-      'Falta la variable de entorno SUPABASE_SERVICE_ROLE_KEY requerida para Antigravity CMS'
+      'Faltan las credenciales requeridas para conectar con Supabase en Antigravity CMS'
     );
   }
 

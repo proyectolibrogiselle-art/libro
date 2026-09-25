@@ -49,14 +49,33 @@ export default function AntigravityAdminPanel() {
     }
   };
 
+  const CMS_AUTH_HEADER = { 'x-cms-auth': 'ci-editorial-session-authenticated' };
+
   // Cargar registros del módulo activo desde Supabase
   const loadModuleRecords = async (module: ModuleTab) => {
     setFetchingRecords(true);
     try {
-      const res = await fetch(`/api/admin/${module}`);
+      const res = await fetch(`/api/admin/${module}`, {
+        headers: CMS_AUTH_HEADER,
+      });
       const data = await res.json();
       if (data.success) {
-        setRecords(data.data || []);
+        const items = data.data || [];
+        setRecords(items);
+        // Si estamos en el módulo de Biografía y no hay edición activa, precargar automáticamente el registro de Carmen
+        if (module === 'autores' && items.length > 0 && !editingId) {
+          const carmenRecord = items[0];
+          setEditingId(carmenRecord.id);
+          setAuthorForm({
+            name: carmenRecord.name || 'Carmen Ibáñez',
+            bio_short: carmenRecord.bio_short || '',
+            bio_long: carmenRecord.bio_long || '',
+            profile_image_url: carmenRecord.profile_image_url || '',
+            twitter_url: carmenRecord.twitter_url || '',
+            instagram_url: carmenRecord.instagram_url || '',
+            facebook_url: carmenRecord.facebook_url || '',
+          });
+        }
       }
     } catch (err) {
       console.warn(`Error cargando registros de ${module}:`, err);
@@ -149,14 +168,23 @@ export default function AntigravityAdminPanel() {
     setLoading(true);
     setStatusMessage(null);
 
-    const isEditing = Boolean(editingId);
+    // En módulo de biografía, si ya existe un registro de Carmen en lista, asegurar que targetEditingId apunte a dicho registro para nunca duplicarlo
+    let targetEditingId = editingId;
+    if (module === 'autores' && !targetEditingId && records.length > 0) {
+      targetEditingId = records[0].id;
+    }
+
+    const isEditing = Boolean(targetEditingId);
     const method = isEditing ? 'PUT' : 'POST';
-    const bodyData = isEditing ? { ...payload, id: editingId } : payload;
+    const bodyData = isEditing ? { ...payload, id: targetEditingId } : payload;
 
     try {
       const res = await fetch(`/api/admin/${module}`, {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...CMS_AUTH_HEADER,
+        },
         body: JSON.stringify(bodyData),
       });
 
@@ -165,15 +193,18 @@ export default function AntigravityAdminPanel() {
         throw new Error(data.error || 'Error al procesar registro');
       }
 
+      const moduleNameDisplay = module === 'autores' ? 'BIOGRAFÍA' : module.toUpperCase();
       setStatusMessage({
         type: 'success',
         text: isEditing
-          ? `Registro [${module.toUpperCase()}] actualizado exitosamente en Supabase.`
-          : `Registro guardado exitosamente en [${module.toUpperCase()}]. Sincronizado con Supabase.`,
+          ? `Registro [${moduleNameDisplay}] actualizado exitosamente en Supabase.`
+          : `Registro guardado exitosamente en [${moduleNameDisplay}]. Sincronizado con Supabase.`,
       });
 
-      // Limpiar formulario y modo edición
-      handleCancelEdit();
+      // Limpiar formulario y modo edición (en autores, se mantiene la edición de Carmen activa)
+      if (module !== 'autores') {
+        handleCancelEdit();
+      }
       // Recargar registros actualizados
       loadModuleRecords(module);
     } catch (err: any) {
@@ -191,7 +222,10 @@ export default function AntigravityAdminPanel() {
     if (!confirm('¿Estás seguro de eliminar este registro permanentemente de Supabase?')) return;
 
     try {
-      const res = await fetch(`/api/admin/${module}?id=${id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/admin/${module}?id=${id}`, {
+        method: 'DELETE',
+        headers: CMS_AUTH_HEADER,
+      });
       const data = await res.json();
       if (data.success) {
         setStatusMessage({ type: 'success', text: 'Registro eliminado con éxito.' });
@@ -207,7 +241,7 @@ export default function AntigravityAdminPanel() {
 
   const tabs: { id: ModuleTab; label: string; icon: string }[] = [
     { id: 'books', label: 'Libros (Subdominios)', icon: '📖' },
-    { id: 'autores', label: 'Autores & Bio', icon: '✍️' },
+    { id: 'autores', label: 'Biografía', icon: '✍️' },
     { id: 'noticias', label: 'Noticias & Prensa', icon: '📰' },
     { id: 'eventos', label: 'Eventos & Firmas', icon: '🗓️' },
     { id: 'galeria', label: 'Galería Visual', icon: '🖼️' },
@@ -548,11 +582,11 @@ export default function AntigravityAdminPanel() {
             </form>
           )}
 
-          {/* TAB 2: AUTORES */}
+          {/* TAB 2: BIOGRAFÍA */}
           {activeTab === 'autores' && (
             <form onSubmit={(e) => { e.preventDefault(); handleSubmit('autores', authorForm); }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <h2 style={{ fontSize: '1.4rem' }}>Perfil de Autora</h2>
+                <h2 style={{ fontSize: '1.4rem' }}>Biografía de Carmen Ibáñez</h2>
                 {editingId && <span className="luxury-badge" style={{ fontSize: '0.72rem' }}>Modo Edición</span>}
               </div>
 
@@ -563,13 +597,13 @@ export default function AntigravityAdminPanel() {
               <textarea rows={2} value={authorForm.bio_short} onChange={(e) => setAuthorForm({ ...authorForm, bio_short: e.target.value })} style={{ ...inputStyle, resize: 'vertical' }} />
 
               <label style={labelStyle}>Biografía Extendida</label>
-              <textarea rows={4} value={authorForm.bio_long} onChange={(e) => setAuthorForm({ ...authorForm, bio_long: e.target.value })} style={{ ...inputStyle, resize: 'vertical' }} />
+              <textarea rows={6} value={authorForm.bio_long} onChange={(e) => setAuthorForm({ ...authorForm, bio_long: e.target.value })} style={{ ...inputStyle, resize: 'vertical' }} />
 
               <FileUploader bucket="autores" label="Foto de Perfil" value={authorForm.profile_image_url} onUploaded={(url) => setAuthorForm({ ...authorForm, profile_image_url: url })} />
               
               <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
                 <button type="submit" disabled={loading} className="btn-noir" style={{ flex: 1 }}>
-                  {loading ? 'Guardando...' : editingId ? '✓ Actualizar Biografía' : 'Actualizar Biografía'}
+                  {loading ? 'Guardando...' : editingId ? '✓ Guardar Cambios' : 'Actualizar Biografía'}
                 </button>
                 {editingId && (
                   <button type="button" onClick={handleCancelEdit} className="btn-noir-outline" style={{ padding: '12px 18px' }}>
@@ -778,36 +812,39 @@ export default function AntigravityAdminPanel() {
                     </div>
                   </div>
 
-                  {/* BOTONES DE ACCIÓN: EDITAR Y ELIMINAR (MEJORA 1) */}
+                  {/* BOTONES DE ACCIÓN: MODIFICAR / EDITAR */}
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0 }}>
                     <button
                       type="button"
                       onClick={() => handleStartEdit(activeTab, item)}
                       className="btn-noir-outline"
                       style={{
-                        padding: '6px 12px',
-                        fontSize: '0.78rem',
+                        padding: '6px 14px',
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
                         borderRadius: '4px',
                         cursor: 'pointer',
                       }}
                     >
-                      ✎ Editar
+                      {activeTab === 'autores' ? 'Modificar' : '✎ Editar'}
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => handleDelete(activeTab, item.id)}
-                      style={{
-                        background: 'none',
-                        border: '1px solid rgba(239, 68, 68, 0.3)',
-                        color: '#ef4444',
-                        padding: '6px 10px',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        fontSize: '0.78rem',
-                      }}
-                    >
-                      Eliminar
-                    </button>
+                    {activeTab !== 'autores' && (
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(activeTab, item.id)}
+                        style={{
+                          background: 'none',
+                          border: '1px solid rgba(239, 68, 68, 0.3)',
+                          color: '#ef4444',
+                          padding: '6px 10px',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                          fontSize: '0.78rem',
+                        }}
+                      >
+                        Eliminar
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}

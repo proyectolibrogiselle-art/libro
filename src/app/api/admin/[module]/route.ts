@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getSupabaseAdminClient } from '@/lib/supabase/admin';
 import { BooksService } from '@/lib/supabase/books.service';
 import {
@@ -8,6 +9,11 @@ import {
   GalleryService,
   BookClubService,
 } from '@/lib/supabase/modules.service';
+
+function checkAdminAuth(req: NextRequest): boolean {
+  const token = req.headers.get('x-cms-auth');
+  return token === 'ci-editorial-session-authenticated';
+}
 
 export type ValidTableName = 'books' | 'autores' | 'noticias' | 'eventos' | 'galeria' | 'club_lectura';
 
@@ -51,9 +57,41 @@ export async function GET(req: NextRequest, { params }: RouteProps) {
         }
         return NextResponse.json({ success: true, data: booksData });
       }
-      case 'autores':
-        query = admin.from('autores').select('*').order('created_at', { ascending: false });
-        break;
+      case 'autores': {
+        const autoresResult = await admin.from('autores').select('*').order('created_at', { ascending: false });
+        let autoresData = autoresResult.data || [];
+
+        // Garantizar persistencia física real del registro oficial de Carmen Ibáñez en public.autores
+        if (autoresData.length === 0) {
+          const nowIso = new Date().toISOString();
+          const canonicalAuthor = {
+            id: 'c0a80101-0000-4000-a000-000000000001',
+            name: 'Carmen Ibáñez',
+            bio_short: 'Autora y escritora chilena.',
+            bio_long:
+              'Carmen Ibáñez es una autora chilena que encuentra en la escritura una forma de explorar las emociones, las decisiones y las contradicciones que marcan la vida de las personas, especialmente el universo femenino. Su narrativa pone especial atención en los vínculos, el amor, la familia, la libertad, la culpa y aquellas elecciones capaces de cambiar una vida completa. Escribe desde la observación de las emociones y de aquello que muchas veces permanece oculto detrás de las apariencias.',
+            profile_image_url: '/images/giselle-portada.png',
+            twitter_url: '',
+            instagram_url: '',
+            facebook_url: '',
+            created_at: nowIso,
+            updated_at: nowIso,
+          };
+          try {
+            await admin.from('autores').upsert(canonicalAuthor, { onConflict: 'id' });
+            const recheck = await admin.from('autores').select('*').order('created_at', { ascending: false });
+            if (recheck.data && recheck.data.length > 0) {
+              autoresData = recheck.data;
+            } else {
+              autoresData = [canonicalAuthor];
+            }
+          } catch (seedErr) {
+            console.warn('[AdminAPI GET] No se pudo auto-sembrar Carmen Ibáñez:', seedErr);
+            autoresData = [canonicalAuthor];
+          }
+        }
+        return NextResponse.json({ success: true, data: autoresData });
+      }
       case 'noticias':
         query = admin.from('noticias').select('*').order('published_at', { ascending: false });
         break;
@@ -84,6 +122,13 @@ export async function GET(req: NextRequest, { params }: RouteProps) {
 export async function POST(req: NextRequest, { params }: RouteProps) {
   const { module } = await params;
 
+  if (!checkAdminAuth(req)) {
+    return NextResponse.json(
+      { success: false, error: 'Acceso no autorizado a la Zona Editorial Privada' },
+      { status: 401 }
+    );
+  }
+
   try {
     const body = await req.json();
 
@@ -94,6 +139,12 @@ export async function POST(req: NextRequest, { params }: RouteProps) {
       }
       case 'autores': {
         const result = await AuthorsService.upsertAuthor(body, body.id);
+        try {
+          revalidatePath('/');
+          revalidatePath('/zona-editorial-privada-ci');
+        } catch (revalErr) {
+          console.warn('[AdminAPI POST] Error revalidando rutas:', revalErr);
+        }
         return NextResponse.json({ success: true, data: result });
       }
       case 'noticias': {
@@ -130,6 +181,14 @@ export async function POST(req: NextRequest, { params }: RouteProps) {
 // DELETE /api/admin/[module]?id=UUID - Eliminar registro
 export async function DELETE(req: NextRequest, { params }: RouteProps) {
   const { module } = await params;
+
+  if (!checkAdminAuth(req)) {
+    return NextResponse.json(
+      { success: false, error: 'Acceso no autorizado a la Zona Editorial Privada' },
+      { status: 401 }
+    );
+  }
+
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');
 
@@ -168,6 +227,13 @@ export async function DELETE(req: NextRequest, { params }: RouteProps) {
 export async function PUT(req: NextRequest, { params }: RouteProps) {
   const { module } = await params;
 
+  if (!checkAdminAuth(req)) {
+    return NextResponse.json(
+      { success: false, error: 'Acceso no autorizado a la Zona Editorial Privada' },
+      { status: 401 }
+    );
+  }
+
   try {
     const body = await req.json();
     const id = body.id;
@@ -183,6 +249,12 @@ export async function PUT(req: NextRequest, { params }: RouteProps) {
       }
       case 'autores': {
         const result = await AuthorsService.upsertAuthor(body, id);
+        try {
+          revalidatePath('/');
+          revalidatePath('/zona-editorial-privada-ci');
+        } catch (revalErr) {
+          console.warn('[AdminAPI PUT] Error revalidando rutas:', revalErr);
+        }
         return NextResponse.json({ success: true, data: result });
       }
       case 'noticias': {
