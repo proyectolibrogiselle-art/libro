@@ -25,6 +25,8 @@ export interface Database {
           title: string;
           slug: string;
           synopsis: string;
+          subtitle: string | null;
+          hero_quote: string | null;
           status: BookStatus;
           cover_url: string | null;
           created_at: string;
@@ -35,6 +37,8 @@ export interface Database {
           title: string;
           slug: string;
           synopsis: string;
+          subtitle?: string | null;
+          hero_quote?: string | null;
           status?: BookStatus;
           cover_url?: string | null;
           created_at?: string;
@@ -45,6 +49,8 @@ export interface Database {
           title?: string;
           slug?: string;
           synopsis?: string;
+          subtitle?: string | null;
+          hero_quote?: string | null;
           status?: BookStatus;
           cover_url?: string | null;
           created_at?: string;

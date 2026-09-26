@@ -24,7 +24,7 @@ export default function AntigravityAdminPanel() {
   const [originalBookData, setOriginalBookData] = useState<any>(null);
 
   // Formularios de Creación / Edición
-  const [bookForm, setBookForm] = useState({ title: '', slug: '', synopsis: '', cover_url: '' });
+  const [bookForm, setBookForm] = useState({ title: '', slug: '', synopsis: '', subtitle: '', hero_quote: '', cover_url: '' });
   const [editorialStatus, setEditorialStatus] = useState<'draft' | 'writing' | 'published'>('draft');
   const [isPublicSwitch, setIsPublicSwitch] = useState(false);
   const [authorForm, setAuthorForm] = useState({ name: 'Carmen Ibáñez', bio_short: '', bio_long: '', profile_image_url: '', twitter_url: '', instagram_url: '', facebook_url: '' });
@@ -103,6 +103,8 @@ export default function AntigravityAdminPanel() {
         title: item.title || '',
         slug: item.slug || '',
         synopsis: item.synopsis || '',
+        subtitle: item.subtitle || '',
+        hero_quote: item.hero_quote || '',
         cover_url: item.cover_url || '',
       });
       setEditorialStatus(item.status || 'draft');
@@ -157,7 +159,7 @@ export default function AntigravityAdminPanel() {
   const handleCancelEdit = () => {
     setEditingId(null);
     setOriginalBookData(null);
-    setBookForm({ title: '', slug: '', synopsis: '', cover_url: '' });
+    setBookForm({ title: '', slug: '', synopsis: '', subtitle: '', hero_quote: '', cover_url: '' });
     setEditorialStatus('draft');
     setIsPublicSwitch(false);
     setNewsForm({ title: '', slug: '', content: '', image_url: '' });
@@ -437,6 +439,12 @@ export default function AntigravityAdminPanel() {
                   if (bookForm.synopsis !== originalBookData.synopsis) {
                     updatePayload.synopsis = bookForm.synopsis;
                   }
+                  if (bookForm.subtitle !== (originalBookData.subtitle || '')) {
+                    updatePayload.subtitle = bookForm.subtitle;
+                  }
+                  if (bookForm.hero_quote !== (originalBookData.hero_quote || '')) {
+                    updatePayload.hero_quote = bookForm.hero_quote;
+                  }
                   if (bookForm.title !== originalBookData.title) {
                     updatePayload.title = bookForm.title;
                   }
@@ -450,9 +458,11 @@ export default function AntigravityAdminPanel() {
                     updatePayload.status = finalStatus;
                   }
 
-                  // Si solo se modificó la sinopsis o submit directo en modo edición, asegurar que viaje la sinopsis
+                  // Si solo se presiona guardar sin cambios o submit directo en modo edición
                   if (Object.keys(updatePayload).length === 1) {
                     updatePayload.synopsis = bookForm.synopsis;
+                    if (bookForm.subtitle) updatePayload.subtitle = bookForm.subtitle;
+                    if (bookForm.hero_quote) updatePayload.hero_quote = bookForm.hero_quote;
                   }
 
                   handleSubmit('books', updatePayload);
@@ -502,6 +512,24 @@ export default function AntigravityAdminPanel() {
                 placeholder="Sinopsis literaria de la obra..."
                 value={bookForm.synopsis}
                 onChange={(e) => setBookForm({ ...bookForm, synopsis: e.target.value })}
+                style={{ ...inputStyle, resize: 'vertical' }}
+              />
+
+              <label style={labelStyle}>Bajada del libro (Subtítulo en Hero)</label>
+              <input
+                type="text"
+                placeholder="Una inmersión literaria nocturna en los pasillos de la culpa, el deseo y la búsqueda irrevocable de autonomía."
+                value={bookForm.subtitle}
+                onChange={(e) => setBookForm({ ...bookForm, subtitle: e.target.value })}
+                style={inputStyle}
+              />
+
+              <label style={labelStyle}>Frase destacada (Cita en Hero)</label>
+              <textarea
+                rows={2}
+                placeholder="Hay mujeres que nacen dispuestas a aceptar el mundo que les tocó vivir. Giselle no es una de ellas."
+                value={bookForm.hero_quote}
+                onChange={(e) => setBookForm({ ...bookForm, hero_quote: e.target.value })}
                 style={{ ...inputStyle, resize: 'vertical' }}
               />
 

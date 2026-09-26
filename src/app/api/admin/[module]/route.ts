@@ -45,6 +45,10 @@ export async function GET(req: NextRequest, { params }: RouteProps) {
               slug: 'giselle',
               synopsis:
                 'Hay mujeres que nacen dispuestas a aceptar el mundo que les tocó vivir. Giselle no es una de ellas. En una época marcada por las apariencias, las convenciones familiares y aquello que se esperaba de una mujer, Giselle intenta construir su vida bajo sus propias reglas. Amores, decisiones, deseos, pérdidas y contradicciones irán trazando un camino en el que cada elección tendrá consecuencias. A su alrededor, otras historias también avanzan: familias que se forman, relaciones que se transforman y personajes que aman, juzgan, perdonan o abandonan. Giselle es una novela sobre la libertad, el amor, la dependencia y las decisiones que pueden acompañarnos durante toda una vida. Pero, sobre todo, es la historia de una mujer que quiso vivir sin pedir permiso.',
+              subtitle:
+                'Una inmersión literaria nocturna en los pasillos de la culpa, el deseo y la búsqueda irrevocable de autonomía.',
+              hero_quote:
+                'Hay mujeres que nacen dispuestas a aceptar el mundo que les tocó vivir. Giselle no es una de ellas.',
               status: 'published',
               cover_url: '/images/giselle-2.jpg',
             }, { onConflict: 'slug' });

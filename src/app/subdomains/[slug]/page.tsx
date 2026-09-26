@@ -22,7 +22,11 @@ export async function generateMetadata({ params }: SubdomainPageProps): Promise<
 
   const title = book?.title || (slug.toLowerCase() === 'giselle' ? 'Giselle' : slug);
   const description =
-    'Hay mujeres que nacen dispuestas a aceptar el mundo que les tocó vivir. Giselle no es una de ellas. Novela oficial de Carmen Ibáñez.';
+    book?.subtitle ||
+    book?.hero_quote ||
+    book?.synopsis?.slice(0, 160) ||
+    'Novela oficial de Carmen Ibáñez.';
+  const coverImage = book?.cover_url || '/images/giselle-2.jpg';
 
   return {
     title: `${title} — Novela de Carmen Ibáñez`,
@@ -30,7 +34,7 @@ export async function generateMetadata({ params }: SubdomainPageProps): Promise<
     openGraph: {
       title: `${title} — Carmen Ibáñez`,
       description,
-      images: ['/images/giselle-2.jpg'],
+      images: [coverImage],
     },
   };
 }
@@ -53,6 +57,10 @@ export default async function BookSubdomainPage({ params }: SubdomainPageProps) 
       slug: 'giselle',
       synopsis:
         'Hay mujeres que nacen dispuestas a aceptar el mundo que les tocó vivir. Giselle no es una de ellas. En una época marcada por las apariencias, las convenciones familiares y aquello que se esperaba de una mujer, Giselle intenta construir su vida bajo sus propias reglas. Amores, decisiones, deseos, pérdidas y contradicciones irán trazando un camino en el que cada elección tendrá consecuencias. A su alrededor, otras historias también avanzan: familias que se forman, relaciones que se transforman y personajes que aman, juzgan, perdonan o abandonan. Giselle es una novela sobre la libertad, el amor, la dependencia y las decisiones que pueden acompañarnos durante toda una vida. Pero, sobre todo, es la historia de una mujer que quiso vivir sin pedir permiso.',
+      subtitle:
+        'Una inmersión literaria nocturna en los pasillos de la culpa, el deseo y la búsqueda irrevocable de autonomía.',
+      hero_quote:
+        'Hay mujeres que nacen dispuestas a aceptar el mundo que les tocó vivir. Giselle no es una de ellas.',
       status: 'published',
       cover_url: '/images/giselle-2.jpg',
       created_at: new Date().toISOString(),
@@ -65,7 +73,10 @@ export default async function BookSubdomainPage({ params }: SubdomainPageProps) 
   }
 
   const isGiselle = slug.toLowerCase() === 'giselle';
-  const coverImage = isGiselle ? '/images/giselle-2.jpg' : (book.cover_url || '/images/giselle-2.jpg');
+  const coverImage = book.cover_url || '/images/giselle-2.jpg';
+  const heroQuote = book.hero_quote || (isGiselle ? 'Hay mujeres que nacen dispuestas a aceptar el mundo que les tocó vivir. Giselle no es una de ellas.' : null);
+  const subtitle = book.subtitle || (isGiselle ? 'Una inmersión literaria nocturna en los pasillos de la culpa, el deseo y la búsqueda irrevocable de autonomía.' : null);
+  const synopsis = book.synopsis;
 
   return (
     <div
@@ -294,39 +305,43 @@ export default async function BookSubdomainPage({ params }: SubdomainPageProps) 
               Una novela de Carmen Ibáñez
             </p>
 
-            <blockquote
-              style={{
-                borderLeft: '2px solid rgba(255, 255, 255, 0.3)',
-                paddingLeft: '20px',
-                marginBottom: '36px',
-              }}
-            >
-              <p
-                className="serif-delicate"
+            {heroQuote && (
+              <blockquote
                 style={{
-                  fontSize: '1.35rem',
-                  fontStyle: 'italic',
-                  color: '#FFFFFF',
-                  lineHeight: 1.5,
-                  margin: 0,
+                  borderLeft: '2px solid rgba(255, 255, 255, 0.3)',
+                  paddingLeft: '20px',
+                  marginBottom: '36px',
                 }}
               >
-                &ldquo;Hay mujeres que nacen dispuestas a aceptar el mundo que les tocó vivir. Giselle no es una de ellas.&rdquo;
-              </p>
-            </blockquote>
+                <p
+                  className="serif-delicate"
+                  style={{
+                    fontSize: '1.35rem',
+                    fontStyle: 'italic',
+                    color: '#FFFFFF',
+                    lineHeight: 1.5,
+                    margin: 0,
+                  }}
+                >
+                  &ldquo;{heroQuote}&rdquo;
+                </p>
+              </blockquote>
+            )}
 
-            <p
-              className="montserrat-body"
-              style={{
-                fontSize: '0.98rem',
-                lineHeight: 1.85,
-                color: '#B0B0B0',
-                marginBottom: '40px',
-                maxWidth: '540px',
-              }}
-            >
-              Una inmersión literaria nocturna en los pasillos de la culpa, el deseo y la búsqueda irrevocable de autonomía.
-            </p>
+            {subtitle && (
+              <p
+                className="montserrat-body"
+                style={{
+                  fontSize: '0.98rem',
+                  lineHeight: 1.85,
+                  color: '#B0B0B0',
+                  marginBottom: '40px',
+                  maxWidth: '540px',
+                }}
+              >
+                {subtitle}
+              </p>
+            )}
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
               <a href="#sinopsis" className="btn-ivory">
@@ -400,9 +415,10 @@ export default async function BookSubdomainPage({ params }: SubdomainPageProps) 
                 textAlign: 'justify',
                 marginBottom: '32px',
                 fontWeight: 300,
+                whiteSpace: 'pre-line',
               }}
             >
-              Hay mujeres que nacen dispuestas a aceptar el mundo que les tocó vivir. Giselle no es una de ellas. En una época marcada por las apariencias, las convenciones familiares y aquello que se esperaba de una mujer, Giselle intenta construir su vida bajo sus propias reglas. Amores, decisiones, deseos, pérdidas y contradicciones irán trazando un camino en el que cada elección tendrá consecuencias. A su alrededor, otras historias también avanzan: familias que se forman, relaciones que se transforman y personajes que aman, juzgan, perdonan o abandonan. Giselle es una novela sobre la libertad, el amor, la dependencia y las decisiones que pueden acompañarnos durante toda una vida. Pero, sobre todo, es la historia de una mujer que quiso vivir sin pedir permiso.
+              {synopsis}
             </p>
 
             <div
@@ -583,7 +599,7 @@ export default async function BookSubdomainPage({ params }: SubdomainPageProps) 
                   lineHeight: 1.3,
                 }}
               >
-                Club de lectura de Giselle
+                Club de lectura de {book.title}
               </h3>
               <p
                 className="montserrat-body"
@@ -795,7 +811,7 @@ export default async function BookSubdomainPage({ params }: SubdomainPageProps) 
               margin: 0,
             }}
           >
-            © 2026 Carmen Ibáñez. Micro-sitio literario de Giselle. Todos los derechos reservados.
+            © 2026 Carmen Ibáñez. Micro-sitio literario de {book.title}. Todos los derechos reservados.
           </p>
         </div>
       </footer>

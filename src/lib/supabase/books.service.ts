@@ -64,6 +64,8 @@ export class BooksService {
         title: validatedData.title,
         slug: validatedData.slug,
         synopsis: validatedData.synopsis,
+        subtitle: validatedData.subtitle || null,
+        hero_quote: validatedData.hero_quote || null,
         status: validatedData.status as BookStatus,
         cover_url: validatedData.cover_url || null,
       })
@@ -88,6 +90,8 @@ export class BooksService {
     if (updateFields.title !== undefined) updatePayload.title = updateFields.title;
     if (updateFields.slug !== undefined) updatePayload.slug = updateFields.slug;
     if (updateFields.synopsis !== undefined) updatePayload.synopsis = updateFields.synopsis;
+    if (updateFields.subtitle !== undefined) updatePayload.subtitle = updateFields.subtitle || null;
+    if (updateFields.hero_quote !== undefined) updatePayload.hero_quote = updateFields.hero_quote || null;
     if (updateFields.status !== undefined) updatePayload.status = updateFields.status as BookStatus;
     if (updateFields.cover_url !== undefined) updatePayload.cover_url = updateFields.cover_url || null;
 

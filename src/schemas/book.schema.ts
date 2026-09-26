@@ -59,6 +59,22 @@ export const bookBaseSchema = z.object({
     .trim()
     .min(10, 'La sinopsis debe contener al menos 10 caracteres'),
 
+  subtitle: z
+    .string()
+    .trim()
+    .max(500, 'La bajada no puede exceder 500 caracteres')
+    .nullable()
+    .optional()
+    .or(z.literal('')),
+
+  hero_quote: z
+    .string()
+    .trim()
+    .max(500, 'La frase destacada no puede exceder 500 caracteres')
+    .nullable()
+    .optional()
+    .or(z.literal('')),
+
   status: z.enum(BOOK_STATUSES, {
     errorMap: () => ({ message: 'El estado debe ser: draft, writing o published' }),
   }).default('draft'),

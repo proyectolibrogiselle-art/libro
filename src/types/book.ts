@@ -30,6 +30,12 @@ export interface Book {
   /** Sinopsis y contenido en formato Rich Text (Markdown o HTML enriquecido) */
   synopsis: string;
 
+  /** Bajada del libro o subtítulo descriptivo */
+  subtitle?: string | null;
+
+  /** Frase destacada (Hero Quote) */
+  hero_quote?: string | null;
+
   /** Estado de publicación en el CMS */
   status: BookStatus;
 
@@ -48,6 +54,8 @@ export interface CreateBookDTO {
   title: string;
   slug: string;
   synopsis: string;
+  subtitle?: string | null;
+  hero_quote?: string | null;
   status?: BookStatus;
   cover_url?: string | null;
 }
