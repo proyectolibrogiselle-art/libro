@@ -6,6 +6,14 @@ import { Book } from '@/types/book';
 import { Author, EventItem, GalleryItem, News } from '@/types/entities';
 import PublicationsCarousel from '@/components/PublicationsCarousel';
 import GalleryMarquee from '@/components/GalleryMarquee';
+import {
+  CalendarIcon,
+  PinIcon,
+  ArrowRightIcon,
+  ChevronDownIcon,
+  BookIcon,
+  QuillIcon
+} from '@/components/Icons';
 
 // Revalidación periódica (ISR)
 export const revalidate = 60;
@@ -62,7 +70,7 @@ export default async function HomePage() {
     },
   ];
 
-  // Fallbacks de alta estética editorial para Eventos si aún no hay registros creados en Supabase
+  // Fallbacks editoriales para Eventos si aún no hay registros creados en Supabase
   const displayEvents: EventItem[] = eventsList.length > 0 ? eventsList : [
     {
       id: 'evento-1',
@@ -104,7 +112,7 @@ export default async function HomePage() {
     {
       id: 'gal-1',
       title: 'Retrato de Autor: Mirada Literaria',
-      description: 'Sesión oficial en blanco y negro para la presentación de la obra.',
+      description: 'Sesión oficial en tonalidad cálida para la presentación de la obra.',
       image_url: '/images/giselle-portada.png',
       category: 'Inspiración',
       created_at: new Date().toISOString(),
@@ -121,8 +129,8 @@ export default async function HomePage() {
     },
     {
       id: 'gal-3',
-      title: 'Manuscritos y Notas de Creación',
-      description: 'Anotaciones sobre los vínculos, mandatos familiares y la voz de Giselle.',
+      title: 'Atmósferas y Escenarios de Época',
+      description: 'Luces de farol, arquitectura clásica y claroscuros que inspiraron el mundo de Giselle.',
       image_url: '/images/giselle-portada.png',
       category: 'Eventos',
       created_at: new Date().toISOString(),
@@ -130,196 +138,215 @@ export default async function HomePage() {
     },
   ];
 
+  const authorPhoto = author?.profile_image_url || '/images/giselle-portada.png';
+
   return (
     <div
       style={{
-        backgroundColor: '#FAFAFA',
-        color: '#121212',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
       }}
     >
-      {/* 1. NAVEGACIÓN PRINCIPAL SOBRIA EN BLANCO Y NEGRO (RESPONSIVE HEADER NAV CON DRAWER MÓVIL) */}
+      {/* 1. NAVEGACIÓN PRINCIPAL: ORO EDITORIAL */}
       <HeaderNav />
 
-      {/* 2. HERO SECTION: LOOK EDITORIAL EN BLANCO Y NEGRO (#INICIO) */}
+      {/* 2. HERO PRINCIPAL: "PRIMERO VEMOS A CARMEN. DESPUÉS DESCUBRIMOS A LA AUTORA." */}
       <section
         id="inicio"
         style={{
-          padding: '80px 24px 100px',
+          padding: '40px 24px 80px',
           maxWidth: '1240px',
           margin: '0 auto',
           width: '100%',
         }}
       >
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-            gap: '64px',
-            alignItems: 'center',
-          }}
-        >
-          {/* Columna Izquierda: Identidad y Proclama Literaria */}
-          <div>
-            <div
+        {/* ACTO I: EL IMPACTO VISUAL — LA FOTOGRAFÍA PROTAGONISTA CENTRADA */}
+        <div className="hero-portrait-stage">
+          {/* Pequeño sello ceremonial superior */}
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '10px',
+              padding: '4px 18px',
+              marginBottom: '26px',
+            }}
+          >
+            <span style={{ fontSize: '0.8rem', color: 'var(--accent-burgundy)' }}>✦</span>
+            <span
+              className="cinzel-heading"
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '6px 16px',
-                borderRadius: '9999px',
-                border: '1px solid rgba(18, 18, 18, 0.15)',
-                backgroundColor: 'rgba(18, 18, 18, 0.03)',
-                marginBottom: '28px',
+                fontSize: '0.74rem',
+                color: 'var(--text-secondary)',
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                fontWeight: 600,
               }}
             >
-              <span style={{ fontSize: '0.72rem', color: '#121212', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 500 }}>
-                Autora chilena · Narrativa contemporánea
-              </span>
-            </div>
+              Edición Oficial de Colección
+            </span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--accent-burgundy)' }}>✦</span>
+          </div>
 
-            <div className="ink-stroke-wrapper" style={{ marginBottom: '18px' }}>
-              <h1
-                className="cinzel-heading ink-stroke-text"
-                style={{
-                  fontSize: 'clamp(2.8rem, 5.5vw, 4.2rem)',
-                  fontWeight: 600,
-                  lineHeight: 1.12,
-                  letterSpacing: '0.03em',
-                  margin: 0,
-                  color: '#1A1A1A',
-                }}
-              >
-                Carmen Ibáñez
-              </h1>
-              <span className="ink-pen-tip" aria-hidden="true" />
-            </div>
+          {/* Marco arquitectónico de lujo para la fotografía de Carmen */}
+          <div className="hero-portrait-frame">
+            {/* Esquinas de relojero grabadas */}
+            <span className="hero-corner-mark hero-corner-tl" />
+            <span className="hero-corner-mark hero-corner-tr" />
+            <span className="hero-corner-mark hero-corner-bl" />
+            <span className="hero-corner-mark hero-corner-br" />
 
-            <div className="fade-in-ink-hero-details">
-              <p
-                className="serif-delicate"
-                style={{
-                  fontSize: '1.45rem',
-                  fontStyle: 'italic',
-                  color: '#404040',
-                  lineHeight: 1.5,
-                  marginBottom: '24px',
-                }}
-              >
-                Historias que también viven en nosotras
-              </p>
-
-              <p
-                className="montserrat-body"
-                style={{
-                  fontSize: '1.02rem',
-                  lineHeight: 1.9,
-                  color: '#525252',
-                  maxWidth: '520px',
-                  marginBottom: '36px',
-                }}
-              >
-                Una exploración literaria íntima de los vínculos, las emociones ocultas y aquellas elecciones capaces de transformar el destino de las personas.
-              </p>
-
-              <div
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: '16px',
-                  alignItems: 'center',
-                }}
-              >
-                <Link href="/subdomains/giselle" className="btn-noir">
-                  Ingresar a la obra Giselle →
-                </Link>
-                <a href="#la-autora" className="btn-noir-outline">
-                  Sobre la autora
-                </a>
-              </div>
-
-              {/* Cita en bloque tipográfico */}
-              <div
-                style={{
-                  marginTop: '44px',
-                  paddingLeft: '20px',
-                  borderLeft: '2px solid #121212',
-                }}
-              >
-                <p
-                  className="serif-delicate"
-                  style={{
-                    fontSize: '1.08rem',
-                    fontStyle: 'italic',
-                    color: '#262626',
-                    lineHeight: 1.7,
-                  }}
-                >
-                  &ldquo;Escribe desde la observación de las emociones y de aquello que muchas veces permanece oculto detrás de las apariencias.&rdquo;
-                </p>
-              </div>
+            <div className="hero-portrait-inner">
+              <img
+                src={authorPhoto}
+                alt={`${author?.name || 'Carmen Ibáñez'} — Retrato oficial de la autora`}
+                className="hero-portrait-img"
+              />
             </div>
           </div>
 
-          {/* Columna Derecha: Fotografía Oficial en Blanco y Negro */}
-          <div style={{ position: 'relative' }} className="fade-in-ink-hero-details">
-            <div
+          {/* Cartel discreto de presentación inicial al pie de la foto */}
+          <div style={{ marginTop: '22px', textAlign: 'center' }}>
+            <p
+              className="cinzel-heading"
               style={{
-                position: 'relative',
-                borderRadius: '16px',
-                overflow: 'hidden',
-                backgroundColor: '#121212',
-                boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.25)',
-                border: '1px solid rgba(18, 18, 18, 0.12)',
+                fontSize: '1.25rem',
+                color: 'var(--text-primary)',
+                letterSpacing: '0.08em',
+                margin: 0,
+                fontWeight: 600,
               }}
             >
-              <img
-                src={author?.profile_image_url || "/images/giselle-portada.png"}
-                alt={`${author?.name || 'Carmen Ibáñez'} — Fotografía oficial de la autora`}
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  maxHeight: '620px',
-                  objectFit: 'cover',
-                  display: 'block',
-                  filter: 'grayscale(100%) contrast(108%)',
-                }}
-              />
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%)',
-                  padding: '30px 24px 20px',
-                  color: '#FAFAFA',
-                }}
-              >
-                <p className="cinzel-heading" style={{ fontSize: '1rem', letterSpacing: '0.04em', margin: 0 }}>
-                  {author?.name || 'Carmen Ibáñez'}
-                </p>
-                <p className="montserrat-body" style={{ fontSize: '0.82rem', color: '#D4D4D4', margin: 0 }}>
-                  Retrato literario oficial
-                </p>
-              </div>
-            </div>
+              {author?.name || 'Carmen Ibáñez'}
+            </p>
+          </div>
+
+          {/* Indicador suave que invita a descubrir a la autora con el scroll */}
+          <a href="#descubrir-autora" className="hero-scroll-cue">
+            <span>Descubrir la obra</span>
+            <ChevronDownIcon size={16} />
+          </a>
+        </div>
+
+        {/* ACTO II: LA REVELACIÓN EDITORIAL — EL MUNDO DE LA AUTORA */}
+        <div
+          id="descubrir-autora"
+          style={{
+            marginTop: '80px',
+            paddingTop: '60px',
+            borderTop: '1px solid var(--border-primary)',
+            textAlign: 'center',
+            maxWidth: '920px',
+            marginInline: 'auto',
+          }}
+        >
+          {/* Badge Borgoña con ribete dorado */}
+          <div style={{ marginBottom: '24px' }}>
+            <span className="luxury-badge-burgundy">
+              Autora chilena · Narrativa contemporánea
+            </span>
+          </div>
+
+          {/* Nombre Monumental */}
+          <h1
+            className="cinzel-decorative"
+            style={{
+              fontSize: 'clamp(2.6rem, 5.2vw, 4.2rem)',
+              fontWeight: 700,
+              lineHeight: 1.12,
+              letterSpacing: '0.04em',
+              marginBottom: '16px',
+              color: 'var(--text-primary)',
+            }}
+          >
+            {author?.name || 'Carmen Ibáñez'}
+          </h1>
+
+          {/* Lema Poético: "Historias que también viven en nosotras" */}
+          <p
+            className="serif-delicate"
+            style={{
+              fontSize: 'clamp(1.5rem, 2.8vw, 2.3rem)',
+              fontStyle: 'italic',
+              color: 'var(--text-primary)',
+              lineHeight: 1.45,
+              marginBottom: '26px',
+              fontWeight: 500,
+            }}
+          >
+            &ldquo;Historias que también viven en nosotras&rdquo;
+          </p>
+
+          {/* Prosa de Presentación */}
+          <p
+            className="montserrat-body"
+            style={{
+              fontSize: '1.05rem',
+              lineHeight: 1.9,
+              color: 'var(--text-secondary)',
+              maxWidth: '680px',
+              margin: '0 auto 38px',
+            }}
+          >
+            Una exploración literaria íntima de los vínculos, las emociones ocultas y aquellas elecciones capaces de transformar el destino de las personas.
+          </p>
+
+          {/* Botones Principales de Acción */}
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '16px',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: '52px',
+            }}
+          >
+            <Link href="/subdomains/giselle" className="btn-burgundy">
+              <span>Ingresar a la obra Giselle</span>
+              <ArrowRightIcon size={16} />
+            </Link>
+            <a href="#la-autora" className="btn-editorial-outline">
+              <span>Conocer su trayectoria</span>
+            </a>
+          </div>
+
+          {/* Cita en Bloque Editorial con Líneas Finas */}
+          <div
+            className="editorial-card"
+            style={{
+              padding: '30px 36px',
+              maxWidth: '740px',
+              margin: '0 auto',
+              textAlign: 'center',
+            }}
+          >
+            <p
+              className="serif-delicate"
+              style={{
+                fontSize: '1.18rem',
+                fontStyle: 'italic',
+                color: 'var(--text-primary)',
+                lineHeight: 1.7,
+                margin: 0,
+              }}
+            >
+              &ldquo;Escribe desde la observación de las emociones y de aquello que muchas veces permanece oculto detrás de las apariencias.&rdquo;
+            </p>
           </div>
         </div>
       </section>
 
-      {/* 3. SECCIÓN: SOBRE LA AUTORA (MEJORA 4: #LA-AUTORA) */}
+      {/* 3. SECCIÓN: LA AUTORA (SEMBLANZA BIOGRÁFICA Y TEMÁTICA) */}
       <section
         id="la-autora"
-        className="fade-in-editorial-sobre-mi"
         style={{
-          backgroundColor: '#FFFFFF',
           padding: '110px 24px',
-          borderTop: '1px solid rgba(18, 18, 18, 0.08)',
-          borderBottom: '1px solid rgba(18, 18, 18, 0.08)',
+          borderTop: '1px solid var(--border-primary)',
+          borderBottom: '1px solid var(--border-primary)',
+          backgroundColor: 'rgba(128, 107, 67, 0.16)',
         }}
       >
         <div
@@ -330,15 +357,8 @@ export default async function HomePage() {
         >
           <div style={{ textAlign: 'center', marginBottom: '56px' }}>
             <span
-              className="cinzel-heading"
-              style={{
-                fontSize: '0.82rem',
-                color: '#737373',
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                display: 'block',
-                marginBottom: '12px',
-              }}
+              className="luxury-badge-gold"
+              style={{ marginBottom: '14px' }}
             >
               Semblanza literaria
             </span>
@@ -346,99 +366,310 @@ export default async function HomePage() {
               className="serif-delicate"
               style={{
                 fontSize: 'clamp(2.4rem, 4vw, 3.2rem)',
-                fontWeight: 500,
+                fontWeight: 600,
                 lineHeight: 1.2,
-                color: '#121212',
+                color: 'var(--text-primary)',
+                marginBottom: '12px',
               }}
             >
-              Sobre la autora
+              Sobre Carmen Ibáñez
             </h2>
+            <p
+              className="serif-delicate"
+              style={{
+                fontSize: '1.15rem',
+                fontStyle: 'italic',
+                color: 'var(--text-secondary)',
+              }}
+            >
+              Voz literaria de la narrativa contemporánea chilena
+            </p>
           </div>
 
+          {/* Biografía en Tarjeta Pergamino */}
           <div
+            className="editorial-card"
             style={{
-              maxWidth: '860px',
-              margin: '0 auto',
+              padding: '48px 44px',
+              marginBottom: '48px',
             }}
           >
-            {/* Texto Real Oficial */}
             <p
               className="montserrat-body"
               style={{
-                fontSize: '1.18rem',
-                lineHeight: 2.1,
-                color: '#262626',
-                textAlign: 'justify',
-                marginBottom: '32px',
-                fontWeight: 300,
-                whiteSpace: 'pre-line',
+                fontSize: '1.02rem',
+                lineHeight: 2.0,
+                color: 'var(--text-primary)',
+                marginBottom: '24px',
               }}
             >
-              {author?.bio_long || author?.bio_short || 'Carmen Ibáñez es una autora chilena que encuentra en la escritura una forma de explorar las emociones, las decisiones y las contradicciones que marcan la vida de las personas, especialmente el universo femenino. Su narrativa pone especial atención en los vínculos, el amor, la familia, la libertad, la culpa y aquellas elecciones capaces de cambiar una vida completa. Escribe desde la observación de las emociones y de aquello que muchas veces permanece oculto detrás de las apariencias.'}
+              {author?.bio_long ||
+                'Carmen Ibáñez es una escritora y autora cuya obra se sumerge en las profundidades de la experiencia humana, las complejidades de los lazos afectivos y la búsqueda irrevocable de autonomía femenina. Con una mirada aguda, sensible y sin concesiones, su literatura explora aquellos momentos bisagra en los que una decisión íntima altera para siempre el rumbo de una vida.'}
             </p>
-
-            {/* Pilares Temáticos en Tarjetas Escala de Grises */}
-            <div
+            <p
+              className="montserrat-body"
               style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-                gap: '24px',
-                marginTop: '48px',
+                fontSize: '1.02rem',
+                lineHeight: 2.0,
+                color: 'var(--text-secondary)',
+                margin: 0,
+              }}
+            >
+              {author?.bio_short ||
+                'A través de su primera novela, Giselle, consolida una propuesta narrativa de atmósferas envolventes, donde las expectativas familiares, los amores silenciosos y los dilemas morales se entrelazan con la fuerza de una prosa elegante y evocadora.'}
+            </p>
+          </div>
+
+          {/* Grilla con los 3 Pilares Temáticos de su Literatura */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '28px',
+            }}
+          >
+            <div
+              className="editorial-card"
+              style={{
+                padding: '32px 28px',
               }}
             >
               <div
-                className="glass-ivory-card"
                 style={{
-                  padding: '28px 24px',
-                  border: '1px solid rgba(18, 18, 18, 0.08)',
+                  width: '42px',
+                  height: '42px',
+                  borderRadius: '50%',
+                  backgroundColor: 'var(--accent-burgundy)',
+                  color: '#FAF7F2',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '18px',
                 }}
               >
-                <p className="cinzel-heading" style={{ fontSize: '0.92rem', fontWeight: 600, marginBottom: '10px', color: '#121212' }}>
-                  El universo femenino
-                </p>
-                <p className="montserrat-body" style={{ fontSize: '0.88rem', color: '#525252', lineHeight: 1.7 }}>
-                  La mirada íntima sobre los anhelos, contradicciones y mandatos que atraviesan la vida de las mujeres.
-                </p>
+                <QuillIcon size={20} />
               </div>
+              <h3
+                className="cinzel-heading"
+                style={{
+                  fontSize: '1.08rem',
+                  fontWeight: 600,
+                  color: 'var(--text-primary)',
+                  marginBottom: '10px',
+                }}
+              >
+                Narrativa íntima
+              </h3>
+              <p
+                className="montserrat-body"
+                style={{
+                  fontSize: '0.92rem',
+                  lineHeight: 1.75,
+                  color: 'var(--text-secondary)',
+                  margin: 0,
+                }}
+              >
+                Exploración psicológica de los afectos, los silencios compartidos y las tensiones que habitan los vínculos humanos más cercanos.
+              </p>
+            </div>
 
+            <div
+              className="editorial-card"
+              style={{
+                padding: '32px 28px',
+              }}
+            >
               <div
-                className="glass-ivory-card"
                 style={{
-                  padding: '28px 24px',
-                  border: '1px solid rgba(18, 18, 18, 0.08)',
+                  width: '42px',
+                  height: '42px',
+                  borderRadius: '50%',
+                  backgroundColor: 'var(--accent-burgundy)',
+                  color: '#FAF7F2',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '18px',
                 }}
               >
-                <p className="cinzel-heading" style={{ fontSize: '0.92rem', fontWeight: 600, marginBottom: '10px', color: '#121212' }}>
-                  Vínculos y libertad
-                </p>
-                <p className="montserrat-body" style={{ fontSize: '0.88rem', color: '#525252', lineHeight: 1.7 }}>
-                  El amor, la familia y la búsqueda constante de vivir bajo las propias reglas sin pedir permiso.
-                </p>
+                <BookIcon size={20} />
               </div>
+              <h3
+                className="cinzel-heading"
+                style={{
+                  fontSize: '1.08rem',
+                  fontWeight: 600,
+                  color: 'var(--text-primary)',
+                  marginBottom: '10px',
+                }}
+              >
+                Ficción y realidad
+              </h3>
+              <p
+                className="montserrat-body"
+                style={{
+                  fontSize: '0.92rem',
+                  lineHeight: 1.75,
+                  color: 'var(--text-secondary)',
+                  margin: 0,
+                }}
+              >
+                Tramas tejidas con el pulso de las vivencias reales, ancladas en épocas de transformación cultural y arquitecturas con memoria.
+              </p>
+            </div>
 
+            <div
+              className="editorial-card"
+              style={{
+                padding: '32px 28px',
+              }}
+            >
               <div
-                className="glass-ivory-card"
                 style={{
-                  padding: '28px 24px',
-                  border: '1px solid rgba(18, 18, 18, 0.08)',
+                  width: '42px',
+                  height: '42px',
+                  borderRadius: '50%',
+                  backgroundColor: 'var(--accent-burgundy)',
+                  color: '#FAF7F2',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '18px',
                 }}
               >
-                <p className="cinzel-heading" style={{ fontSize: '0.92rem', fontWeight: 600, marginBottom: '10px', color: '#121212' }}>
-                  Decisiones y destino
-                </p>
-                <p className="montserrat-body" style={{ fontSize: '0.88rem', color: '#525252', lineHeight: 1.7 }}>
-                  Elecciones trascendentales y aquello que permanece oculto detrás de la superficie social.
-                </p>
+                <span style={{ fontSize: '1.2rem', color: '#D6BD7A' }}>✦</span>
               </div>
+              <h3
+                className="cinzel-heading"
+                style={{
+                  fontSize: '1.08rem',
+                  fontWeight: 600,
+                  color: 'var(--text-primary)',
+                  marginBottom: '10px',
+                }}
+              >
+                Dilemas humanos
+              </h3>
+              <p
+                className="montserrat-body"
+                style={{
+                  fontSize: '0.92rem',
+                  lineHeight: 1.75,
+                  color: 'var(--text-secondary)',
+                  margin: 0,
+                }}
+              >
+                Elecciones trascendentales donde la libertad, el perdón y el anhelo de autenticidad se enfrentan a los mandatos sociales.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. SECCIÓN: PUBLICACIONES CON CARRUSEL COVER FLOW TRIDIMENSIONAL (MEJORAS 4 Y 5: #PUBLICACIONES) */}
+      {/* 4. SECCIÓN: MANIFIESTO EDITORIAL (COMO PÁGINA DE LIBRO DE LUJO) */}
+      <section
+        id="manifiesto"
+        style={{
+          padding: '130px 24px',
+          maxWidth: '920px',
+          margin: '0 auto',
+          width: '100%',
+          textAlign: 'center',
+        }}
+      >
+        <div
+          style={{
+            padding: '56px 48px',
+            borderTop: '1.5px solid var(--border-metallic)',
+            borderBottom: '1.5px solid var(--border-metallic)',
+            position: 'relative',
+          }}
+        >
+          <span
+            style={{
+              position: 'absolute',
+              top: '-12px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              backgroundColor: 'var(--bg-primary)',
+              padding: '0 18px',
+              color: 'var(--accent-burgundy)',
+              fontSize: '1rem',
+            }}
+          >
+            ✦
+          </span>
+
+          <span
+            className="cinzel-heading"
+            style={{
+              fontSize: '0.78rem',
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: 'var(--text-secondary)',
+              display: 'block',
+              marginBottom: '24px',
+              fontWeight: 600,
+            }}
+          >
+            Manifiesto Literario
+          </span>
+
+          <blockquote
+            className="serif-delicate"
+            style={{
+              fontSize: 'clamp(1.6rem, 3.2vw, 2.4rem)',
+              fontStyle: 'italic',
+              color: 'var(--text-primary)',
+              lineHeight: 1.5,
+              margin: '0 auto 28px',
+              maxWidth: '720px',
+            }}
+          >
+            &ldquo;Escribir no es inventar vidas ajenas, sino encender una lámpara en los rincones donde todas nos reconocemos.&rdquo;
+          </blockquote>
+
+          <div
+            style={{
+              width: '60px',
+              height: '1px',
+              backgroundColor: 'var(--border-primary)',
+              margin: '0 auto 20px',
+            }}
+          />
+
+          <p
+            className="cinzel-heading"
+            style={{
+              fontSize: '0.92rem',
+              color: 'var(--text-secondary)',
+              letterSpacing: '0.06em',
+              margin: 0,
+            }}
+          >
+            Carmen Ibáñez
+          </p>
+
+          <span
+            style={{
+              position: 'absolute',
+              bottom: '-12px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              backgroundColor: 'var(--bg-primary)',
+              padding: '0 18px',
+              color: 'var(--accent-burgundy)',
+              fontSize: '1rem',
+            }}
+          >
+            ✦
+          </span>
+        </div>
+      </section>
+
+      {/* 5. SECCIÓN: PUBLICACIONES (COVER FLOW 3D) */}
       <section
         id="publicaciones"
-        className="fade-in-editorial-novela"
         style={{
           padding: '110px 24px',
           maxWidth: '1240px',
@@ -448,15 +679,8 @@ export default async function HomePage() {
       >
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <span
-            className="cinzel-heading"
-            style={{
-              fontSize: '0.82rem',
-              color: '#737373',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              display: 'block',
-              marginBottom: '12px',
-            }}
+            className="luxury-badge-gold"
+            style={{ marginBottom: '14px' }}
           >
             Catálogo de Obras
           </span>
@@ -464,9 +688,9 @@ export default async function HomePage() {
             className="serif-delicate"
             style={{
               fontSize: 'clamp(2.4rem, 4vw, 3.2rem)',
-              fontWeight: 500,
+              fontWeight: 600,
               lineHeight: 1.2,
-              color: '#121212',
+              color: 'var(--text-primary)',
               marginBottom: '14px',
             }}
           >
@@ -475,7 +699,7 @@ export default async function HomePage() {
           <p
             className="montserrat-body"
             style={{
-              color: '#666666',
+              color: 'var(--text-secondary)',
               fontSize: '1rem',
               maxWidth: '580px',
               margin: '0 auto',
@@ -485,19 +709,18 @@ export default async function HomePage() {
           </p>
         </div>
 
-        {/* COMPONENTE INTERACTIVO 3D STACKED / COVER FLOW */}
+        {/* Componente Interactivo Cover Flow 3D */}
         <PublicationsCarousel books={displayBooks} />
       </section>
 
-      {/* 5. SECCIÓN: NOTICIAS Y PRENSA (MEJORA 4: #NOTICIAS) */}
+      {/* 6. SECCIÓN: NOTICIAS Y PRENSA */}
       <section
         id="noticias"
-        className="fade-in-editorial-novedades"
         style={{
-          backgroundColor: '#FFFFFF',
           padding: '110px 24px',
-          borderTop: '1px solid rgba(18, 18, 18, 0.08)',
-          borderBottom: '1px solid rgba(18, 18, 18, 0.08)',
+          borderTop: '1px solid var(--border-primary)',
+          borderBottom: '1px solid var(--border-primary)',
+          backgroundColor: 'rgba(128, 107, 67, 0.16)',
         }}
       >
         <div
@@ -508,15 +731,8 @@ export default async function HomePage() {
         >
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
             <span
-              className="cinzel-heading"
-              style={{
-                fontSize: '0.82rem',
-                color: '#737373',
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                display: 'block',
-                marginBottom: '12px',
-              }}
+              className="luxury-badge-gold"
+              style={{ marginBottom: '14px' }}
             >
               Actualidad editorial
             </span>
@@ -524,9 +740,9 @@ export default async function HomePage() {
               className="serif-delicate"
               style={{
                 fontSize: 'clamp(2.4rem, 4vw, 3.2rem)',
-                fontWeight: 500,
+                fontWeight: 600,
                 lineHeight: 1.2,
-                color: '#121212',
+                color: 'var(--text-primary)',
               }}
             >
               Noticias y Prensa
@@ -544,10 +760,9 @@ export default async function HomePage() {
               newsList.map((item) => (
                 <article
                   key={item.id}
-                  className="glass-ivory-card"
+                  className="editorial-card"
                   style={{
                     padding: '36px 30px',
-                    border: '1px solid rgba(18, 18, 18, 0.08)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
@@ -557,13 +772,17 @@ export default async function HomePage() {
                     <span
                       style={{
                         fontSize: '0.74rem',
-                        color: '#737373',
+                        color: 'var(--accent-burgundy)',
                         letterSpacing: '0.06em',
                         textTransform: 'uppercase',
-                        display: 'block',
-                        marginBottom: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        marginBottom: '14px',
+                        fontWeight: 600,
                       }}
                     >
+                      <CalendarIcon size={14} />
                       {new Date(item.published_at).toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' })}
                     </span>
                     <h3
@@ -572,7 +791,7 @@ export default async function HomePage() {
                         fontSize: '1.45rem',
                         fontWeight: 600,
                         marginBottom: '14px',
-                        color: '#121212',
+                        color: 'var(--text-primary)',
                         lineHeight: 1.3,
                       }}
                     >
@@ -582,7 +801,7 @@ export default async function HomePage() {
                       className="montserrat-body"
                       style={{
                         fontSize: '0.92rem',
-                        color: '#525252',
+                        color: 'var(--text-secondary)',
                         lineHeight: 1.75,
                       }}
                     >
@@ -595,25 +814,25 @@ export default async function HomePage() {
                       className="montserrat-body"
                       style={{
                         fontSize: '0.86rem',
-                        fontWeight: 500,
-                        color: '#121212',
-                        textDecoration: 'underline',
-                        textUnderlineOffset: '4px',
+                        fontWeight: 600,
+                        color: 'var(--accent-burgundy)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
                       }}
                     >
-                      Leer artículo completo →
+                      <span>Leer artículo</span>
+                      <ArrowRightIcon size={14} />
                     </Link>
                   </div>
                 </article>
               ))
             ) : (
               <>
-                {/* Noticia Curada 1 */}
                 <article
-                  className="glass-ivory-card"
+                  className="editorial-card"
                   style={{
                     padding: '36px 30px',
-                    border: '1px solid rgba(18, 18, 18, 0.08)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
@@ -623,14 +842,18 @@ export default async function HomePage() {
                     <span
                       style={{
                         fontSize: '0.74rem',
-                        color: '#737373',
+                        color: 'var(--accent-burgundy)',
                         letterSpacing: '0.06em',
                         textTransform: 'uppercase',
-                        display: 'block',
-                        marginBottom: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        marginBottom: '14px',
+                        fontWeight: 600,
                       }}
                     >
-                      Lanzamiento oficial
+                      <CalendarIcon size={14} />
+                      24 de Septiembre, 2026
                     </span>
                     <h3
                       className="serif-delicate"
@@ -638,21 +861,21 @@ export default async function HomePage() {
                         fontSize: '1.45rem',
                         fontWeight: 600,
                         marginBottom: '14px',
-                        color: '#121212',
+                        color: 'var(--text-primary)',
                         lineHeight: 1.3,
                       }}
                     >
-                      La gestación de Giselle: un viaje hacia la libertad personal
+                      Entrevista exclusiva: El nacimiento del universo de Giselle
                     </h3>
                     <p
                       className="montserrat-body"
                       style={{
                         fontSize: '0.92rem',
-                        color: '#525252',
+                        color: 'var(--text-secondary)',
                         lineHeight: 1.75,
                       }}
                     >
-                      Un recorrido por el proceso creativo detrás de la novela, las preguntas iniciales sobre el universo femenino y las decisiones que marcaron a sus personajes.
+                      Carmen Ibáñez reflexiona sobre la génesis de su novela, las complejidades de ambientar una historia de época y la rebeldía de sus personajes.
                     </p>
                   </div>
                   <div style={{ marginTop: '24px' }}>
@@ -661,23 +884,23 @@ export default async function HomePage() {
                       className="montserrat-body"
                       style={{
                         fontSize: '0.86rem',
-                        fontWeight: 500,
-                        color: '#121212',
-                        textDecoration: 'underline',
-                        textUnderlineOffset: '4px',
+                        fontWeight: 600,
+                        color: 'var(--accent-burgundy)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
                       }}
                     >
-                      Conocer más →
+                      <span>Leer artículo</span>
+                      <ArrowRightIcon size={14} />
                     </Link>
                   </div>
                 </article>
 
-                {/* Noticia Curada 2 */}
                 <article
-                  className="glass-ivory-card"
+                  className="editorial-card"
                   style={{
                     padding: '36px 30px',
-                    border: '1px solid rgba(18, 18, 18, 0.08)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
@@ -687,14 +910,18 @@ export default async function HomePage() {
                     <span
                       style={{
                         fontSize: '0.74rem',
-                        color: '#737373',
+                        color: 'var(--accent-burgundy)',
                         letterSpacing: '0.06em',
                         textTransform: 'uppercase',
-                        display: 'block',
-                        marginBottom: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        marginBottom: '14px',
+                        fontWeight: 600,
                       }}
                     >
-                      Club de lectura
+                      <CalendarIcon size={14} />
+                      15 de Septiembre, 2026
                     </span>
                     <h3
                       className="serif-delicate"
@@ -702,46 +929,46 @@ export default async function HomePage() {
                         fontSize: '1.45rem',
                         fontWeight: 600,
                         marginBottom: '14px',
-                        color: '#121212',
+                        color: 'var(--text-primary)',
                         lineHeight: 1.3,
                       }}
                     >
-                      Primer capítulo disponible para lectoras registradas
+                      Crítica literaria: La vigencia del deseo de libertad femenina
                     </h3>
                     <p
                       className="montserrat-body"
                       style={{
                         fontSize: '0.92rem',
-                        color: '#525252',
+                        color: 'var(--text-secondary)',
                         lineHeight: 1.75,
                       }}
                     >
-                      Acceso prioritario a las páginas de apertura antes de la llegada de la novela a las librerías. Inscripciones abiertas a la comunidad de lectoras.
+                      Un análisis detallado de los hilos temáticos que tejen la trama de Giselle y su diálogo con los desafíos afectivos contemporáneos.
                     </p>
                   </div>
                   <div style={{ marginTop: '24px' }}>
                     <Link
-                      href="/subdomains/giselle#club-lectura"
+                      href="/subdomains/giselle"
                       className="montserrat-body"
                       style={{
                         fontSize: '0.86rem',
-                        fontWeight: 500,
-                        color: '#121212',
-                        textDecoration: 'underline',
-                        textUnderlineOffset: '4px',
+                        fontWeight: 600,
+                        color: 'var(--accent-burgundy)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
                       }}
                     >
-                      Unirse al club →
+                      <span>Leer artículo</span>
+                      <ArrowRightIcon size={14} />
                     </Link>
                   </div>
                 </article>
 
-                {/* Noticia Curada 3 */}
                 <article
-                  className="glass-ivory-card"
+                  className="editorial-card"
                   style={{
                     padding: '36px 30px',
-                    border: '1px solid rgba(18, 18, 18, 0.08)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
@@ -751,14 +978,18 @@ export default async function HomePage() {
                     <span
                       style={{
                         fontSize: '0.74rem',
-                        color: '#737373',
+                        color: 'var(--accent-burgundy)',
                         letterSpacing: '0.06em',
                         textTransform: 'uppercase',
-                        display: 'block',
-                        marginBottom: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        marginBottom: '14px',
+                        fontWeight: 600,
                       }}
                     >
-                      Encuentros literarios
+                      <CalendarIcon size={14} />
+                      02 de Septiembre, 2026
                     </span>
                     <h3
                       className="serif-delicate"
@@ -766,37 +997,39 @@ export default async function HomePage() {
                         fontSize: '1.45rem',
                         fontWeight: 600,
                         marginBottom: '14px',
-                        color: '#121212',
+                        color: 'var(--text-primary)',
                         lineHeight: 1.3,
                       }}
                     >
-                      Ciclo de conversaciones sobre emociones y narrativa femenina
+                      Edición especial de colección en preparación
                     </h3>
                     <p
                       className="montserrat-body"
                       style={{
                         fontSize: '0.92rem',
-                        color: '#525252',
+                        color: 'var(--text-secondary)',
                         lineHeight: 1.75,
                       }}
                     >
-                      Espacios de diálogo íntimo sobre los vínculos, la culpa, el amor y los mandatos que inspiraron la creación de los personajes de Giselle.
+                      Detalles de la primera tirada encuadernada con tipografías históricas y papel libre de ácido para coleccionistas y amantes de la narrativa.
                     </p>
                   </div>
                   <div style={{ marginTop: '24px' }}>
-                    <a
-                      href="#contacto"
+                    <Link
+                      href="/subdomains/giselle"
                       className="montserrat-body"
                       style={{
                         fontSize: '0.86rem',
-                        fontWeight: 500,
-                        color: '#121212',
-                        textDecoration: 'underline',
-                        textUnderlineOffset: '4px',
+                        fontWeight: 600,
+                        color: 'var(--accent-burgundy)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
                       }}
                     >
-                      Consultar fechas →
-                    </a>
+                      <span>Leer artículo</span>
+                      <ArrowRightIcon size={14} />
+                    </Link>
                   </div>
                 </article>
               </>
@@ -805,7 +1038,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 6. SECCIÓN: EVENTOS Y FIRMAS (MEJORA 4: #EVENTOS - CON IMAGEN DE EVENTO SOPORTADA) */}
+      {/* 7. SECCIÓN: EVENTOS Y FIRMAS */}
       <section
         id="eventos"
         style={{
@@ -817,15 +1050,8 @@ export default async function HomePage() {
       >
         <div style={{ textAlign: 'center', marginBottom: '60px' }}>
           <span
-            className="cinzel-heading"
-            style={{
-              fontSize: '0.82rem',
-              color: '#737373',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              display: 'block',
-              marginBottom: '12px',
-            }}
+            className="luxury-badge-gold"
+            style={{ marginBottom: '14px' }}
           >
             Agenda literaria
           </span>
@@ -833,9 +1059,9 @@ export default async function HomePage() {
             className="serif-delicate"
             style={{
               fontSize: 'clamp(2.4rem, 4vw, 3.2rem)',
-              fontWeight: 500,
+              fontWeight: 600,
               lineHeight: 1.2,
-              color: '#121212',
+              color: 'var(--text-primary)',
               marginBottom: '14px',
             }}
           >
@@ -844,7 +1070,7 @@ export default async function HomePage() {
           <p
             className="montserrat-body"
             style={{
-              color: '#666666',
+              color: 'var(--text-secondary)',
               fontSize: '1rem',
               maxWidth: '560px',
               margin: '0 auto',
@@ -872,24 +1098,22 @@ export default async function HomePage() {
             return (
               <article
                 key={ev.id}
-                className="glass-ivory-card"
+                className="editorial-card"
                 style={{
                   borderRadius: '16px',
                   overflow: 'hidden',
-                  border: '1px solid rgba(18, 18, 18, 0.09)',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  boxShadow: '0 12px 30px rgba(0,0,0,0.04)',
                 }}
               >
-                {/* Imagen del evento (MEJORA 2: CAMPO IMAGE_URL) */}
+                {/* Imagen del evento */}
                 {ev.image_url && (
                   <div
                     style={{
                       height: '210px',
                       overflow: 'hidden',
-                      backgroundColor: '#121212',
+                      backgroundColor: 'var(--bg-deep)',
                       position: 'relative',
                     }}
                   >
@@ -900,7 +1124,7 @@ export default async function HomePage() {
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
-                        filter: 'grayscale(70%) contrast(105%)',
+                        filter: 'contrast(105%) sepia(0.15)',
                         transition: 'transform 0.4s ease',
                       }}
                     />
@@ -909,12 +1133,14 @@ export default async function HomePage() {
                         position: 'absolute',
                         top: '14px',
                         left: '14px',
-                        backgroundColor: 'rgba(18, 18, 18, 0.85)',
-                        color: '#FAFAFA',
-                        padding: '4px 12px',
+                        backgroundColor: 'var(--accent-burgundy)',
+                        color: '#FAF7F2',
+                        padding: '4px 14px',
                         borderRadius: '9999px',
                         fontSize: '0.7rem',
                         letterSpacing: '0.04em',
+                        fontWeight: 600,
+                        border: '1px solid rgba(214, 189, 122, 0.4)',
                       }}
                     >
                       Evento presencial
@@ -927,14 +1153,17 @@ export default async function HomePage() {
                     className="montserrat-body"
                     style={{
                       fontSize: '0.78rem',
-                      color: '#737373',
+                      color: 'var(--accent-burgundy)',
                       textTransform: 'capitalize',
-                      display: 'block',
-                      marginBottom: '8px',
-                      fontWeight: 500,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      marginBottom: '10px',
+                      fontWeight: 600,
                     }}
                   >
-                    📅 {formattedDate}
+                    <CalendarIcon size={14} />
+                    {formattedDate}
                   </span>
 
                   <h3
@@ -942,7 +1171,7 @@ export default async function HomePage() {
                     style={{
                       fontSize: '1.4rem',
                       fontWeight: 600,
-                      color: '#121212',
+                      color: 'var(--text-primary)',
                       lineHeight: 1.3,
                       marginBottom: '10px',
                     }}
@@ -954,21 +1183,23 @@ export default async function HomePage() {
                     className="montserrat-body"
                     style={{
                       fontSize: '0.84rem',
-                      color: '#666666',
+                      color: 'var(--text-secondary)',
                       marginBottom: '14px',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '6px',
+                      fontWeight: 500,
                     }}
                   >
-                    📍 {ev.location}
+                    <PinIcon size={14} style={{ color: 'var(--accent-burgundy)' }} />
+                    {ev.location}
                   </p>
 
                   <p
                     className="montserrat-body"
                     style={{
                       fontSize: '0.92rem',
-                      color: '#404040',
+                      color: 'var(--text-secondary)',
                       lineHeight: 1.7,
                       flexGrow: 1,
                     }}
@@ -979,15 +1210,16 @@ export default async function HomePage() {
                   <div style={{ marginTop: '24px' }}>
                     <a
                       href={ev.registration_url || '#contacto'}
-                      className="btn-noir-outline"
+                      className="btn-burgundy-outline"
                       style={{
                         width: '100%',
                         textAlign: 'center',
-                        fontSize: '0.86rem',
-                        padding: '10px 20px',
+                        fontSize: '0.88rem',
+                        padding: '11px 20px',
                       }}
                     >
-                      Confirmar asistencia →
+                      <span>Confirmar asistencia</span>
+                      <ArrowRightIcon size={15} />
                     </a>
                   </div>
                 </div>
@@ -997,14 +1229,14 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 7. SECCIÓN: GALERÍA VISUAL (MEJORA 4: #GALERIA) */}
+      {/* 8. SECCIÓN: GALERÍA VISUAL */}
       <section
         id="galeria"
         style={{
-          backgroundColor: '#FFFFFF',
           padding: '110px 24px',
-          borderTop: '1px solid rgba(18, 18, 18, 0.08)',
-          borderBottom: '1px solid rgba(18, 18, 18, 0.08)',
+          borderTop: '1px solid var(--border-primary)',
+          borderBottom: '1px solid var(--border-primary)',
+          backgroundColor: 'rgba(128, 107, 67, 0.16)',
         }}
       >
         <div
@@ -1015,15 +1247,8 @@ export default async function HomePage() {
         >
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
             <span
-              className="cinzel-heading"
-              style={{
-                fontSize: '0.82rem',
-                color: '#737373',
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                display: 'block',
-                marginBottom: '12px',
-              }}
+              className="luxury-badge-gold"
+              style={{ marginBottom: '14px' }}
             >
               Atmósferas y memoria
             </span>
@@ -1033,7 +1258,7 @@ export default async function HomePage() {
                 fontSize: 'clamp(2.4rem, 4vw, 3.2rem)',
                 fontWeight: 600,
                 lineHeight: 1.2,
-                color: '#121212',
+                color: 'var(--text-primary)',
                 marginBottom: '14px',
               }}
             >
@@ -1042,7 +1267,7 @@ export default async function HomePage() {
             <p
               className="montserrat-body"
               style={{
-                color: '#666666',
+                color: 'var(--text-secondary)',
                 fontSize: '1rem',
                 maxWidth: '560px',
                 margin: '0 auto',
@@ -1052,15 +1277,14 @@ export default async function HomePage() {
             </p>
           </div>
 
-          {/* CINTA INFINITA AUTOMÁTICA CON LIGHTBOX INTERACTIVO */}
+          {/* Cinta continua interactiva con modal Lightbox */}
           <GalleryMarquee items={displayGallery} />
         </div>
       </section>
 
-      {/* 8. FORMULARIO MINIMALISTA DE CONTACTO */}
+      {/* 9. SECCIÓN: CONTACTO Y CORRESPONDENCIA */}
       <section
         id="contacto"
-        className="fade-in-editorial-contacto"
         style={{
           padding: '110px 24px',
           maxWidth: '820px',
@@ -1068,17 +1292,10 @@ export default async function HomePage() {
           width: '100%',
         }}
       >
-        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '46px' }}>
           <span
-            className="cinzel-heading"
-            style={{
-              fontSize: '0.82rem',
-              color: '#737373',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              display: 'block',
-              marginBottom: '12px',
-            }}
+            className="luxury-badge-gold"
+            style={{ marginBottom: '14px' }}
           >
             Correspondencia
           </span>
@@ -1086,9 +1303,9 @@ export default async function HomePage() {
             className="serif-delicate"
             style={{
               fontSize: 'clamp(2.4rem, 4vw, 3.2rem)',
-              fontWeight: 500,
+              fontWeight: 600,
               lineHeight: 1.2,
-              color: '#121212',
+              color: 'var(--text-primary)',
               marginBottom: '14px',
             }}
           >
@@ -1097,55 +1314,59 @@ export default async function HomePage() {
           <p
             className="montserrat-body"
             style={{
-              color: '#525252',
-              fontSize: '0.98rem',
+              color: 'var(--text-secondary)',
+              fontSize: '1rem',
               maxWidth: '540px',
               margin: '0 auto',
-              lineHeight: 1.75,
             }}
           >
-            Para consultas editoriales, correspondencia de lectoras, entrevistas o invitaciones a conversatorios, por favor complete el siguiente formulario.
+            Para consultas editoriales, correspondencia de lectoras, invitaciones académicas o prensa literaria.
           </p>
         </div>
 
+        {/* Formulario en Tarjeta Pergamino */}
         <form
           action="#"
           method="POST"
+          className="editorial-card"
           style={{
-            backgroundColor: '#FFFFFF',
             padding: '44px 38px',
-            borderRadius: '16px',
-            border: '1px solid rgba(18, 18, 18, 0.08)',
-            boxShadow: '0 15px 40px -10px rgba(0, 0, 0, 0.05)',
             display: 'flex',
             flexDirection: 'column',
-            gap: '24px',
+            gap: '22px',
           }}
         >
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+              gap: '20px',
+            }}
+          >
             <div>
               <label
                 htmlFor="nombre"
                 className="montserrat-body"
-                style={{ fontSize: '0.84rem', fontWeight: 500, color: '#121212', display: 'block', marginBottom: '8px' }}
+                style={{ fontSize: '0.84rem', fontWeight: 600, color: 'var(--text-primary)', display: 'block', marginBottom: '8px' }}
               >
-                Nombre y apellido
+                Nombre completo
               </label>
               <input
                 type="text"
                 id="nombre"
                 name="nombre"
                 required
-                placeholder="Ej. Francisca Valenzuela"
+                placeholder="Su nombre"
                 style={{
                   width: '100%',
-                  padding: '12px 16px',
+                  padding: '13px 16px',
                   borderRadius: '6px',
-                  border: '1px solid rgba(18, 18, 18, 0.2)',
+                  border: '1px solid var(--border-primary)',
                   fontSize: '0.92rem',
                   fontFamily: 'inherit',
                   outline: 'none',
-                  backgroundColor: '#FAFAFA',
+                  backgroundColor: '#FAF7F2',
+                  color: 'var(--text-primary)',
                 }}
               />
             </div>
@@ -1153,7 +1374,7 @@ export default async function HomePage() {
               <label
                 htmlFor="correo"
                 className="montserrat-body"
-                style={{ fontSize: '0.84rem', fontWeight: 500, color: '#121212', display: 'block', marginBottom: '8px' }}
+                style={{ fontSize: '0.84rem', fontWeight: 600, color: 'var(--text-primary)', display: 'block', marginBottom: '8px' }}
               >
                 Correo electrónico
               </label>
@@ -1165,13 +1386,14 @@ export default async function HomePage() {
                 placeholder="ejemplo@correo.com"
                 style={{
                   width: '100%',
-                  padding: '12px 16px',
+                  padding: '13px 16px',
                   borderRadius: '6px',
-                  border: '1px solid rgba(18, 18, 18, 0.2)',
+                  border: '1px solid var(--border-primary)',
                   fontSize: '0.92rem',
                   fontFamily: 'inherit',
                   outline: 'none',
-                  backgroundColor: '#FAFAFA',
+                  backgroundColor: '#FAF7F2',
+                  color: 'var(--text-primary)',
                 }}
               />
             </div>
@@ -1181,7 +1403,7 @@ export default async function HomePage() {
             <label
               htmlFor="asunto"
               className="montserrat-body"
-              style={{ fontSize: '0.84rem', fontWeight: 500, color: '#121212', display: 'block', marginBottom: '8px' }}
+              style={{ fontSize: '0.84rem', fontWeight: 600, color: 'var(--text-primary)', display: 'block', marginBottom: '8px' }}
             >
               Asunto
             </label>
@@ -1193,13 +1415,14 @@ export default async function HomePage() {
               placeholder="Consulta editorial / Invitación / Correspondencia"
               style={{
                 width: '100%',
-                padding: '12px 16px',
+                padding: '13px 16px',
                 borderRadius: '6px',
-                border: '1px solid rgba(18, 18, 18, 0.2)',
+                border: '1px solid var(--border-primary)',
                 fontSize: '0.92rem',
                 fontFamily: 'inherit',
                 outline: 'none',
-                backgroundColor: '#FAFAFA',
+                backgroundColor: '#FAF7F2',
+                color: 'var(--text-primary)',
               }}
             />
           </div>
@@ -1208,7 +1431,7 @@ export default async function HomePage() {
             <label
               htmlFor="mensaje"
               className="montserrat-body"
-              style={{ fontSize: '0.84rem', fontWeight: 500, color: '#121212', display: 'block', marginBottom: '8px' }}
+              style={{ fontSize: '0.84rem', fontWeight: 600, color: 'var(--text-primary)', display: 'block', marginBottom: '8px' }}
             >
               Mensaje
             </label>
@@ -1222,39 +1445,41 @@ export default async function HomePage() {
                 width: '100%',
                 padding: '14px 16px',
                 borderRadius: '6px',
-                border: '1px solid rgba(18, 18, 18, 0.2)',
+                border: '1px solid var(--border-primary)',
                 fontSize: '0.92rem',
                 fontFamily: 'inherit',
                 outline: 'none',
                 resize: 'vertical',
-                backgroundColor: '#FAFAFA',
+                backgroundColor: '#FAF7F2',
+                color: 'var(--text-primary)',
               }}
             />
           </div>
 
           <button
             type="submit"
-            className="btn-noir"
+            className="btn-burgundy"
             style={{
-              padding: '14px',
-              fontSize: '0.94rem',
+              padding: '15px',
+              fontSize: '0.96rem',
               width: '100%',
+              marginTop: '4px',
             }}
           >
-            Enviar mensaje
+            <span>Enviar mensaje</span>
+            <ArrowRightIcon size={16} />
           </button>
         </form>
       </section>
 
-      {/* 9. FOOTER: ENLACES TIPOGRÁFICOS Y REDES SOCIALES */}
+      {/* 10. FOOTER: ORO EDITORIAL Y ALTA RELOJERÍA */}
       <footer
-        className="fade-in-editorial-footer"
         style={{
           marginTop: 'auto',
-          backgroundColor: '#121212',
-          color: '#FAFAFA',
+          backgroundColor: 'var(--bg-deep)',
+          color: '#FAF7F2',
           padding: '70px 24px 40px',
-          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+          borderTop: '1px solid var(--border-metallic)',
         }}
       >
         <div
@@ -1275,7 +1500,7 @@ export default async function HomePage() {
               height: '48px',
               objectFit: 'contain',
               marginBottom: '18px',
-              filter: 'brightness(1.5)',
+              filter: 'brightness(0.2) drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
             }}
           />
 
@@ -1284,8 +1509,9 @@ export default async function HomePage() {
             style={{
               fontSize: '1.4rem',
               fontWeight: 600,
-              letterSpacing: '0.04em',
+              letterSpacing: '0.05em',
               marginBottom: '6px',
+              color: '#FAF7F2',
             }}
           >
             Carmen Ibáñez
@@ -1294,16 +1520,16 @@ export default async function HomePage() {
           <p
             className="serif-delicate"
             style={{
-              fontSize: '1.05rem',
+              fontSize: '1.1rem',
               fontStyle: 'italic',
-              color: '#A3A3A3',
+              color: 'var(--accent-metallic)',
               marginBottom: '36px',
             }}
           >
             Historias que también viven en nosotras
           </p>
 
-          {/* Enlaces a Redes Sociales y Editorial */}
+          {/* Enlaces de correspondencia y redes */}
           <div
             style={{
               display: 'flex',
@@ -1320,8 +1546,9 @@ export default async function HomePage() {
               className="montserrat-body"
               style={{
                 fontSize: '0.86rem',
-                color: '#D4D4D4',
+                color: '#EDE5D3',
                 letterSpacing: '0.04em',
+                transition: 'color 0.2s ease',
               }}
             >
               Instagram
@@ -1333,8 +1560,9 @@ export default async function HomePage() {
               className="montserrat-body"
               style={{
                 fontSize: '0.86rem',
-                color: '#D4D4D4',
+                color: '#EDE5D3',
                 letterSpacing: '0.04em',
+                transition: 'color 0.2s ease',
               }}
             >
               Goodreads
@@ -1346,8 +1574,9 @@ export default async function HomePage() {
               className="montserrat-body"
               style={{
                 fontSize: '0.86rem',
-                color: '#D4D4D4',
+                color: '#EDE5D3',
                 letterSpacing: '0.04em',
+                transition: 'color 0.2s ease',
               }}
             >
               TikTok Literario
@@ -1357,8 +1586,9 @@ export default async function HomePage() {
               className="montserrat-body"
               style={{
                 fontSize: '0.86rem',
-                color: '#D4D4D4',
+                color: '#EDE5D3',
                 letterSpacing: '0.04em',
+                transition: 'color 0.2s ease',
               }}
             >
               Contacto Editorial / Prensa
@@ -1370,7 +1600,7 @@ export default async function HomePage() {
               width: '100%',
               maxWidth: '500px',
               height: '1px',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              backgroundColor: 'rgba(214, 189, 122, 0.25)',
               marginBottom: '28px',
             }}
           />
@@ -1379,7 +1609,7 @@ export default async function HomePage() {
             className="montserrat-body"
             style={{
               fontSize: '0.78rem',
-              color: '#737373',
+              color: '#D8CBB6',
               margin: 0,
             }}
           >

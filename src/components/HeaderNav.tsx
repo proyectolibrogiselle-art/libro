@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { ArrowRightIcon } from '@/components/Icons';
 
 interface NavItem {
   label: string;
@@ -11,10 +12,12 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { label: 'Inicio', href: '#inicio' },
   { label: 'La Autora', href: '#la-autora' },
+  { label: 'Manifiesto', href: '#manifiesto' },
   { label: 'Publicaciones', href: '#publicaciones' },
   { label: 'Noticias', href: '#noticias' },
   { label: 'Eventos', href: '#eventos' },
   { label: 'Galería', href: '#galeria' },
+  { label: 'Contacto', href: '#contacto' },
 ];
 
 export default function HeaderNav() {
@@ -51,7 +54,7 @@ export default function HeaderNav() {
   return (
     <header className="main-header-nav">
       <div className="main-header-container">
-        {/* Logotipo / Monograma oficial de Carmen Ibáñez */}
+        {/* Monograma oficial de Carmen Ibáñez */}
         <Link href="/" className="nav-brand-link" onClick={handleLinkClick}>
           <img
             src="/images/logo-ci.png"
@@ -63,7 +66,7 @@ export default function HeaderNav() {
           </span>
         </Link>
 
-        {/* Menú Oficial Escritorio: Horizontal y sobrio */}
+        {/* Menú de Escritorio: Sobrio, atemporal y refinado */}
         <nav
           aria-label="Navegación principal de escritorio"
           className="nav-desktop-links"
@@ -93,7 +96,7 @@ export default function HeaderNav() {
           <span className="nav-hamburger-line" />
         </button>
 
-        {/* Menú Desplegable Móvil (Drawer elegante en una sola columna) */}
+        {/* Menú Desplegable Móvil */}
         <nav
           id="mobile-navigation-drawer"
           aria-label="Navegación móvil"
@@ -109,7 +112,7 @@ export default function HeaderNav() {
               tabIndex={isOpen ? 0 : -1}
             >
               <span>{item.label}</span>
-              <span className="nav-mobile-arrow" aria-hidden="true">→</span>
+              <ArrowRightIcon size={15} style={{ color: 'var(--accent-burgundy)', opacity: 0.8 }} />
             </a>
           ))}
         </nav>

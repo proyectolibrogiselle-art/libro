@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { GalleryItem } from '@/types/entities';
+import { SearchIcon, CloseIcon } from '@/components/Icons';
 
 interface GalleryMarqueeProps {
   items: GalleryItem[];
@@ -34,7 +35,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
     {
       id: 'gal-1',
       title: 'Retrato de Autor: Mirada Literaria',
-      description: 'Sesión oficial en blanco y negro para la presentación de la obra.',
+      description: 'Sesión oficial en tonalidad cálida para la presentación de la obra.',
       image_url: '/images/giselle-portada.png',
       category: 'Inspiración',
       created_at: new Date().toISOString(),
@@ -52,7 +53,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
     {
       id: 'gal-3',
       title: 'Atmósferas y Escenarios de Época',
-      description: 'Luces cálidas, arquitectura clásica y claroscuros que inspiraron el mundo de Giselle.',
+      description: 'Luces de farol, arquitectura clásica y claroscuros que inspiraron el mundo de Giselle.',
       image_url: '/images/giselle-portada.png',
       category: 'Eventos',
       created_at: new Date().toISOString(),
@@ -65,15 +66,15 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
 
   return (
     <div style={{ position: 'relative', width: '100%', overflow: 'hidden', padding: '16px 0 32px' }}>
-      {/* Sombras difuminadas en los extremos para un fade editorial impecable */}
+      {/* Sombras difuminadas en los extremos con tono oro editorial */}
       <div
         style={{
           position: 'absolute',
           top: 0,
           bottom: 0,
           left: 0,
-          width: '80px',
-          background: 'linear-gradient(to right, #FFFFFF 20%, transparent 100%)',
+          width: '90px',
+          background: 'linear-gradient(to right, var(--bg-primary) 20%, transparent 100%)',
           zIndex: 10,
           pointerEvents: 'none',
         }}
@@ -84,8 +85,8 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
           top: 0,
           bottom: 0,
           right: 0,
-          width: '80px',
-          background: 'linear-gradient(to left, #FFFFFF 20%, transparent 100%)',
+          width: '90px',
+          background: 'linear-gradient(to left, var(--bg-primary) 20%, transparent 100%)',
           zIndex: 10,
           pointerEvents: 'none',
         }}
@@ -121,11 +122,12 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
                 <span
                   style={{
                     fontSize: '0.68rem',
-                    color: '#C5C5C5',
+                    color: 'var(--accent-metallic)',
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
                     marginBottom: '4px',
                     display: 'block',
+                    fontWeight: 600,
                   }}
                 >
                   {item.category || 'Archivo visual'}
@@ -135,7 +137,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
                   style={{
                     fontSize: '0.98rem',
                     fontWeight: 600,
-                    color: '#FAFAFA',
+                    color: '#FAF7F2',
                     margin: 0,
                     lineHeight: 1.3,
                   }}
@@ -144,15 +146,17 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
                 </p>
                 <span
                   style={{
-                    fontSize: '0.72rem',
-                    color: '#E0E0E0',
-                    marginTop: '6px',
+                    fontSize: '0.74rem',
+                    color: '#E4CB89',
+                    marginTop: '8px',
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '4px',
+                    gap: '6px',
+                    fontWeight: 500,
                   }}
                 >
-                  🔍 Ver detalle
+                  <SearchIcon size={13} />
+                  <span>Explorar detalle</span>
                 </span>
               </div>
             </div>
@@ -172,17 +176,17 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
             className="gallery-lightbox-content"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Botón de cierre */}
+            {/* Botón de cierre con icono SVG */}
             <button
               onClick={() => setSelectedItem(null)}
               aria-label="Cerrar imagen"
               className="gallery-lightbox-close-btn"
             >
-              ✕
+              <CloseIcon size={18} />
             </button>
 
             {/* Imagen en alta resolución */}
-            <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '12px 12px 0 0', backgroundColor: '#0A0A0A' }}>
+            <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '14px 14px 0 0', backgroundColor: '#1E1913' }}>
               <img
                 src={selectedItem.image_url}
                 alt={selectedItem.title}
@@ -198,10 +202,10 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
             {/* Pie de foto editorial del Lightbox */}
             <div
               style={{
-                padding: '24px 28px',
-                backgroundColor: '#161616',
-                color: '#FAFAFA',
-                borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                padding: '26px 30px',
+                backgroundColor: 'var(--text-primary)',
+                color: '#FAF7F2',
+                borderTop: '1px solid rgba(214, 189, 122, 0.3)',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '8px',
@@ -211,14 +215,15 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
                 <span
                   style={{
                     fontSize: '0.72rem',
-                    color: '#A3A3A3',
+                    color: 'var(--accent-metallic)',
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
+                    fontWeight: 600,
                   }}
                 >
                   {selectedItem.category || 'Galería Oficial'}
                 </span>
-                <span style={{ fontSize: '0.74rem', color: '#737373' }}>
+                <span style={{ fontSize: '0.74rem', color: '#B5A58A' }}>
                   Presione ESC o haga clic fuera para salir
                 </span>
               </div>
@@ -228,7 +233,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
                   fontSize: '1.35rem',
                   fontWeight: 600,
                   margin: 0,
-                  color: '#FFFFFF',
+                  color: '#FAF7F2',
                   letterSpacing: '0.02em',
                 }}
               >
@@ -238,8 +243,8 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
                 <p
                   className="montserrat-body"
                   style={{
-                    fontSize: '0.9rem',
-                    color: '#CCCCCC',
+                    fontSize: '0.92rem',
+                    color: '#D8CBB6',
                     margin: 0,
                     lineHeight: 1.6,
                   }}
