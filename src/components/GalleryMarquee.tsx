@@ -35,7 +35,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
     {
       id: 'gal-1',
       title: 'Retrato de Autor: Mirada Literaria',
-      description: 'Sesión oficial en tonalidad cálida para la presentación de la obra.',
+      description: 'Sesión oficial en tonalidad platino para la presentación de la obra.',
       image_url: '/images/giselle-portada.png',
       category: 'Inspiración',
       created_at: new Date().toISOString(),
@@ -53,7 +53,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
     {
       id: 'gal-3',
       title: 'Atmósferas y Escenarios de Época',
-      description: 'Luces de farol, arquitectura clásica y claroscuros que inspiraron el mundo de Giselle.',
+      description: 'Luces nocturnas, arquitectura clásica y claroscuros que inspiraron el mundo de Giselle.',
       image_url: '/images/giselle-portada.png',
       category: 'Eventos',
       created_at: new Date().toISOString(),
@@ -66,7 +66,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
 
   return (
     <div style={{ position: 'relative', width: '100%', overflow: 'hidden', padding: '16px 0 32px' }}>
-      {/* Sombras difuminadas en los extremos con tono oro editorial */}
+      {/* Sombras difuminadas en los extremos con tono azul petróleo */}
       <div
         style={{
           position: 'absolute',
@@ -74,7 +74,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
           bottom: 0,
           left: 0,
           width: '90px',
-          background: 'linear-gradient(to right, var(--bg-primary) 20%, transparent 100%)',
+          background: 'linear-gradient(to right, var(--petrol-deep) 20%, transparent 100%)',
           zIndex: 10,
           pointerEvents: 'none',
         }}
@@ -86,7 +86,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
           bottom: 0,
           right: 0,
           width: '90px',
-          background: 'linear-gradient(to left, var(--bg-primary) 20%, transparent 100%)',
+          background: 'linear-gradient(to left, var(--petrol-deep) 20%, transparent 100%)',
           zIndex: 10,
           pointerEvents: 'none',
         }}
@@ -122,7 +122,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
                 <span
                   style={{
                     fontSize: '0.68rem',
-                    color: 'var(--accent-metallic)',
+                    color: 'var(--accent-copper)',
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
                     marginBottom: '4px',
@@ -147,7 +147,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
                 <span
                   style={{
                     fontSize: '0.74rem',
-                    color: '#E4CB89',
+                    color: 'var(--accent-platinum-bright)',
                     marginTop: '8px',
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -155,7 +155,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
                     fontWeight: 500,
                   }}
                 >
-                  <SearchIcon size={13} />
+                  <SearchIcon size={13} style={{ color: 'var(--accent-copper)' }} />
                   <span>Explorar detalle</span>
                 </span>
               </div>
@@ -186,7 +186,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
             </button>
 
             {/* Imagen en alta resolución */}
-            <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '14px 14px 0 0', backgroundColor: '#1E1913' }}>
+            <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '14px 14px 0 0', backgroundColor: '#0C1E1F' }}>
               <img
                 src={selectedItem.image_url}
                 alt={selectedItem.title}
@@ -203,9 +203,9 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
             <div
               style={{
                 padding: '26px 30px',
-                backgroundColor: 'var(--text-primary)',
+                backgroundColor: 'var(--petrol-deep)',
                 color: '#FAF7F2',
-                borderTop: '1px solid rgba(214, 189, 122, 0.3)',
+                borderTop: '1px solid var(--border-platinum)',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '8px',
@@ -215,7 +215,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
                 <span
                   style={{
                     fontSize: '0.72rem',
-                    color: 'var(--accent-metallic)',
+                    color: 'var(--accent-copper)',
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
                     fontWeight: 600,
@@ -223,7 +223,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
                 >
                   {selectedItem.category || 'Galería Oficial'}
                 </span>
-                <span style={{ fontSize: '0.74rem', color: '#B5A58A' }}>
+                <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
                   Presione ESC o haga clic fuera para salir
                 </span>
               </div>
@@ -233,7 +233,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
                   fontSize: '1.35rem',
                   fontWeight: 600,
                   margin: 0,
-                  color: '#FAF7F2',
+                  color: 'var(--text-primary)',
                   letterSpacing: '0.02em',
                 }}
               >
@@ -244,7 +244,7 @@ export default function GalleryMarquee({ items }: GalleryMarqueeProps) {
                   className="montserrat-body"
                   style={{
                     fontSize: '0.92rem',
-                    color: '#D8CBB6',
+                    color: 'var(--text-secondary)',
                     margin: 0,
                     lineHeight: 1.6,
                   }}

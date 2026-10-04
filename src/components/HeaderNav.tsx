@@ -66,7 +66,7 @@ export default function HeaderNav() {
           </span>
         </Link>
 
-        {/* Menú de Escritorio: Sobrio, atemporal y refinado */}
+        {/* Menú de Escritorio: Arquitectónico, limpio y ligero */}
         <nav
           aria-label="Navegación principal de escritorio"
           className="nav-desktop-links"
@@ -112,7 +112,7 @@ export default function HeaderNav() {
               tabIndex={isOpen ? 0 : -1}
             >
               <span>{item.label}</span>
-              <ArrowRightIcon size={15} style={{ color: 'var(--accent-burgundy)', opacity: 0.8 }} />
+              <ArrowRightIcon size={15} style={{ color: 'var(--accent-copper)', opacity: 0.9 }} />
             </a>
           ))}
         </nav>
