@@ -10,7 +10,7 @@ interface PublicationsCarouselProps {
 }
 
 export default function PublicationsCarousel({ books }: PublicationsCarouselProps) {
-  // Catálogo editorial completo con soporte de fallback
+  // Asegurar catálogo editorial completo y coherente
   const fallbackList: Book[] = [
     {
       id: 'giselle-official',
@@ -78,7 +78,7 @@ export default function PublicationsCarousel({ books }: PublicationsCarouselProp
 
   return (
     <div style={{ width: '100%', maxWidth: '1100px', margin: '0 auto', position: 'relative' }}>
-      {/* ESCENARIO COVER FLOW 3D: AZUL PETRÓLEO / PLATINO */}
+      {/* ESCENARIO COVER FLOW 3D */}
       <div
         className="cover-flow-stage"
         style={{
@@ -132,8 +132,8 @@ export default function PublicationsCarousel({ books }: PublicationsCarouselProp
             rotateY = `${factor * 18}deg`;
             scale = factor === 1 ? 0.86 : 0.72;
             zIndex = 30 - factor * 10;
-            opacity = factor === 1 ? 0.76 : 0.42;
-            filter = 'brightness(75%) contrast(108%)';
+            opacity = factor === 1 ? 0.78 : 0.45;
+            filter = 'brightness(80%) sepia(0.2)';
           } else if (visualOffset > 0) {
             const factor = visualOffset;
             translateX = `${factor === 1 ? '170px' : '280px'}`;
@@ -141,8 +141,8 @@ export default function PublicationsCarousel({ books }: PublicationsCarouselProp
             rotateY = `-${factor * 18}deg`;
             scale = factor === 1 ? 0.86 : 0.72;
             zIndex = 30 - factor * 10;
-            opacity = factor === 1 ? 0.76 : 0.42;
-            filter = 'brightness(75%) contrast(108%)';
+            opacity = factor === 1 ? 0.78 : 0.45;
+            filter = 'brightness(80%) sepia(0.2)';
           }
 
           const bookCover = book.slug === 'giselle' 
@@ -166,10 +166,10 @@ export default function PublicationsCarousel({ books }: PublicationsCarouselProp
                 filter,
                 transition: 'all 0.55s cubic-bezier(0.25, 1, 0.5, 1)',
                 boxShadow: isCurrent
-                  ? '0 28px 65px -12px rgba(10, 24, 25, 0.75), 0 0 0 1px rgba(184, 176, 156, 0.45)'
-                  : '0 16px 36px -8px rgba(10, 24, 25, 0.5)',
-                backgroundColor: 'var(--petrol-secondary)',
-                border: isCurrent ? '1.5px solid var(--accent-platinum-bright)' : '1px solid var(--border-platinum)',
+                  ? '0 28px 65px -12px rgba(41, 35, 27, 0.5), 0 0 0 1px rgba(214, 189, 122, 0.45)'
+                  : '0 16px 36px -8px rgba(41, 35, 27, 0.35)',
+                backgroundColor: 'var(--bg-deep)',
+                border: isCurrent ? '1.5px solid var(--accent-metallic)' : '1px solid rgba(41, 35, 27, 0.25)',
                 overflow: 'hidden',
                 userSelect: 'none',
               }}
@@ -186,14 +186,14 @@ export default function PublicationsCarousel({ books }: PublicationsCarouselProp
                 }}
               />
               
-              {/* Overlay arquitectónico suave */}
+              {/* Overlay suave con degradado editorial */}
               <div
                 style={{
                   position: 'absolute',
                   inset: 0,
                   background: isCurrent
-                    ? 'linear-gradient(to top, rgba(23, 59, 60, 0.8) 0%, rgba(23, 59, 60, 0.15) 50%, transparent 100%)'
-                    : 'linear-gradient(to top, rgba(17, 47, 48, 0.9) 0%, rgba(17, 47, 48, 0.4) 100%)',
+                    ? 'linear-gradient(to top, rgba(41, 35, 27, 0.75) 0%, rgba(41, 35, 27, 0.1) 45%, transparent 100%)'
+                    : 'linear-gradient(to top, rgba(41, 35, 27, 0.85) 0%, rgba(41, 35, 27, 0.3) 100%)',
                   pointerEvents: 'none',
                 }}
               />
@@ -216,7 +216,7 @@ export default function PublicationsCarousel({ books }: PublicationsCarouselProp
                     fontWeight: 600,
                     letterSpacing: '0.04em',
                     margin: 0,
-                    textShadow: '0 2px 8px rgba(10, 24, 25, 0.9)',
+                    textShadow: '0 2px 6px rgba(41, 35, 27, 0.8)',
                   }}
                 >
                   {book.title}
@@ -224,10 +224,10 @@ export default function PublicationsCarousel({ books }: PublicationsCarouselProp
                 <span
                   style={{
                     fontSize: '0.68rem',
-                    color: 'var(--accent-copper)',
+                    color: '#D6BD7A',
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
-                    fontWeight: 600,
+                    fontWeight: 500,
                   }}
                 >
                   {book.slug === 'giselle' ? 'Obra disponible' : 'Catálogo editorial'}
@@ -256,27 +256,25 @@ export default function PublicationsCarousel({ books }: PublicationsCarouselProp
             width: '46px',
             height: '46px',
             borderRadius: '50%',
-            backgroundColor: 'var(--petrol-surface)',
-            color: 'var(--text-primary)',
-            border: '1px solid var(--border-platinum)',
+            backgroundColor: 'var(--text-primary)',
+            color: '#FAF7F2',
+            border: '1px solid rgba(214, 189, 122, 0.45)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
-            boxShadow: '0 6px 18px rgba(10, 24, 25, 0.4)',
+            boxShadow: '0 6px 18px rgba(41, 35, 27, 0.25)',
             transition: 'all 0.25s ease',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.08)';
-            e.currentTarget.style.backgroundColor = 'var(--accent-copper)';
-            e.currentTarget.style.borderColor = 'var(--accent-platinum-bright)';
-            e.currentTarget.style.color = '#FFFFFF';
+            e.currentTarget.style.backgroundColor = 'var(--accent-burgundy)';
+            e.currentTarget.style.borderColor = 'var(--accent-metallic)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.backgroundColor = 'var(--petrol-surface)';
-            e.currentTarget.style.borderColor = 'var(--border-platinum)';
-            e.currentTarget.style.color = 'var(--text-primary)';
+            e.currentTarget.style.backgroundColor = 'var(--text-primary)';
+            e.currentTarget.style.borderColor = 'rgba(214, 189, 122, 0.45)';
           }}
         >
           <ArrowLeftIcon size={18} />
@@ -293,8 +291,8 @@ export default function PublicationsCarousel({ books }: PublicationsCarouselProp
                 width: dotIdx === activeIndex ? '28px' : '9px',
                 height: '9px',
                 borderRadius: '9999px',
-                backgroundColor: dotIdx === activeIndex ? 'var(--accent-copper)' : 'rgba(184, 176, 156, 0.25)',
-                border: dotIdx === activeIndex ? '1px solid var(--accent-platinum-bright)' : 'none',
+                backgroundColor: dotIdx === activeIndex ? 'var(--accent-burgundy)' : 'rgba(41, 35, 27, 0.25)',
+                border: dotIdx === activeIndex ? '1px solid var(--accent-metallic)' : 'none',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
                 padding: 0,
@@ -310,27 +308,25 @@ export default function PublicationsCarousel({ books }: PublicationsCarouselProp
             width: '46px',
             height: '46px',
             borderRadius: '50%',
-            backgroundColor: 'var(--petrol-surface)',
-            color: 'var(--text-primary)',
-            border: '1px solid var(--border-platinum)',
+            backgroundColor: 'var(--text-primary)',
+            color: '#FAF7F2',
+            border: '1px solid rgba(214, 189, 122, 0.45)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
-            boxShadow: '0 6px 18px rgba(10, 24, 25, 0.4)',
+            boxShadow: '0 6px 18px rgba(41, 35, 27, 0.25)',
             transition: 'all 0.25s ease',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.08)';
-            e.currentTarget.style.backgroundColor = 'var(--accent-copper)';
-            e.currentTarget.style.borderColor = 'var(--accent-platinum-bright)';
-            e.currentTarget.style.color = '#FFFFFF';
+            e.currentTarget.style.backgroundColor = 'var(--accent-burgundy)';
+            e.currentTarget.style.borderColor = 'var(--accent-metallic)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.backgroundColor = 'var(--petrol-surface)';
-            e.currentTarget.style.borderColor = 'var(--border-platinum)';
-            e.currentTarget.style.color = 'var(--text-primary)';
+            e.currentTarget.style.backgroundColor = 'var(--text-primary)';
+            e.currentTarget.style.borderColor = 'rgba(214, 189, 122, 0.45)';
           }}
         >
           <ArrowRightIcon size={18} />
@@ -340,7 +336,7 @@ export default function PublicationsCarousel({ books }: PublicationsCarouselProp
       {/* FICHA EDITORIAL DE LA OBRA ACTIVA */}
       {currentBook && (
         <div
-          className="petrol-card"
+          className="editorial-card"
           style={{
             padding: '42px 38px',
             maxWidth: '820px',
@@ -350,7 +346,7 @@ export default function PublicationsCarousel({ books }: PublicationsCarouselProp
           }}
         >
           <span
-            className="petrol-badge-copper"
+            className="luxury-badge-burgundy"
             style={{ marginBottom: '14px' }}
           >
             Novela · Ficción literaria
@@ -374,7 +370,7 @@ export default function PublicationsCarousel({ books }: PublicationsCarouselProp
             style={{
               fontSize: '1.1rem',
               fontStyle: 'italic',
-              color: 'var(--accent-platinum)',
+              color: 'var(--text-secondary)',
               marginBottom: '22px',
             }}
           >
@@ -398,7 +394,7 @@ export default function PublicationsCarousel({ books }: PublicationsCarouselProp
           <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
             <Link
               href={`/subdomains/${currentBook.slug || 'giselle'}`}
-              className="btn-copper"
+              className="btn-burgundy"
               style={{
                 padding: '14px 38px',
                 fontSize: '0.94rem',
