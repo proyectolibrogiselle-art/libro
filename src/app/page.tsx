@@ -10,7 +10,6 @@ import {
   CalendarIcon,
   PinIcon,
   ArrowRightIcon,
-  ChevronDownIcon,
   BookIcon,
   QuillIcon
 } from '@/components/Icons';
@@ -112,7 +111,7 @@ export default async function HomePage() {
     {
       id: 'gal-1',
       title: 'Retrato de Autor: Mirada Literaria',
-      description: 'Sesión oficial en tonalidad cálida para la presentación de la obra.',
+      description: 'Sesión oficial en tonalidad platino para la presentación de la obra.',
       image_url: '/images/giselle-portada.png',
       category: 'Inspiración',
       created_at: new Date().toISOString(),
@@ -130,7 +129,7 @@ export default async function HomePage() {
     {
       id: 'gal-3',
       title: 'Atmósferas y Escenarios de Época',
-      description: 'Luces de farol, arquitectura clásica y claroscuros que inspiraron el mundo de Giselle.',
+      description: 'Luces nocturnas, arquitectura clásica y claroscuros que inspiraron el mundo de Giselle.',
       image_url: '/images/giselle-portada.png',
       category: 'Eventos',
       created_at: new Date().toISOString(),
@@ -149,204 +148,190 @@ export default async function HomePage() {
         position: 'relative',
       }}
     >
-      {/* 1. NAVEGACIÓN PRINCIPAL: ORO EDITORIAL */}
+      {/* 1. NAVEGACIÓN PRINCIPAL: AZUL PETRÓLEO / PLATINO */}
       <HeaderNav />
 
-      {/* 2. HERO PRINCIPAL: "PRIMERO VEMOS A CARMEN. DESPUÉS DESCUBRIMOS A LA AUTORA." */}
+      {/* 2. HERO EDITORIAL: TEXTO A LA IZQUIERDA + FOTOGRAFÍA A LA DERECHA */}
       <section
         id="inicio"
         style={{
-          padding: '40px 24px 80px',
+          padding: '0 24px',
           maxWidth: '1240px',
           margin: '0 auto',
           width: '100%',
         }}
       >
-        {/* ACTO I: EL IMPACTO VISUAL — LA FOTOGRAFÍA PROTAGONISTA CENTRADA */}
-        <div className="hero-portrait-stage">
-          {/* Pequeño sello ceremonial superior */}
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '10px',
-              padding: '4px 18px',
-              marginBottom: '26px',
-            }}
-          >
-            <span style={{ fontSize: '0.8rem', color: 'var(--accent-burgundy)' }}>✦</span>
-            <span
-              className="cinzel-heading"
-              style={{
-                fontSize: '0.74rem',
-                color: 'var(--text-secondary)',
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                fontWeight: 600,
-              }}
-            >
-              Edición Oficial de Colección
-            </span>
-            <span style={{ fontSize: '0.8rem', color: 'var(--accent-burgundy)' }}>✦</span>
-          </div>
-
-          {/* Marco arquitectónico de lujo para la fotografía de Carmen */}
-          <div className="hero-portrait-frame">
-            {/* Esquinas de relojero grabadas */}
-            <span className="hero-corner-mark hero-corner-tl" />
-            <span className="hero-corner-mark hero-corner-tr" />
-            <span className="hero-corner-mark hero-corner-bl" />
-            <span className="hero-corner-mark hero-corner-br" />
-
-            <div className="hero-portrait-inner">
-              <img
-                src={authorPhoto}
-                alt={`${author?.name || 'Carmen Ibáñez'} — Retrato oficial de la autora`}
-                className="hero-portrait-img"
-              />
+        <div className="hero-editorial-container">
+          {/* Columna Izquierda: Identidad y Proclama Literaria */}
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            {/* Badge Cobre Discreto */}
+            <div style={{ marginBottom: '22px' }}>
+              <span className="petrol-badge-copper">
+                Autora chilena · Narrativa contemporánea
+              </span>
             </div>
-          </div>
 
-          {/* Cartel discreto de presentación inicial al pie de la foto */}
-          <div style={{ marginTop: '22px', textAlign: 'center' }}>
-            <p
-              className="cinzel-heading"
+            {/* Nombre Monumental */}
+            <h1
+              className="cinzel-decorative"
               style={{
-                fontSize: '1.25rem',
+                fontSize: 'clamp(2.8rem, 5.2vw, 4.4rem)',
+                fontWeight: 700,
+                lineHeight: 1.1,
+                letterSpacing: '0.04em',
+                marginBottom: '16px',
                 color: 'var(--text-primary)',
-                letterSpacing: '0.08em',
-                margin: 0,
-                fontWeight: 600,
               }}
             >
               {author?.name || 'Carmen Ibáñez'}
-            </p>
-          </div>
+            </h1>
 
-          {/* Indicador suave que invita a descubrir a la autora con el scroll */}
-          <a href="#descubrir-autora" className="hero-scroll-cue">
-            <span>Descubrir la obra</span>
-            <ChevronDownIcon size={16} />
-          </a>
-        </div>
-
-        {/* ACTO II: LA REVELACIÓN EDITORIAL — EL MUNDO DE LA AUTORA */}
-        <div
-          id="descubrir-autora"
-          style={{
-            marginTop: '80px',
-            paddingTop: '60px',
-            borderTop: '1px solid var(--border-primary)',
-            textAlign: 'center',
-            maxWidth: '920px',
-            marginInline: 'auto',
-          }}
-        >
-          {/* Badge Borgoña con ribete dorado */}
-          <div style={{ marginBottom: '24px' }}>
-            <span className="luxury-badge-burgundy">
-              Autora chilena · Narrativa contemporánea
-            </span>
-          </div>
-
-          {/* Nombre Monumental */}
-          <h1
-            className="cinzel-decorative"
-            style={{
-              fontSize: 'clamp(2.6rem, 5.2vw, 4.2rem)',
-              fontWeight: 700,
-              lineHeight: 1.12,
-              letterSpacing: '0.04em',
-              marginBottom: '16px',
-              color: 'var(--text-primary)',
-            }}
-          >
-            {author?.name || 'Carmen Ibáñez'}
-          </h1>
-
-          {/* Lema Poético: "Historias que también viven en nosotras" */}
-          <p
-            className="serif-delicate"
-            style={{
-              fontSize: 'clamp(1.5rem, 2.8vw, 2.3rem)',
-              fontStyle: 'italic',
-              color: 'var(--text-primary)',
-              lineHeight: 1.45,
-              marginBottom: '26px',
-              fontWeight: 500,
-            }}
-          >
-            &ldquo;Historias que también viven en nosotras&rdquo;
-          </p>
-
-          {/* Prosa de Presentación */}
-          <p
-            className="montserrat-body"
-            style={{
-              fontSize: '1.05rem',
-              lineHeight: 1.9,
-              color: 'var(--text-secondary)',
-              maxWidth: '680px',
-              margin: '0 auto 38px',
-            }}
-          >
-            Una exploración literaria íntima de los vínculos, las emociones ocultas y aquellas elecciones capaces de transformar el destino de las personas.
-          </p>
-
-          {/* Botones Principales de Acción */}
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '16px',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: '52px',
-            }}
-          >
-            <Link href="/subdomains/giselle" className="btn-burgundy">
-              <span>Ingresar a la obra Giselle</span>
-              <ArrowRightIcon size={16} />
-            </Link>
-            <a href="#la-autora" className="btn-editorial-outline">
-              <span>Conocer su trayectoria</span>
-            </a>
-          </div>
-
-          {/* Cita en Bloque Editorial con Líneas Finas */}
-          <div
-            className="editorial-card"
-            style={{
-              padding: '30px 36px',
-              maxWidth: '740px',
-              margin: '0 auto',
-              textAlign: 'center',
-            }}
-          >
+            {/* Lema Poético */}
             <p
               className="serif-delicate"
               style={{
-                fontSize: '1.18rem',
+                fontSize: 'clamp(1.4rem, 2.4vw, 2.05rem)',
                 fontStyle: 'italic',
                 color: 'var(--text-primary)',
-                lineHeight: 1.7,
-                margin: 0,
+                lineHeight: 1.4,
+                marginBottom: '26px',
+                fontWeight: 500,
               }}
             >
-              &ldquo;Escribe desde la observación de las emociones y de aquello que muchas veces permanece oculto detrás de las apariencias.&rdquo;
+              &ldquo;Historias que también viven en nosotras&rdquo;
             </p>
+
+            {/* Filete Platino Sutil */}
+            <div
+              style={{
+                width: '80px',
+                height: '1.5px',
+                backgroundColor: 'var(--border-platinum-strong)',
+                marginBottom: '26px',
+              }}
+            />
+
+            {/* Párrafo Introductorio */}
+            <p
+              className="montserrat-body"
+              style={{
+                fontSize: '1.02rem',
+                lineHeight: 1.9,
+                color: 'var(--text-secondary)',
+                maxWidth: '560px',
+                marginBottom: '38px',
+              }}
+            >
+              Una exploración literaria íntima de los vínculos, las emociones ocultas y aquellas elecciones capaces de transformar el destino de las personas.
+            </p>
+
+            {/* Botones de Acción */}
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '16px',
+                alignItems: 'center',
+                marginBottom: '44px',
+              }}
+            >
+              <Link href="/subdomains/giselle" className="btn-copper">
+                <span>Ingresar a la obra Giselle</span>
+                <ArrowRightIcon size={16} />
+              </Link>
+              <a href="#la-autora" className="btn-platinum-outline">
+                <span>Conocer su trayectoria</span>
+              </a>
+            </div>
+
+            {/* Cita en Bloque con Borde Platino */}
+            <div
+              style={{
+                borderLeft: '2px solid var(--accent-copper)',
+                paddingLeft: '20px',
+                maxWidth: '540px',
+              }}
+            >
+              <p
+                className="serif-delicate"
+                style={{
+                  fontSize: '1.08rem',
+                  fontStyle: 'italic',
+                  color: 'var(--text-primary)',
+                  lineHeight: 1.65,
+                  margin: 0,
+                }}
+              >
+                &ldquo;Escribe desde la observación de las emociones y de aquello que muchas veces permanece oculto detrás de las apariencias.&rdquo;
+              </p>
+            </div>
+          </div>
+
+          {/* Columna Derecha: Fotografía Protagonista con Marco Fino Platino */}
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div className="hero-portrait-frame-petrol">
+              {/* Esquinas Platino */}
+              <span className="petrol-corner-mark petrol-corner-tl" />
+              <span className="petrol-corner-mark petrol-corner-tr" />
+              <span className="petrol-corner-mark petrol-corner-bl" />
+              <span className="petrol-corner-mark petrol-corner-br" />
+
+              <div className="hero-portrait-inner-petrol">
+                <img
+                  src={authorPhoto}
+                  alt={`${author?.name || 'Carmen Ibáñez'} — Retrato oficial de la autora`}
+                  className="hero-portrait-img-petrol"
+                />
+              </div>
+
+              {/* Pie de Foto Editorial Platino */}
+              <div
+                style={{
+                  padding: '16px 12px 6px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  borderTop: '1px solid var(--border-platinum)',
+                  marginTop: '10px',
+                }}
+              >
+                <span
+                  className="cinzel-heading"
+                  style={{
+                    fontSize: '0.82rem',
+                    letterSpacing: '0.08em',
+                    color: 'var(--text-primary)',
+                    fontWeight: 600,
+                  }}
+                >
+                  Carmen Ibáñez
+                </span>
+                <span
+                  className="montserrat-body"
+                  style={{
+                    fontSize: '0.72rem',
+                    color: 'var(--accent-copper)',
+                    letterSpacing: '0.06em',
+                    textTransform: 'uppercase',
+                    fontWeight: 600,
+                  }}
+                >
+                  Retrato Oficial
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 3. SECCIÓN: LA AUTORA (SEMBLANZA BIOGRÁFICA Y TEMÁTICA) */}
+      {/* 3. SECCIÓN: LA AUTORA (AZUL SECUNDARIO + SUPERFICIES PLATINO) */}
       <section
         id="la-autora"
         style={{
           padding: '110px 24px',
-          borderTop: '1px solid var(--border-primary)',
-          borderBottom: '1px solid var(--border-primary)',
-          backgroundColor: 'rgba(128, 107, 67, 0.16)',
+          borderTop: '1px solid var(--border-platinum)',
+          borderBottom: '1px solid var(--border-platinum)',
+          backgroundColor: 'var(--petrol-secondary)',
         }}
       >
         <div
@@ -357,7 +342,7 @@ export default async function HomePage() {
         >
           <div style={{ textAlign: 'center', marginBottom: '56px' }}>
             <span
-              className="luxury-badge-gold"
+              className="petrol-badge-platinum"
               style={{ marginBottom: '14px' }}
             >
               Semblanza literaria
@@ -386,9 +371,9 @@ export default async function HomePage() {
             </p>
           </div>
 
-          {/* Biografía en Tarjeta Pergamino */}
+          {/* Biografía en Tarjeta Petrol Surface */}
           <div
-            className="editorial-card"
+            className="petrol-card"
             style={{
               padding: '48px 44px',
               marginBottom: '48px',
@@ -420,7 +405,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          {/* Grilla con los 3 Pilares Temáticos de su Literatura */}
+          {/* Grilla con los 3 Pilares Temáticos */}
           <div
             style={{
               display: 'grid',
@@ -429,7 +414,7 @@ export default async function HomePage() {
             }}
           >
             <div
-              className="editorial-card"
+              className="petrol-card"
               style={{
                 padding: '32px 28px',
               }}
@@ -439,7 +424,7 @@ export default async function HomePage() {
                   width: '42px',
                   height: '42px',
                   borderRadius: '50%',
-                  backgroundColor: 'var(--accent-burgundy)',
+                  backgroundColor: 'var(--accent-copper)',
                   color: '#FAF7F2',
                   display: 'flex',
                   alignItems: 'center',
@@ -474,7 +459,7 @@ export default async function HomePage() {
             </div>
 
             <div
-              className="editorial-card"
+              className="petrol-card"
               style={{
                 padding: '32px 28px',
               }}
@@ -484,7 +469,7 @@ export default async function HomePage() {
                   width: '42px',
                   height: '42px',
                   borderRadius: '50%',
-                  backgroundColor: 'var(--accent-burgundy)',
+                  backgroundColor: 'var(--accent-copper)',
                   color: '#FAF7F2',
                   display: 'flex',
                   alignItems: 'center',
@@ -519,7 +504,7 @@ export default async function HomePage() {
             </div>
 
             <div
-              className="editorial-card"
+              className="petrol-card"
               style={{
                 padding: '32px 28px',
               }}
@@ -529,7 +514,7 @@ export default async function HomePage() {
                   width: '42px',
                   height: '42px',
                   borderRadius: '50%',
-                  backgroundColor: 'var(--accent-burgundy)',
+                  backgroundColor: 'var(--accent-copper)',
                   color: '#FAF7F2',
                   display: 'flex',
                   alignItems: 'center',
@@ -537,7 +522,7 @@ export default async function HomePage() {
                   marginBottom: '18px',
                 }}
               >
-                <span style={{ fontSize: '1.2rem', color: '#D6BD7A' }}>✦</span>
+                <span style={{ fontSize: '1.1rem', color: '#FAF7F2' }}>✦</span>
               </div>
               <h3
                 className="cinzel-heading"
@@ -566,7 +551,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 4. SECCIÓN: MANIFIESTO EDITORIAL (COMO PÁGINA DE LIBRO DE LUJO) */}
+      {/* 4. SECCIÓN: MANIFIESTO EDITORIAL (LÍNEAS PLATINO Y COMPOSICIÓN MINIMALISTA) */}
       <section
         id="manifiesto"
         style={{
@@ -580,8 +565,8 @@ export default async function HomePage() {
         <div
           style={{
             padding: '56px 48px',
-            borderTop: '1.5px solid var(--border-metallic)',
-            borderBottom: '1.5px solid var(--border-metallic)',
+            borderTop: '1.5px solid var(--border-platinum-strong)',
+            borderBottom: '1.5px solid var(--border-platinum-strong)',
             position: 'relative',
           }}
         >
@@ -591,9 +576,9 @@ export default async function HomePage() {
               top: '-12px',
               left: '50%',
               transform: 'translateX(-50%)',
-              backgroundColor: 'var(--bg-primary)',
+              backgroundColor: 'var(--petrol-deep)',
               padding: '0 18px',
-              color: 'var(--accent-burgundy)',
+              color: 'var(--accent-copper)',
               fontSize: '1rem',
             }}
           >
@@ -606,7 +591,7 @@ export default async function HomePage() {
               fontSize: '0.78rem',
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
-              color: 'var(--text-secondary)',
+              color: 'var(--accent-platinum)',
               display: 'block',
               marginBottom: '24px',
               fontWeight: 600,
@@ -633,7 +618,7 @@ export default async function HomePage() {
             style={{
               width: '60px',
               height: '1px',
-              backgroundColor: 'var(--border-primary)',
+              backgroundColor: 'var(--border-platinum)',
               margin: '0 auto 20px',
             }}
           />
@@ -656,9 +641,9 @@ export default async function HomePage() {
               bottom: '-12px',
               left: '50%',
               transform: 'translateX(-50%)',
-              backgroundColor: 'var(--bg-primary)',
+              backgroundColor: 'var(--petrol-deep)',
               padding: '0 18px',
-              color: 'var(--accent-burgundy)',
+              color: 'var(--accent-copper)',
               fontSize: '1rem',
             }}
           >
@@ -667,7 +652,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 5. SECCIÓN: PUBLICACIONES (COVER FLOW 3D) */}
+      {/* 5. SECCIÓN: PUBLICACIONES (COVER FLOW 3D AZUL PETRÓLEO / PLATINO) */}
       <section
         id="publicaciones"
         style={{
@@ -679,7 +664,7 @@ export default async function HomePage() {
       >
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <span
-            className="luxury-badge-gold"
+            className="petrol-badge-platinum"
             style={{ marginBottom: '14px' }}
           >
             Catálogo de Obras
@@ -718,9 +703,9 @@ export default async function HomePage() {
         id="noticias"
         style={{
           padding: '110px 24px',
-          borderTop: '1px solid var(--border-primary)',
-          borderBottom: '1px solid var(--border-primary)',
-          backgroundColor: 'rgba(128, 107, 67, 0.16)',
+          borderTop: '1px solid var(--border-platinum)',
+          borderBottom: '1px solid var(--border-platinum)',
+          backgroundColor: 'var(--petrol-secondary)',
         }}
       >
         <div
@@ -731,7 +716,7 @@ export default async function HomePage() {
         >
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
             <span
-              className="luxury-badge-gold"
+              className="petrol-badge-platinum"
               style={{ marginBottom: '14px' }}
             >
               Actualidad editorial
@@ -760,7 +745,7 @@ export default async function HomePage() {
               newsList.map((item) => (
                 <article
                   key={item.id}
-                  className="editorial-card"
+                  className="petrol-card"
                   style={{
                     padding: '36px 30px',
                     display: 'flex',
@@ -772,7 +757,7 @@ export default async function HomePage() {
                     <span
                       style={{
                         fontSize: '0.74rem',
-                        color: 'var(--accent-burgundy)',
+                        color: 'var(--accent-copper)',
                         letterSpacing: '0.06em',
                         textTransform: 'uppercase',
                         display: 'flex',
@@ -815,7 +800,7 @@ export default async function HomePage() {
                       style={{
                         fontSize: '0.86rem',
                         fontWeight: 600,
-                        color: 'var(--accent-burgundy)',
+                        color: 'var(--accent-copper)',
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '6px',
@@ -830,7 +815,7 @@ export default async function HomePage() {
             ) : (
               <>
                 <article
-                  className="editorial-card"
+                  className="petrol-card"
                   style={{
                     padding: '36px 30px',
                     display: 'flex',
@@ -842,7 +827,7 @@ export default async function HomePage() {
                     <span
                       style={{
                         fontSize: '0.74rem',
-                        color: 'var(--accent-burgundy)',
+                        color: 'var(--accent-copper)',
                         letterSpacing: '0.06em',
                         textTransform: 'uppercase',
                         display: 'flex',
@@ -885,7 +870,7 @@ export default async function HomePage() {
                       style={{
                         fontSize: '0.86rem',
                         fontWeight: 600,
-                        color: 'var(--accent-burgundy)',
+                        color: 'var(--accent-copper)',
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '6px',
@@ -898,7 +883,7 @@ export default async function HomePage() {
                 </article>
 
                 <article
-                  className="editorial-card"
+                  className="petrol-card"
                   style={{
                     padding: '36px 30px',
                     display: 'flex',
@@ -910,7 +895,7 @@ export default async function HomePage() {
                     <span
                       style={{
                         fontSize: '0.74rem',
-                        color: 'var(--accent-burgundy)',
+                        color: 'var(--accent-copper)',
                         letterSpacing: '0.06em',
                         textTransform: 'uppercase',
                         display: 'flex',
@@ -953,7 +938,7 @@ export default async function HomePage() {
                       style={{
                         fontSize: '0.86rem',
                         fontWeight: 600,
-                        color: 'var(--accent-burgundy)',
+                        color: 'var(--accent-copper)',
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '6px',
@@ -966,7 +951,7 @@ export default async function HomePage() {
                 </article>
 
                 <article
-                  className="editorial-card"
+                  className="petrol-card"
                   style={{
                     padding: '36px 30px',
                     display: 'flex',
@@ -978,7 +963,7 @@ export default async function HomePage() {
                     <span
                       style={{
                         fontSize: '0.74rem',
-                        color: 'var(--accent-burgundy)',
+                        color: 'var(--accent-copper)',
                         letterSpacing: '0.06em',
                         textTransform: 'uppercase',
                         display: 'flex',
@@ -1021,7 +1006,7 @@ export default async function HomePage() {
                       style={{
                         fontSize: '0.86rem',
                         fontWeight: 600,
-                        color: 'var(--accent-burgundy)',
+                        color: 'var(--accent-copper)',
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '6px',
@@ -1050,7 +1035,7 @@ export default async function HomePage() {
       >
         <div style={{ textAlign: 'center', marginBottom: '60px' }}>
           <span
-            className="luxury-badge-gold"
+            className="petrol-badge-platinum"
             style={{ marginBottom: '14px' }}
           >
             Agenda literaria
@@ -1098,7 +1083,7 @@ export default async function HomePage() {
             return (
               <article
                 key={ev.id}
-                className="editorial-card"
+                className="petrol-card"
                 style={{
                   borderRadius: '16px',
                   overflow: 'hidden',
@@ -1113,7 +1098,7 @@ export default async function HomePage() {
                     style={{
                       height: '210px',
                       overflow: 'hidden',
-                      backgroundColor: 'var(--bg-deep)',
+                      backgroundColor: 'var(--petrol-secondary)',
                       position: 'relative',
                     }}
                   >
@@ -1124,7 +1109,7 @@ export default async function HomePage() {
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
-                        filter: 'contrast(105%) sepia(0.15)',
+                        filter: 'contrast(105%)',
                         transition: 'transform 0.4s ease',
                       }}
                     />
@@ -1133,14 +1118,14 @@ export default async function HomePage() {
                         position: 'absolute',
                         top: '14px',
                         left: '14px',
-                        backgroundColor: 'var(--accent-burgundy)',
+                        backgroundColor: 'var(--accent-copper)',
                         color: '#FAF7F2',
                         padding: '4px 14px',
                         borderRadius: '9999px',
                         fontSize: '0.7rem',
                         letterSpacing: '0.04em',
                         fontWeight: 600,
-                        border: '1px solid rgba(214, 189, 122, 0.4)',
+                        border: '1px solid rgba(184, 176, 156, 0.4)',
                       }}
                     >
                       Evento presencial
@@ -1153,7 +1138,7 @@ export default async function HomePage() {
                     className="montserrat-body"
                     style={{
                       fontSize: '0.78rem',
-                      color: 'var(--accent-burgundy)',
+                      color: 'var(--accent-copper)',
                       textTransform: 'capitalize',
                       display: 'flex',
                       alignItems: 'center',
@@ -1191,7 +1176,7 @@ export default async function HomePage() {
                       fontWeight: 500,
                     }}
                   >
-                    <PinIcon size={14} style={{ color: 'var(--accent-burgundy)' }} />
+                    <PinIcon size={14} style={{ color: 'var(--accent-copper)' }} />
                     {ev.location}
                   </p>
 
@@ -1210,7 +1195,7 @@ export default async function HomePage() {
                   <div style={{ marginTop: '24px' }}>
                     <a
                       href={ev.registration_url || '#contacto'}
-                      className="btn-burgundy-outline"
+                      className="btn-copper-outline"
                       style={{
                         width: '100%',
                         textAlign: 'center',
@@ -1234,9 +1219,9 @@ export default async function HomePage() {
         id="galeria"
         style={{
           padding: '110px 24px',
-          borderTop: '1px solid var(--border-primary)',
-          borderBottom: '1px solid var(--border-primary)',
-          backgroundColor: 'rgba(128, 107, 67, 0.16)',
+          borderTop: '1px solid var(--border-platinum)',
+          borderBottom: '1px solid var(--border-platinum)',
+          backgroundColor: 'var(--petrol-secondary)',
         }}
       >
         <div
@@ -1247,7 +1232,7 @@ export default async function HomePage() {
         >
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
             <span
-              className="luxury-badge-gold"
+              className="petrol-badge-platinum"
               style={{ marginBottom: '14px' }}
             >
               Atmósferas y memoria
@@ -1294,7 +1279,7 @@ export default async function HomePage() {
       >
         <div style={{ textAlign: 'center', marginBottom: '46px' }}>
           <span
-            className="luxury-badge-gold"
+            className="petrol-badge-platinum"
             style={{ marginBottom: '14px' }}
           >
             Correspondencia
@@ -1324,11 +1309,11 @@ export default async function HomePage() {
           </p>
         </div>
 
-        {/* Formulario en Tarjeta Pergamino */}
+        {/* Formulario en Tarjeta Petrol */}
         <form
           action="#"
           method="POST"
-          className="editorial-card"
+          className="petrol-card"
           style={{
             padding: '44px 38px',
             display: 'flex',
@@ -1361,11 +1346,11 @@ export default async function HomePage() {
                   width: '100%',
                   padding: '13px 16px',
                   borderRadius: '6px',
-                  border: '1px solid var(--border-primary)',
+                  border: '1px solid var(--border-platinum)',
                   fontSize: '0.92rem',
                   fontFamily: 'inherit',
                   outline: 'none',
-                  backgroundColor: '#FAF7F2',
+                  backgroundColor: 'var(--petrol-secondary)',
                   color: 'var(--text-primary)',
                 }}
               />
@@ -1388,11 +1373,11 @@ export default async function HomePage() {
                   width: '100%',
                   padding: '13px 16px',
                   borderRadius: '6px',
-                  border: '1px solid var(--border-primary)',
+                  border: '1px solid var(--border-platinum)',
                   fontSize: '0.92rem',
                   fontFamily: 'inherit',
                   outline: 'none',
-                  backgroundColor: '#FAF7F2',
+                  backgroundColor: 'var(--petrol-secondary)',
                   color: 'var(--text-primary)',
                 }}
               />
@@ -1417,11 +1402,11 @@ export default async function HomePage() {
                 width: '100%',
                 padding: '13px 16px',
                 borderRadius: '6px',
-                border: '1px solid var(--border-primary)',
+                border: '1px solid var(--border-platinum)',
                 fontSize: '0.92rem',
                 fontFamily: 'inherit',
                 outline: 'none',
-                backgroundColor: '#FAF7F2',
+                backgroundColor: 'var(--petrol-secondary)',
                 color: 'var(--text-primary)',
               }}
             />
@@ -1445,12 +1430,12 @@ export default async function HomePage() {
                 width: '100%',
                 padding: '14px 16px',
                 borderRadius: '6px',
-                border: '1px solid var(--border-primary)',
+                border: '1px solid var(--border-platinum)',
                 fontSize: '0.92rem',
                 fontFamily: 'inherit',
                 outline: 'none',
                 resize: 'vertical',
-                backgroundColor: '#FAF7F2',
+                backgroundColor: 'var(--petrol-secondary)',
                 color: 'var(--text-primary)',
               }}
             />
@@ -1458,7 +1443,7 @@ export default async function HomePage() {
 
           <button
             type="submit"
-            className="btn-burgundy"
+            className="btn-copper"
             style={{
               padding: '15px',
               fontSize: '0.96rem',
@@ -1472,14 +1457,14 @@ export default async function HomePage() {
         </form>
       </section>
 
-      {/* 10. FOOTER: ORO EDITORIAL Y ALTA RELOJERÍA */}
+      {/* 10. FOOTER: AZUL PETRÓLEO PROFUNDO Y PLATINO */}
       <footer
         style={{
           marginTop: 'auto',
-          backgroundColor: 'var(--bg-deep)',
+          backgroundColor: '#112D2E',
           color: '#FAF7F2',
           padding: '70px 24px 40px',
-          borderTop: '1px solid var(--border-metallic)',
+          borderTop: '1px solid var(--border-platinum)',
         }}
       >
         <div
@@ -1500,7 +1485,7 @@ export default async function HomePage() {
               height: '48px',
               objectFit: 'contain',
               marginBottom: '18px',
-              filter: 'brightness(0.2) drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
+              filter: 'brightness(1.8) contrast(90%) drop-shadow(0 2px 6px rgba(0,0,0,0.4))',
             }}
           />
 
@@ -1511,7 +1496,7 @@ export default async function HomePage() {
               fontWeight: 600,
               letterSpacing: '0.05em',
               marginBottom: '6px',
-              color: '#FAF7F2',
+              color: 'var(--text-primary)',
             }}
           >
             Carmen Ibáñez
@@ -1522,7 +1507,7 @@ export default async function HomePage() {
             style={{
               fontSize: '1.1rem',
               fontStyle: 'italic',
-              color: 'var(--accent-metallic)',
+              color: 'var(--accent-platinum)',
               marginBottom: '36px',
             }}
           >
@@ -1543,13 +1528,7 @@ export default async function HomePage() {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="montserrat-body"
-              style={{
-                fontSize: '0.86rem',
-                color: '#EDE5D3',
-                letterSpacing: '0.04em',
-                transition: 'color 0.2s ease',
-              }}
+              className="montserrat-body petrol-footer-link"
             >
               Instagram
             </a>
@@ -1557,13 +1536,7 @@ export default async function HomePage() {
               href="https://goodreads.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="montserrat-body"
-              style={{
-                fontSize: '0.86rem',
-                color: '#EDE5D3',
-                letterSpacing: '0.04em',
-                transition: 'color 0.2s ease',
-              }}
+              className="montserrat-body petrol-footer-link"
             >
               Goodreads
             </a>
@@ -1571,25 +1544,13 @@ export default async function HomePage() {
               href="https://tiktok.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="montserrat-body"
-              style={{
-                fontSize: '0.86rem',
-                color: '#EDE5D3',
-                letterSpacing: '0.04em',
-                transition: 'color 0.2s ease',
-              }}
+              className="montserrat-body petrol-footer-link"
             >
               TikTok Literario
             </a>
             <a
               href="mailto:contacto@carmenibanez.cl"
-              className="montserrat-body"
-              style={{
-                fontSize: '0.86rem',
-                color: '#EDE5D3',
-                letterSpacing: '0.04em',
-                transition: 'color 0.2s ease',
-              }}
+              className="montserrat-body petrol-footer-link"
             >
               Contacto Editorial / Prensa
             </a>
@@ -1600,7 +1561,7 @@ export default async function HomePage() {
               width: '100%',
               maxWidth: '500px',
               height: '1px',
-              backgroundColor: 'rgba(214, 189, 122, 0.25)',
+              backgroundColor: 'var(--border-platinum-subtle)',
               marginBottom: '28px',
             }}
           />
@@ -1609,7 +1570,7 @@ export default async function HomePage() {
             className="montserrat-body"
             style={{
               fontSize: '0.78rem',
-              color: '#D8CBB6',
+              color: 'var(--text-muted)',
               margin: 0,
             }}
           >
