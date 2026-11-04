@@ -237,12 +237,40 @@ export interface Database {
           }
         ];
       };
+      contact_rate_limits: {
+        Row: {
+          ip_hash: string;
+          attempt_count: number;
+          first_attempt_at: string;
+          last_attempt_at: string;
+        };
+        Insert: {
+          ip_hash: string;
+          attempt_count?: number;
+          first_attempt_at?: string;
+          last_attempt_at?: string;
+        };
+        Update: {
+          ip_hash?: string;
+          attempt_count?: number;
+          first_attempt_at?: string;
+          last_attempt_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      check_and_consume_contact_rate_limit: {
+        Args: {
+          p_ip_hash: string;
+          p_max_attempts?: number;
+          p_window_hours?: number;
+        };
+        Returns: Json;
+      };
     };
     Enums: {
       book_status: BookStatus;
