@@ -830,3 +830,129 @@ a {
   }
 }
 
+
+
+/* ==============================================================================
+   REDES SOCIALES EN NAVBAR Y ANIMACIONES
+   ============================================================================== */
+.nav-desktop-socials {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 6px;
+}
+
+.nav-desktop-socials-divider {
+  display: inline-block;
+  width: 1px;
+  height: 18px;
+  background-color: var(--border-platinum);
+  margin-right: 4px;
+  opacity: 0.7;
+}
+
+.nav-desktop-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--text-primary);
+  background-color: rgba(184, 176, 156, 0.08);
+  border: 1px solid var(--border-platinum-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.nav-desktop-social-link:hover {
+  color: #FFFFFF;
+  background-color: var(--accent-copper);
+  border-color: var(--accent-copper);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(169, 120, 92, 0.35);
+}
+
+.nav-desktop-social-link:focus-visible {
+  outline: 2px solid var(--accent-copper);
+  outline-offset: 2px;
+}
+
+@media (min-width: 769px) and (max-width: 1140px) {
+  .nav-desktop-links {
+    gap: 16px;
+  }
+  .nav-desktop-link {
+    font-size: 0.82rem;
+  }
+}
+
+/* Redes Sociales en Menú Móvil */
+.nav-mobile-socials-block {
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-platinum-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav-mobile-socials-heading {
+  font-family: var(--font-cinzel);
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+  padding: 0 4px;
+}
+
+.nav-mobile-socials-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.nav-mobile-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  background-color: rgba(43, 89, 86, 0.35);
+  border: 1px solid var(--border-platinum);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.nav-mobile-social-btn:hover,
+.nav-mobile-social-btn:active {
+  background-color: var(--accent-copper);
+  border-color: var(--accent-copper);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.nav-mobile-social-btn:focus-visible {
+  outline: 2px solid var(--accent-copper);
+  outline-offset: 2px;
+}
+
+/* Animación de carga y estados de formulario */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.icon-spin {
+  animation: spin 0.9s linear infinite;
+}

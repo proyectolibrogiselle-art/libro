@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRightIcon } from '@/components/Icons';
+import { ArrowRightIcon, InstagramIcon, LinkedInIcon } from '@/components/Icons';
 
 interface NavItem {
   label: string;
@@ -18,6 +18,23 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Eventos', href: '#eventos' },
   { label: 'Galería', href: '#galeria' },
   { label: 'Contacto', href: '#contacto' },
+];
+
+const SOCIAL_LINKS = [
+  {
+    name: 'Instagram',
+    href: 'https://www.instagram.com/carmenibaez22',
+    ariaLabel: 'Perfil oficial de Instagram de Carmen Ibáñez',
+    title: 'Instagram oficial de Carmen Ibáñez (abre en pestaña nueva)',
+    icon: InstagramIcon,
+  },
+  {
+    name: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/angela-soto-ib%C3%B1aez-27a86698',
+    ariaLabel: 'Perfil profesional de LinkedIn de Carmen Ibáñez',
+    title: 'LinkedIn oficial de Carmen Ibáñez (abre en pestaña nueva)',
+    icon: LinkedInIcon,
+  },
 ];
 
 export default function HeaderNav() {
@@ -80,6 +97,27 @@ export default function HeaderNav() {
               {item.label}
             </a>
           ))}
+
+          {/* Redes Sociales en Escritorio: Inmediatamente después de Contacto */}
+          <div className="nav-desktop-socials" aria-label="Redes sociales oficiales">
+            <span className="nav-desktop-socials-divider" aria-hidden="true" />
+            {SOCIAL_LINKS.map((social) => {
+              const Icon = social.icon;
+              return (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="nav-desktop-social-link"
+                  aria-label={social.ariaLabel}
+                  title={social.title}
+                >
+                  <Icon size={17} />
+                </a>
+              );
+            })}
+          </div>
         </nav>
 
         {/* Botón Hamburguesa Minimalista Móvil */}
@@ -115,6 +153,32 @@ export default function HeaderNav() {
               <ArrowRightIcon size={15} style={{ color: 'var(--accent-copper)', opacity: 0.9 }} />
             </a>
           ))}
+
+          {/* Redes Sociales en Menú Móvil */}
+          <div className="nav-mobile-socials-block">
+            <span className="nav-mobile-socials-heading">Redes oficiales</span>
+            <div className="nav-mobile-socials-grid">
+              {SOCIAL_LINKS.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="nav-mobile-social-btn"
+                    onClick={handleLinkClick}
+                    aria-label={social.ariaLabel}
+                    title={social.title}
+                    tabIndex={isOpen ? 0 : -1}
+                  >
+                    <Icon size={18} />
+                    <span>{social.name}</span>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
         </nav>
       </div>
     </header>
