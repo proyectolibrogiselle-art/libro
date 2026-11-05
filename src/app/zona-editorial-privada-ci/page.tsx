@@ -42,7 +42,7 @@ export default function AntigravityAdminPanel() {
     }
 
     // Validación estricta de credenciales
-    if (loginEmail.trim() === 'proyectolibrogiselle@gmail.com' && loginPassword.trim() === '20181860') {
+    if (loginEmail.trim() === 'administrador@carmenibanez.cl' && loginPassword.trim() === '#8mK$2vP!9xL#5qZ@7bF$4wJ') {
       setIsAuthenticated(true);
       setLoginError(null);
     } else {
@@ -317,7 +317,7 @@ export default function AntigravityAdminPanel() {
               <input
                 type="email"
                 required
-                placeholder="proyectolibrogiselle@gmail.com"
+                placeholder="administrador@carmenibanez.cl"
                 value={loginEmail}
                 onChange={(e) => setLoginEmail(e.target.value)}
                 style={inputStyle}

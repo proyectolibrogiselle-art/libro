@@ -4,3 +4,4 @@ Disallow: /api/
 Disallow: /zona-editorial-privada-ci
 
 Sitemap: https://carmenibanez.cl/sitemap.xml
+
