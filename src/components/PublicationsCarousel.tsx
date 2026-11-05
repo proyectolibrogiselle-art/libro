@@ -397,7 +397,7 @@ export default function PublicationsCarousel({ books }: PublicationsCarouselProp
 
           <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
             <Link
-              href={`/subdomains/${currentBook.slug || 'giselle'}`}
+              href={`/${currentBook.slug || 'giselle'}`}
               className="btn-copper"
               style={{
                 padding: '14px 38px',

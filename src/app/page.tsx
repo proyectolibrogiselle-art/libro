@@ -236,7 +236,7 @@ export default async function HomePage() {
                 marginBottom: '44px',
               }}
             >
-              <Link href="/subdomains/giselle" className="btn-copper">
+              <Link href="/giselle" className="btn-copper">
                 <span>Ingresar a la obra Giselle</span>
                 <ArrowRightIcon size={16} />
               </Link>
@@ -796,7 +796,7 @@ export default async function HomePage() {
                   </div>
                   <div style={{ marginTop: '24px' }}>
                     <Link
-                      href="/subdomains/giselle"
+                      href="/giselle"
                       className="montserrat-body"
                       style={{
                         fontSize: '0.86rem',
@@ -866,7 +866,7 @@ export default async function HomePage() {
                   </div>
                   <div style={{ marginTop: '24px' }}>
                     <Link
-                      href="/subdomains/giselle"
+                      href="/giselle"
                       className="montserrat-body"
                       style={{
                         fontSize: '0.86rem',
@@ -934,7 +934,7 @@ export default async function HomePage() {
                   </div>
                   <div style={{ marginTop: '24px' }}>
                     <Link
-                      href="/subdomains/giselle"
+                      href="/giselle"
                       className="montserrat-body"
                       style={{
                         fontSize: '0.86rem',
@@ -1002,7 +1002,7 @@ export default async function HomePage() {
                   </div>
                   <div style={{ marginTop: '24px' }}>
                     <Link
-                      href="/subdomains/giselle"
+                      href="/giselle"
                       className="montserrat-body"
                       style={{
                         fontSize: '0.86rem',
