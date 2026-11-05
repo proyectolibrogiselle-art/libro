@@ -124,3 +124,4 @@ $$;
 -- 5. PERMISOS DE EJECUCIÓN RESTRICTIVOS
 REVOKE ALL ON FUNCTION public.check_and_consume_contact_rate_limit(VARCHAR, INT, INT) FROM PUBLIC, anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.check_and_consume_contact_rate_limit(VARCHAR, INT, INT) TO service_role;
+
